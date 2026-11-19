@@ -23,6 +23,24 @@ def test_repository_reads_the_profile(tmp_path: Path) -> None:
     assert profile.links == (Link("GitHub", "https://example.com/me"),)
 
 
+def test_repository_reads_the_photo_path(tmp_path: Path) -> None:
+    path = write_json(
+        tmp_path / "profile.json", profile_document(photo=" images/profile.jpg ")
+    )
+    assert JsonProfileRepository(path).get_profile().photo == "images/profile.jpg"
+
+
+@pytest.mark.parametrize("photo", [None, "missing-key"])
+def test_repository_gives_no_photo_when_it_is_not_set(
+    tmp_path: Path, photo: str | None
+) -> None:
+    document = profile_document()
+    if photo is None:
+        document["photo"] = None
+    path = write_json(tmp_path / "profile.json", document)
+    assert JsonProfileRepository(path).get_profile().photo is None
+
+
 def test_repository_accepts_a_profile_without_links(tmp_path: Path) -> None:
     path = write_json(tmp_path / "profile.json", profile_document(links=[]))
     assert JsonProfileRepository(path).get_profile().links == ()
@@ -73,6 +91,7 @@ def test_repository_reports_a_missing_key(tmp_path: Path, key: str) -> None:
         ({"name": 3}, "'name' must be text"),
         ({"skills": "Python"}, "'skills' must be a JSON array"),
         ({"skills": ["Python", 3]}, "skill 2 must be text"),
+        ({"photo": 3}, "'photo' must be text"),
         ({"links": {"label": "x"}}, "'links' must be a JSON array"),
         ({"links": ["GitHub"]}, "link 1 must be a JSON object"),
         ({"links": [{"label": "GitHub"}]}, "link 1 is missing the key 'url'"),
@@ -92,6 +111,9 @@ def test_repository_reports_a_wrong_shape(
         ({"name": "  "}, "name must not be blank"),
         ({"skills": []}, "skills must not be empty"),
         ({"skills": [" "]}, "skill must not be blank"),
+        ({"photo": "https://example.com/me.jpg"}, "photo must be a relative path"),
+        ({"photo": "../me.jpg"}, "photo must be a relative path"),
+        ({"photo": "javascript:alert(1)"}, "photo must be a relative path"),
         ({"links": [{"label": "", "url": "https://x.example"}]}, "label must not be"),
     ],
 )

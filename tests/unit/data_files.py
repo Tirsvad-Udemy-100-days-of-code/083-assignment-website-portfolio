@@ -4,13 +4,15 @@ import json
 from pathlib import Path
 
 
-def project_entry(**overrides: str) -> dict[str, str]:
-    entry = {
+def project_entry(**overrides: object) -> dict[str, object]:
+    entry: dict[str, object] = {
         "title": "Weather app",
         "type": "Web app",
         "description": "Shows the weather of a city.",
         "img_url": "https://example.com/weather.png",
         "source_code_url": "https://example.com/weather",
+        "tags": ["Python", "API"],
+        "skills": ["Working with web APIs"],
     }
     return entry | overrides
 

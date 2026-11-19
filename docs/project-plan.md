@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the LinkedIn link, the profile photo and the project flip cards to the scope coverage and the MIL-004 deliverable; added OI-003<br>Verdict Go (RC-015) | [ec90c2b] |
 
 ---
 
@@ -37,7 +38,7 @@ This plan schedules the four gateways that deliver the Day 83 portfolio website:
 | MIL-001 Project setup | [MIL-001] | 2026-11-19 to 2026-11-20 | 2026-11-20 | S01 | none (technical tasks) | An installable Python project skeleton with tooling files, a passing smoke test, a Doxyfile and a described, tagged repository | not yet synced |
 | MIL-002 Core domain and use cases | [MIL-002] | 2026-11-21 | 2026-11-21 | S01 | none (technical tasks) | Domain entities and the `home` and `about` use cases with ports, unit-tested with fakes and checked by a layer contract | not yet synced |
 | MIL-003 Site generation and preview | [MIL-003] | 2026-11-22 | 2026-11-22 | S01 | none (technical tasks) | `python -m portfolio build` and `python -m portfolio serve` working end to end on sample data, with `load_from_json`, a stylesheet and integration and end-to-end tests | not yet synced |
-| MIL-004 Documentation and wrap-up | [MIL-004] | 2026-11-23 | 2026-11-23 | S01 | none (documentation tasks) | README, Doxygen reference and a wiki in English, Danish and Bahasa Malaysia with one screenshot per step | not yet synced |
+| MIL-004 Documentation and wrap-up | [MIL-004] | 2026-11-23 | 2026-11-23 | S01 | none (documentation tasks) | README, Doxygen reference, a wiki in English, Danish and Bahasa Malaysia with one screenshot per step, a LinkedIn link and profile photo on the about page, and flip cards for the projects | not yet synced |
 
 ## Timeline diagram
 
@@ -69,6 +70,8 @@ Project starts 2026-11-19
 | README from the framework template and the three-language wiki with Getting Started | MIL-004 |
 | Screenshots of this project's own output for every step | MIL-004 |
 | Repository description and topics | MIL-001 |
+| A LinkedIn link and a profile photo on the about page (O7) | MIL-004 |
+| Project flip cards with image, tags and skills (O8) | MIL-004 |
 
 ## Dependencies
 
@@ -90,6 +93,7 @@ The gateways form a chain: MIL-001 precedes MIL-002, which precedes MIL-003, whi
 | --- | --- | --- |
 | OI-001 | The end date 2026-11-23 is an assumption; S01 may set another date at plan acceptance. | S01 |
 | OI-002 | The Timeline diagram has not been rendered because no PlantUML server is set in the registry; the text is checked by reading. | S01 |
+| OI-003 | S01 supplies the profile photo as an image file in `data/images/`; LinkedIn cannot be read without a sign-in. Until the file exists the about page shows an initials avatar. | S01 |
 
 ---
 
@@ -100,3 +104,4 @@ The gateways form a chain: MIL-001 precedes MIL-002, which precedes MIL-003, whi
 [MIL-003]: ./milestones/mil-003-site-generation-and-preview.md
 [MIL-004]: ./milestones/mil-004-documentation-and-wrap-up.md
 [8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
+[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b

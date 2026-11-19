@@ -11,6 +11,7 @@ from portfolio.constants import (
     JSON_KEY_LABEL,
     JSON_KEY_LINKS,
     JSON_KEY_NAME,
+    JSON_KEY_PHOTO,
     JSON_KEY_SKILLS,
     JSON_KEY_SUMMARY,
     JSON_KEY_URL,
@@ -26,6 +27,7 @@ from portfolio.infrastructure.json_document import (
     require_object,
     require_text,
     require_text_field,
+    require_text_list,
 )
 
 _PROFILE = "the profile"
@@ -57,6 +59,7 @@ class JsonProfileRepository:
                 summary=self._text(fields, JSON_KEY_SUMMARY),
                 skills=self._skills(fields),
                 links=self._links(fields),
+                photo=self._photo(fields),
             )
         except DomainError as err:
             raise DataFileError(self._path, str(err)) from err
@@ -65,11 +68,14 @@ class JsonProfileRepository:
         return require_text_field(fields, key, self._path, _PROFILE)
 
     def _skills(self, fields: Mapping[str, object]) -> tuple[str, ...]:
-        values = self._array(fields, JSON_KEY_SKILLS)
-        return tuple(
-            require_text(value, self._path, f"skill {number}")
-            for number, value in enumerate(values, start=1)
-        )
+        value = require_field(fields, JSON_KEY_SKILLS, self._path, _PROFILE)
+        return require_text_list(value, self._path, f"'{JSON_KEY_SKILLS}'", "skill")
+
+    def _photo(self, fields: Mapping[str, object]) -> str | None:
+        value = fields.get(JSON_KEY_PHOTO)
+        if value is None:
+            return None
+        return require_text(value, self._path, f"'{JSON_KEY_PHOTO}'").strip()
 
     def _links(self, fields: Mapping[str, object]) -> tuple[Link, ...]:
         values = self._array(fields, JSON_KEY_LINKS)

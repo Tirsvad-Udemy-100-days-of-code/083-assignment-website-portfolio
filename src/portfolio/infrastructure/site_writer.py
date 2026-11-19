@@ -7,6 +7,7 @@ from pathlib import Path
 
 from portfolio.application.errors.site_write_error import SiteWriteError
 from portfolio.constants import ENCODING
+from portfolio.infrastructure.confined_path import resolve_inside
 
 
 class FileSiteWriter:
@@ -35,8 +36,22 @@ class FileSiteWriter:
         except OSError as err:
             raise SiteWriteError(f"cannot write {target}: {err}") from err
 
+    def write_bytes(self, relative_path: str, content: bytes) -> None:
+        """!
+        @brief Write a binary file inside the folder, creating the folders it needs.
+        @param relative_path Path of the file inside the folder.
+        @param content The bytes to write.
+        @throws SiteWriteError The path leaves the folder or the file cannot be written.
+        """
+        target = self._resolve(relative_path)
+        try:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(content)
+        except OSError as err:
+            raise SiteWriteError(f"cannot write {target}: {err}") from err
+
     def _resolve(self, relative_path: str) -> Path:
-        target = (self._root / relative_path).resolve()
-        if target == self._root or not target.is_relative_to(self._root):
+        target = resolve_inside(self._root, relative_path)
+        if target is None:
             raise SiteWriteError(f"{relative_path!r} is outside the output folder")
         return target

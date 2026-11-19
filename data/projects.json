@@ -1,58 +1,114 @@
 [
   {
-    "title": "Band Name Generator",
-    "type": "Console game",
-    "description": "Asks for the city you grew up in and the name of a pet, then combines them into a band name.",
-    "img_url": "",
-    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+    "title": "Prime Number Benchmark",
+    "type": "Benchmark",
+    "description": "C, Rust and C# programs that list every prime up to 1,000,000 and time it: scalar and AVX2 trial division, multithreaded versions and a sieve of Eratosthenes. It shows how speed depends on the algorithm, SIMD and threads.",
+    "img_url": "images/prime-numbers-c.svg",
+    "source_code_url": "https://github.com/Tirsvad/prime-numbers-c",
+    "tags": [
+      "C",
+      "Rust",
+      "C#",
+      "AVX2",
+      "OpenMP",
+      "benchmark"
+    ],
+    "skills": [
+      "Low-level performance tuning",
+      "SIMD and multithreading",
+      "Algorithm comparison",
+      "Working in three languages"
+    ]
   },
   {
-    "title": "Tip Calculator",
-    "type": "Console app",
-    "description": "Splits a restaurant bill between friends and adds the tip percentage you choose.",
-    "img_url": "",
-    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
-  },
-  {
-    "title": "Rock Paper Scissors",
-    "type": "Console game",
-    "description": "Play rock, paper, scissors against the computer, which picks its move at random.",
-    "img_url": "",
-    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
-  },
-  {
-    "title": "Hangman",
-    "type": "Console game",
-    "description": "Guess a hidden word one letter at a time before the drawing of the hangman is complete.",
-    "img_url": "",
-    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
-  },
-  {
-    "title": "Blackjack",
-    "type": "Console game",
-    "description": "A game of blackjack against the dealer: draw cards and try to reach 21 without going over.",
-    "img_url": "",
-    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
-  },
-  {
-    "title": "Snake Game",
-    "type": "Desktop app",
-    "description": "The classic snake game drawn with turtle graphics: eat the food, grow longer and avoid the walls.",
-    "img_url": "",
-    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
-  },
-  {
-    "title": "Flash Card App",
-    "type": "Desktop app",
-    "description": "A Tkinter app that shows French words and flips each card to the English meaning to help you learn.",
-    "img_url": "",
-    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
-  },
-  {
-    "title": "Portfolio Website",
+    "title": "Developer Portfolio Website",
     "type": "Website",
-    "description": "This site: a portfolio generated from JSON files with the Python standard library and shown by a local server.",
-    "img_url": "",
-    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+    "description": "The website dev.tirsvad.dk that shows my software projects: markup, styling and a small C# back end.",
+    "img_url": "images/developer-website.svg",
+    "source_code_url": "https://github.com/Tirsvad/Website.DevTirsvadDk",
+    "tags": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "C#"
+    ],
+    "skills": [
+      "Responsive web design",
+      "Front end and back end together",
+      "Publishing a website"
+    ]
+  },
+  {
+    "title": "Blazor WebAssembly Sign-in",
+    "type": "Web application",
+    "description": "A Blazor WebAssembly application with authentication, set up and run on Linux.",
+    "img_url": "images/blazor-sign-in.svg",
+    "source_code_url": "https://github.com/Tirsvad/BlazorWasmAuth",
+    "tags": [
+      "Blazor",
+      "WebAssembly",
+      ".NET",
+      "authentication",
+      "Linux"
+    ],
+    "skills": [
+      "Authentication and authorisation",
+      "Single-page applications in .NET",
+      "Building and running on Linux"
+    ]
+  },
+  {
+    "title": "Linux Server Setup Script",
+    "type": "Automation",
+    "description": "A script that sets up a complete Debian server: system update, a user with an optional SSH key, hardened sshd, hostname and more.",
+    "img_url": "images/server-setup-script.svg",
+    "source_code_url": "https://github.com/Tirsvad/LinodeStackScript386424",
+    "tags": [
+      "Bash",
+      "Debian",
+      "SSH",
+      "Linode",
+      "automation"
+    ],
+    "skills": [
+      "Server administration",
+      "Secure SSH configuration",
+      "Repeatable infrastructure with scripts"
+    ]
+  },
+  {
+    "title": "Hotel Data Analysis",
+    "type": "Data analysis",
+    "description": "Python notebooks that analyse hotel data and try machine learning on it.",
+    "img_url": "images/hotel-data-analysis.svg",
+    "source_code_url": "https://github.com/Tirsvad/Other.NF_Hotel-dataanalysis_and_ai",
+    "tags": [
+      "Python",
+      "data analysis",
+      "machine learning",
+      "notebooks"
+    ],
+    "skills": [
+      "Cleaning and exploring data",
+      "Machine learning basics",
+      "Presenting findings"
+    ]
+  },
+  {
+    "title": "ChimneyWise API",
+    "type": "Web API",
+    "description": "The API of ChimneyWise, built next to separate repositories for the business logic and the web interface.",
+    "img_url": "images/chimneywise-api.svg",
+    "source_code_url": "https://github.com/Tirsvad/ChimneyWise.ChimneyWiseApi",
+    "tags": [
+      "API",
+      "layered design",
+      ".NET"
+    ],
+    "skills": [
+      "API design",
+      "Separating business logic from the interface",
+      "Working with several repositories as one product"
+    ]
   }
 ]

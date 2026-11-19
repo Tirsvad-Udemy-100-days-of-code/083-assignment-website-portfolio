@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the LinkedIn link, profile photo and flip cards to the deliverable, criteria 11 to 14 and tasks 8 to 11, at the request of S01<br>Verdict Go (RC-016) | [ec90c2b] |
 
 ---
 
@@ -21,7 +22,7 @@ Decide whether the project can be handed to course participants and repository v
 
 ## Deliverable
 
-`README.md` from the framework template, the Doxygen reference, and a flat wiki in `docs/wiki/` in English, Danish and Bahasa Malaysia with a Home page, a Getting Started page, a lecture summary, one page per build step and a sidebar, with one screenshot of this project's own output per step in the README and the wiki.
+`README.md` from the framework template, the Doxygen reference, and a flat wiki in `docs/wiki/` in English, Danish and Bahasa Malaysia with a Home page, a Getting Started page, a lecture summary, one page per build step and a sidebar, with one screenshot of this project's own output per step in the README and the wiki, and a link to the author's LinkedIn profile a profile photo on the about page, and a flip card for each project (name, description and image on the front; source code link and tags on the back).
 
 ## Go / No-Go Criteria
 
@@ -37,6 +38,10 @@ Decide whether the project can be handed to course participants and repository v
 | 8 | `python -m pytest`, `ruff check`, `mypy`, import-linter and the opengrep scan pass on the final tree (SC2, SC4) | All pass | Any failure |
 | 9 | The wiki is published and the sidebar and links work on the host (QC-WIKI-001 criterion 14) | Checked on the host | Any dead link |
 | 10 | The review records for the README, the wiki and any changed code are `Go` | `RC-*` says Go | `No-Go` or missing |
+| 11 | `data/profile.json` links to `https://www.linkedin.com/in/tirsvad74/` and the built about page shows it (O7, SC8) | Link present in the page | Link missing |
+| 12 | The about page shows the photo file the author supplies, or an initials avatar when none is supplied, and the build copies the photo into the site (O7, SC8) | An end-to-end test passes for both cases | Broken image or build error |
+| 13 | The home page has one flip card per project: the front holds name, description and image, the back holds the source code link, the tags and the skills the project shows (O8, SC9) | An end-to-end test finds both faces for every project, and the sample data holds only projects that show the author's skills | A face or an element missing |
+| 14 | The flip works with a pointer and with the keyboard, and does not animate when the visitor prefers reduced motion (O8) | The stylesheet has the focus and the reduced-motion rules, checked by a test | Either rule missing |
 
 ## Dependencies
 
@@ -50,7 +55,8 @@ Decide whether the project can be handed to course participants and repository v
 | --- | --- |
 | O4 (`.venv`, pip, run, test on both systems) | [BC-001] Objectives |
 | O5 (wiki in three languages with a screenshot per step) | [BC-001] Objectives |
-| SC5, SC6 | [BC-001] Success Criteria |
+| O7 (LinkedIn link and profile photo), O8 (flip cards) | [BC-001] Objectives |
+| SC5, SC6, SC8, SC9 | [BC-001] Success Criteria |
 
 ## Ownership
 
@@ -74,7 +80,11 @@ Decide whether the project can be handed to course participants and repository v
 | 5 | Write the Bahasa Malaysia wiki | Translate every English page to Bahasa Malaysia as `<Page>-ms.md` with the language line, keeping commands and code in English. The language check stays Pending until a person who reads the language has checked it. | No | |
 | 6 | Build the Doxygen reference | Run `doxygen Doxyfile`, fix every warning in the source comments and document the command in the README and the wiki. | No | |
 | 7 | Run the final checks | Run pytest, ruff, mypy, import-linter and the opengrep scan on the final tree and search the tracked files for lecture material and for the assistant tooling name, then record the results in the review records. | No | |
-| 8 | Review the documents and verify the published wiki | Review the README and the wiki against `QC-WIKI-001`, write the `RC-*` records, and after the merge check the sidebar and links on the published wiki. | No | |
+| 8 | Add the LinkedIn link to the profile data | Add a `LinkedIn` entry with the address `https://www.linkedin.com/in/tirsvad74/` to the links of `data/profile.json`, so the about page connects the portfolio to the author's LinkedIn profile. | No | |
+| 9 | Support images in the build: the profile photo and the project images | Add an optional photo (a relative path to an image file in the data folder) to the `Profile` entity, and make `image_url` of a project either an http or https address or such a relative path. A port reads a data-folder file and the site writer writes bytes, so the build copies every referenced image into the site. The about page shows the photo as a round picture with the owner's name as alternative text, or an initials avatar when none is set. A missing or unsafe file gives a clear error. Tests cover both cases. | No | |
+| 10 | Show each project as a flip card with tags and skills | Add `tags` and `skills` (two lists of short phrases, both optional) to the `Project` entity, the JSON file and the card DTO. The front of a card shows the project name, description and image (a generated placeholder when there is none); the back shows the source code link, the tags and the skills the project shows. The flip is pure CSS: it turns on hover and on keyboard focus, works on touch by tapping, and is switched off for visitors who prefer reduced motion. Replace the sample data with public projects of the author that show the author's skills (no basic course exercises), each with an SVG image, tags and skills. Tests check both faces of every card and the rules of the stylesheet. | No | |
+| 11 | Place the author's profile photo and retake the screenshots | S01 supplies the LinkedIn profile photo as an image file (LinkedIn cannot be read without a sign-in), saved in `data/images/`. Set it in `data/profile.json`, rebuild and retake the screenshots, including the back of a card, so the README and the wiki show them. | No | |
+| 12 | Review the documents and verify the published wiki | Review the README and the wiki against `QC-WIKI-001`, write the `RC-*` records, and after the merge check the sidebar and links on the published wiki. | No | |
 
 ---
 
@@ -82,3 +92,4 @@ Decide whether the project can be handed to course participants and repository v
 [PP-001]: ../project-plan.md
 [MIL-003]: ./mil-003-site-generation-and-preview.md
 [8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
+[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b

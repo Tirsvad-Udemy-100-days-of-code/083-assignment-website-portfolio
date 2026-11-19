@@ -128,7 +128,9 @@ nav a[aria-current="page"] {
   color: var(--color-accent-contrast);
 }
 
-/* Project cards */
+/* Project cards: a flip card shows the front (image, name, description) and
+   turns to the back (source code, tags, skills) on hover, on keyboard focus and
+   on a tap, which focuses the card. Pure CSS, no script. */
 
 .card-grid {
   display: grid;
@@ -136,14 +138,54 @@ nav a[aria-current="page"] {
   gap: 1.5rem;
 }
 
-.card {
+.flip-card {
+  perspective: 1000px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.flip-card:focus {
+  outline: none;
+}
+
+.flip-card:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Both faces share one grid cell, so the card is as high as its taller face. */
+.flip-card-inner {
+  display: grid;
+  height: 100%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card:focus .flip-card-inner,
+.flip-card:focus-within .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-face {
   display: flex;
   flex-direction: column;
+  grid-area: 1 / 1;
   overflow: hidden;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card-back {
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  transform: rotateY(180deg);
 }
 
 .card-image {
@@ -151,6 +193,40 @@ nav a[aria-current="page"] {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+}
+
+/* A card without image gets a coloured block with the first letter of the title. */
+.card-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+.placeholder-0 {
+  background: #2f5fd0;
+}
+
+.placeholder-1 {
+  background: #0f766e;
+}
+
+.placeholder-2 {
+  background: #b45309;
+}
+
+.placeholder-3 {
+  background: #9333ea;
+}
+
+.placeholder-4 {
+  background: #be123c;
+}
+
+.placeholder-5 {
+  background: #475569;
 }
 
 .card-body {
@@ -187,6 +263,46 @@ nav a[aria-current="page"] {
   font-weight: 600;
 }
 
+.tags,
+.skill-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background: var(--color-badge-background);
+  color: var(--color-badge-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.skills-title {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+}
+
+.skill-list li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--color-muted);
+}
+
+.skill-list li::before {
+  content: "\2022";
+  position: absolute;
+  left: 0.2rem;
+  color: var(--color-accent);
+}
+
 .empty-state {
   padding: 2rem;
   text-align: center;
@@ -203,9 +319,39 @@ nav a[aria-current="page"] {
 }
 
 .headline {
-  margin-top: -1rem;
+  margin: 0;
   color: var(--color-muted);
   font-size: 1.2rem;
+}
+
+.about-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-header h1 {
+  margin-bottom: 0.25rem;
+}
+
+.avatar {
+  flex: none;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  font-size: 2.75rem;
+  font-weight: 700;
 }
 
 .skills,
@@ -239,6 +385,14 @@ nav a[aria-current="page"] {
   color: var(--color-muted);
   font-size: 0.9rem;
   text-align: center;
+}
+
+/* Visitors who prefer reduced motion get an instant swap instead of the turn. */
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card-inner {
+    transition: none;
+  }
 }
 
 /* Narrow screens: one column of cards, stacked header */

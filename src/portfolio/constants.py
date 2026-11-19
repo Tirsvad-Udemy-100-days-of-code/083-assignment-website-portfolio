@@ -41,8 +41,34 @@ MAX_KIND_LENGTH: Final[int] = 30
 ## @brief Longest accepted project description, in characters.
 MAX_DESCRIPTION_LENGTH: Final[int] = 250
 
-## @brief Longest accepted URL (image or source code), in characters.
+## @brief Longest accepted URL, image path or photo path, in characters.
 MAX_URL_LENGTH: Final[int] = 200
+
+## @brief Longest accepted project tag, in characters.
+MAX_TAG_LENGTH: Final[int] = 30
+
+## @brief Largest number of tags on one project.
+MAX_TAGS: Final[int] = 10
+
+## @brief Longest accepted project skill, in characters.
+MAX_SKILL_LENGTH: Final[int] = 60
+
+## @brief Largest number of skills on one project.
+MAX_PROJECT_SKILLS: Final[int] = 10
+
+## @brief File name endings an image of the data folder may have, in lower case.
+IMAGE_EXTENSIONS: Final[tuple[str, ...]] = (
+    ".svg",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".webp",
+    ".avif",
+)
+
+## @brief Number of colours the placeholder of a card without image can have.
+PLACEHOLDER_COLOR_COUNT: Final[int] = 6
 
 ## @brief Character encoding of every text file the program reads or writes.
 ENCODING: Final[str] = "utf-8"
@@ -104,6 +130,12 @@ JSON_KEY_IMAGE_URL: Final[str] = "img_url"
 ## @brief JSON key of the project source code URL.
 JSON_KEY_SOURCE_CODE_URL: Final[str] = "source_code_url"
 
+## @brief JSON key of the tag list of a project.
+JSON_KEY_TAGS: Final[str] = "tags"
+
+## @brief JSON key of the profile photo, a path inside the data folder.
+JSON_KEY_PHOTO: Final[str] = "photo"
+
 ## @brief JSON key of the full name in the profile.
 JSON_KEY_NAME: Final[str] = "name"
 
@@ -113,7 +145,7 @@ JSON_KEY_HEADLINE: Final[str] = "headline"
 ## @brief JSON key of the summary in the profile.
 JSON_KEY_SUMMARY: Final[str] = "summary"
 
-## @brief JSON key of the skills list in the profile.
+## @brief JSON key of the skills list, in the profile and in a project.
 JSON_KEY_SKILLS: Final[str] = "skills"
 
 ## @brief JSON key of the links list in the profile.
@@ -159,6 +191,9 @@ SOURCE_CODE_LABEL: Final[str] = "Source code"
 
 ## @brief Heading of the skills list on the about page.
 SKILLS_HEADING: Final[str] = "Skills"
+
+## @brief Accessible name of the list of tags on the back of a project card.
+TAGS_LABEL: Final[str] = "Tags"
 
 ## @brief Heading of the links list on the about page.
 LINKS_HEADING: Final[str] = "Links"

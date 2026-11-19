@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [8163226] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Removed the notebook from scope and constraints (not requested)<br>Named the assignment's function names in O1<br>Reworded the tooling constraint | [8163226] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Removed the notebook from scope and constraints (not requested)<br>Named the assignment's function names in O1<br>Reworded the tooling constraint | [8163226] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | [ec90c2b] |
 
 ---
 
@@ -48,6 +48,8 @@ A portfolio site that is easy to install (no runtime dependencies), easy to read
 | O4 | Document how to create and use a local `.venv`, upgrade pip, run the project and run the tests, for both Windows and Linux. |
 | O5 | Explain each build step of the assignment, and what it teaches, in a wiki in English, Danish and Bahasa Malaysia, with one screenshot of this project per step. |
 | O6 | Publish the repository with a description and topics, and scan the code with opengrep before every push. |
+| O7 | Connect the portfolio to the author's LinkedIn profile and show the author's profile photo on the about page. |
+| O8 | Show each project as a flip card: the front shows the project name, description and image; the back shows the source code link, the tags and the skills the project shows. The sample projects are real work of the author that shows the author's skills, not basic course exercises. |
 
 ## Scope
 
@@ -60,12 +62,15 @@ A portfolio site that is easy to install (no runtime dependencies), easy to read
 - A README from the framework template and a flat wiki in `docs/wiki/` in English, Danish and Bahasa Malaysia, with a Getting Started page for Windows and Linux.
 - Screenshots of this project's own output for every step, in the README and the wiki.
 - Repository description and topics on the git host.
+- A link to the author's LinkedIn profile (https://www.linkedin.com/in/tirsvad74/) in the profile data, and a profile photo, taken from an image file the author supplies, shown on the about page.
+- Project images and tags: each project is shown as a flip card (name, description and image on the front; source code link, tags and the skills the project shows on the back), and the build copies the image files from the data folder into the site.
 
 ### Out of Scope
 
 - Reproducing the Flask, SQLAlchemy and Bootstrap application of the idea repository (see ADR-0001).
 - A database, user accounts, a contact form, content management or hosting and deployment of the site.
 - Copying lecture material: no lecture screenshot, text or video appears in the README or the wiki; the lecture is only summarised.
+- Fetching the profile photo from LinkedIn automatically: LinkedIn requires a sign-in and its terms restrict automated access, so the author supplies the image file.
 - Third-party runtime dependencies. Development tools (pytest, ruff, mypy, import-linter) are installed only on request, through an optional extra.
 - Use-case modelling, user stories and a domain dictionary: the product is too small to justify them.
 
@@ -99,6 +104,8 @@ The project supports the course's own goal for Day 83 (independent work that bui
 | SC5 | Wiki is complete | Every English page has a Danish and a Bahasa Malaysia page; each step page has a screenshot | Page list compared with `QC-WIKI-001` |
 | SC6 | Guide works on both systems | Getting Started shows Windows PowerShell and Linux commands for the `.venv`, pip upgrade, run and test | Review against the README and wiki criteria |
 | SC7 | Repository is described | The repository has a description and at least five topics | Git host API response |
+| SC8 | The portfolio connects to LinkedIn and shows the photo | `data/profile.json` links to https://www.linkedin.com/in/tirsvad74/; the about page shows the supplied photo, or an initials avatar until a file is supplied | End-to-end test of the built about page, and a screenshot |
+| SC9 | Projects are flip cards | The built home page has one flip card per project; the front holds name, description and image, the back holds the source code link, the tags and the skills; the sample projects are not basic course exercises | End-to-end test of the built home page, and screenshots of a front and a back |
 
 ## Risks
 
@@ -109,6 +116,7 @@ The project supports the course's own goal for Day 83 (independent work that bui
 | Screenshots taken on the host desktop would take the user's mouse and keyboard | Medium: interrupts the user | Take screenshots only in a Docker container with a headless browser, as the GUI testing rule requires. |
 | A token is committed or printed | High: secret leak | Tokens stay in the untracked `.env`; the project does not read or test it; `.env` is in `.gitignore`; opengrep runs before each push. |
 | The Gitea tokens lack a scope for issues, wiki or releases | Medium: sync or wiki publishing fails | Check each endpoint when first needed; stop and report instead of working around it. |
+| The profile photo cannot be fetched from LinkedIn (sign-in wall) | Low: the about page has no photo until the author supplies the file | The author saves the photo into `data/images/`; the site shows an initials avatar until then, and the build never reaches LinkedIn |
 | The local opengrep binary is missing or outdated | Low: scan skipped | Check the binary path before the first push; stop if it cannot run. |
 
 ## Assumptions
@@ -117,6 +125,7 @@ The project supports the course's own goal for Day 83 (independent work that bui
 - The lecture gives a motivational introduction and the open assignment; no lecture resource file was provided, so none is used.
 - The git host's wiki is enabled and the wiki publishing workflow of the organisation is delivered to the repository.
 - Docker is available on the author's machine for headless screenshots.
+- The author supplies the profile photo as an image file in `data/images/`; the build copies it to the site.
 
 ## Constraints
 
@@ -153,3 +162,4 @@ Proceed: the project is small, has a clear definition of done, needs no runtime 
 
 [SA-001]: ./stakeholder-analysis.md
 [8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
+[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b

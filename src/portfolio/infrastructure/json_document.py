@@ -59,6 +59,25 @@ def require_array(value: object, path: Path, what: str) -> Sequence[object]:
     return value
 
 
+def require_text_list(
+    value: object, path: Path, what: str, item: str
+) -> tuple[str, ...]:
+    """!
+    @brief Check that a value is a JSON array of texts and strip each text.
+    @param value The value to check.
+    @param path The data file, for the error message.
+    @param what Name of the array, for the error message.
+    @param item Name of one entry, for the error message; the number is added.
+    @return The texts without surrounding space.
+    @throws DataFileError The value is not an array or an entry is not text.
+    """
+    entries = require_array(value, path, what)
+    return tuple(
+        require_text(entry, path, f"{item} {number}").strip()
+        for number, entry in enumerate(entries, start=1)
+    )
+
+
 def require_field(
     mapping: Mapping[str, object], key: str, path: Path, what: str
 ) -> object:

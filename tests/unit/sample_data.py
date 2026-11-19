@@ -15,8 +15,10 @@ def make_project(
     description: str = "Shows the weather of a city.",
     image_url: str = "https://example.com/weather.png",
     source_code_url: str = "https://example.com/weather",
+    tags: tuple[str, ...] = ("Python", "API"),
+    skills: tuple[str, ...] = ("Working with web APIs",),
 ) -> Project:
-    return Project(title, kind, description, image_url, source_code_url)
+    return Project(title, kind, description, image_url, source_code_url, tags, skills)
 
 
 def make_projects(count: int) -> list[Project]:
@@ -33,8 +35,9 @@ def make_profile(
     summary: str = "Builds small, tested programs.",
     skills: tuple[str, ...] = ("Python", "Testing"),
     links: tuple[Link, ...] = (make_link(),),
+    photo: str | None = None,
 ) -> Profile:
-    return Profile(name, headline, summary, skills, links)
+    return Profile(name, headline, summary, skills, links, photo)
 
 
 def make_card(
@@ -43,8 +46,12 @@ def make_card(
     description: str = "Shows the weather of a city.",
     image_url: str = "https://example.com/weather.png",
     source_code_url: str = "https://example.com/weather",
+    tags: tuple[str, ...] = ("Python", "API"),
+    skills: tuple[str, ...] = ("Working with web APIs",),
 ) -> ProjectCard:
-    return ProjectCard(title, kind, description, image_url, source_code_url)
+    return ProjectCard(
+        title, kind, description, image_url, source_code_url, tags, skills
+    )
 
 
 def make_home_page(projects: tuple[ProjectCard, ...] = (make_card(),)) -> HomePage:
@@ -57,5 +64,9 @@ def make_about_page(
     summary: str = "Builds small, tested programs.",
     skills: tuple[str, ...] = ("Python", "Testing"),
     links: tuple[LinkItem, ...] = (LinkItem("GitHub", "https://example.com/me"),),
+    photo_url: str | None = None,
+    initials: str = "AL",
 ) -> AboutPage:
-    return AboutPage("Portfolio", name, headline, summary, skills, links)
+    return AboutPage(
+        "Portfolio", name, headline, summary, skills, links, photo_url, initials
+    )

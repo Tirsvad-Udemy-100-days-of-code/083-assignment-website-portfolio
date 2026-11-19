@@ -20,6 +20,19 @@ def test_home_maps_a_project_to_a_card() -> None:
     assert card.source_code_url == "https://example.com/weather"
 
 
+def test_home_maps_tags_and_skills_to_the_card() -> None:
+    project = make_project(tags=("C", "Rust"), skills=("SIMD", "Threads"))
+    card = home(InMemoryProjectRepository([project])).projects[0]
+    assert card.tags == ("C", "Rust")
+    assert card.skills == ("SIMD", "Threads")
+
+
+def test_home_maps_a_relative_image_path_unchanged() -> None:
+    project = make_project(image_url="images/a.svg")
+    card = home(InMemoryProjectRepository([project])).projects[0]
+    assert card.image_url == "images/a.svg"
+
+
 def test_home_returns_no_cards_when_repository_is_empty() -> None:
     assert home(InMemoryProjectRepository([])).projects == ()
 
