@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Removed the notebook from scope and constraints (not requested)<br>Named the assignment's function names in O1<br>Reworded the tooling constraint | [8163226] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | [ec90c2b] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | [ec90c2b] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O9, O10, SC10, SC11, the SQLite database, the management commands and the dynamic server to scope, assumptions and risks; amended O1, O2 and SC1; removed the database from the out-of-scope list, at the request of S01 (ADR-0002) <br>Verdict Go (RC-019) | pending |
 
 ---
 
@@ -42,33 +42,35 @@ A portfolio site that is easy to install (no runtime dependencies), easy to read
 
 | # | Objective |
 | --- | --- |
-| O1 | Provide a portfolio site generator that builds a home page and an about page from a JSON list of projects, with the function names `home`, `about` and `load_from_json` taken from the idea repository, using the Python standard library only. |
-| O2 | Provide a local preview command so the site can be viewed in a browser without installing anything. |
+| O1 | Provide a portfolio site generator that builds a home page and an about page from a list of projects stored in a database, with the function names `home`, `about` and `load_from_json` taken from the idea repository, using the Python standard library only. |
+| O2 | Provide a local server command so the site can be viewed in a browser without installing anything. |
 | O3 | Prove the behaviour with automated pytest tests, and keep the dependency direction of the layers checked by tooling. |
 | O4 | Document how to create and use a local `.venv`, upgrade pip, run the project and run the tests, for both Windows and Linux. |
 | O5 | Explain each build step of the assignment, and what it teaches, in a wiki in English, Danish and Bahasa Malaysia, with one screenshot of this project per step. |
 | O6 | Publish the repository with a description and topics, and scan the code with opengrep before every push. |
 | O7 | Connect the portfolio to the author's LinkedIn profile and show the author's profile photo on the about page. |
 | O8 | Show each project as a flip card: the front shows the project name, description and image; the back shows the source code link, the tags and the skills the project shows. The sample projects are real work of the author that shows the author's skills, not basic course exercises. |
+| O9 | Store the projects and the profile in a SQLite database through the Python standard library, import the existing JSON files once, and change the data with commands. |
+| O10 | Make the site dynamic: a running server renders the home page and the about page from the database on every request, so a data change shows without a rebuild. |
 
 ## Scope
 
 ### In Scope
 
 - A Python package under `src/` with the layers domain, application, infrastructure and presentation, and a `constants.py` module for all constants.
-- A sample `projects.json` listing portfolio entries, a home page, an about page, a stylesheet and a local preview server, all written to a build folder.
+- A SQLite database with a versioned schema for projects and the profile, the commands `init`, `import` and the management commands, a sample `projects.json` and `profile.json` used as the import source, and a local server that renders a home page and an about page, with a stylesheet and the images, from the database on every request.
 - Tests under `tests/` run with pytest.
 - `pyproject.toml`, a Python `.gitignore`, an `.editorconfig`, a Doxygen configuration and Doxygen comments in the source.
 - A README from the framework template and a flat wiki in `docs/wiki/` in English, Danish and Bahasa Malaysia, with a Getting Started page for Windows and Linux.
 - Screenshots of this project's own output for every step, in the README and the wiki.
 - Repository description and topics on the git host.
 - A link to the author's LinkedIn profile (https://www.linkedin.com/in/tirsvad74/) in the profile data, and a profile photo, taken from an image file the author supplies, shown on the about page.
-- Project images and tags: each project is shown as a flip card (name, description and image on the front; source code link, tags and the skills the project shows on the back), and the build copies the image files from the data folder into the site.
+- Project images and tags: each project is shown as a flip card (name, description and image on the front; source code link, tags and the skills the project shows on the back), and the server serves the image files of the data folder.
 
 ### Out of Scope
 
-- Reproducing the Flask, SQLAlchemy and Bootstrap application of the idea repository (see ADR-0001).
-- A database, user accounts, a contact form, content management or hosting and deployment of the site.
+- Reproducing the Flask, SQLAlchemy and Bootstrap application of the idea repository (see ADR-0001 and ADR-0002).
+- User accounts, a contact form, a web admin page for content management, and hosting and deployment of the site. The data is changed by commands, not by the web site.
 - Copying lecture material: no lecture screenshot, text or video appears in the README or the wiki; the lecture is only summarised.
 - Fetching the profile photo from LinkedIn automatically: LinkedIn requires a sign-in and its terms restrict automated access, so the author supplies the image file.
 - Third-party runtime dependencies. Development tools (pytest, ruff, mypy, import-linter) are installed only on request, through an optional extra.
@@ -97,7 +99,7 @@ The project supports the course's own goal for Day 83 (independent work that bui
 
 | # | Criterion | Target | Measure |
 | --- | --- | --- | --- |
-| SC1 | The site builds and previews | `python -m portfolio build` writes `index.html` and `about.html`; `python -m portfolio serve` serves them on localhost | Manual run plus an end-to-end test |
+| SC1 | The site is served dynamically | `python -m portfolio serve` renders `/` and `/about` from the database on each request on localhost; a data change shows on the next request | Manual run plus an end-to-end test against a running server |
 | SC2 | Tests pass | 100 % of pytest tests pass on Python 3.13 | `python -m pytest` exit code 0 |
 | SC3 | No runtime dependencies | `[project] dependencies` in `pyproject.toml` is empty | Inspection of `pyproject.toml` |
 | SC4 | Static analysis is clean | 0 findings above the accepted baseline from opengrep, ruff and mypy | Tool output before each push |
@@ -106,6 +108,8 @@ The project supports the course's own goal for Day 83 (independent work that bui
 | SC7 | Repository is described | The repository has a description and at least five topics | Git host API response |
 | SC8 | The portfolio connects to LinkedIn and shows the photo | `data/profile.json` links to https://www.linkedin.com/in/tirsvad74/; the about page shows the supplied photo, or an initials avatar until a file is supplied | End-to-end test of the built about page, and a screenshot |
 | SC9 | Projects are flip cards | The built home page has one flip card per project; the front holds name, description and image, the back holds the source code link, the tags and the skills; the sample projects are not basic course exercises | End-to-end test of the built home page, and screenshots of a front and a back |
+| SC10 | Data is stored in SQLite | `python -m portfolio import` loads the sample JSON into the database in one transaction, and the SQLite repositories return the same objects as the JSON repositories did | Contract test and an end-to-end test |
+| SC11 | The dynamic site resists hostile input | Every SQL statement is parameterised; the images route serves only files inside one folder; the server has no write route and sends a content security policy | Tests with hostile titles and paths, and a source search for formatted SQL |
 
 ## Risks
 
@@ -117,6 +121,8 @@ The project supports the course's own goal for Day 83 (independent work that bui
 | A token is committed or printed | High: secret leak | Tokens stay in the untracked `.env`; the project does not read or test it; `.env` is in `.gitignore`; opengrep runs before each push. |
 | The Gitea tokens lack a scope for issues, wiki or releases | Medium: sync or wiki publishing fails | Check each endpoint when first needed; stop and report instead of working around it. |
 | The profile photo cannot be fetched from LinkedIn (sign-in wall) | Low: the about page has no photo until the author supplies the file | The author saves the photo into `data/images/`; the site shows an initials avatar until then, and the build never reaches LinkedIn |
+| Hostile input reaches SQL or a file path (injection, path traversal) | High: data loss or a file outside the data folder is shown | Parameterised statements only, a read-only database connection in the server, one confined images folder, no write route, security headers, and tests with hostile input. |
+| The database file is committed or lost | Medium: sample data and personal data in git, or the data is gone | The file is in `.gitignore`; the JSON samples stay as the import source, so a database can be rebuilt with `init` and `import`. |
 | The local opengrep binary is missing or outdated | Low: scan skipped | Check the binary path before the first push; stop if it cannot run. |
 
 ## Assumptions
@@ -125,7 +131,7 @@ The project supports the course's own goal for Day 83 (independent work that bui
 - The lecture gives a motivational introduction and the open assignment; no lecture resource file was provided, so none is used.
 - The git host's wiki is enabled and the wiki publishing workflow of the organisation is delivered to the repository.
 - Docker is available on the author's machine for headless screenshots.
-- The author supplies the profile photo as an image file in `data/images/`; the build copies it to the site.
+- The author supplies the profile photo as an image file in `data/images/`; the server serves it.
 
 ## Constraints
 
@@ -161,5 +167,4 @@ Proceed: the project is small, has a clear definition of done, needs no runtime 
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
 [ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b

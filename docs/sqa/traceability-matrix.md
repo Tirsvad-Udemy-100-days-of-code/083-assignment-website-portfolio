@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-013 to RC-016 for the amended BC, SA, PP and MIL-004 | [ec90c2b] |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-017 for the MIL-004 source and RC-018 for the wiki and README | [1d8362f] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-019 to RC-025 for the plan change (BC, SA, PP, MIL-005, MIL-006, ADR-0001, ADR-0002) | pending |
 
 ---
 
@@ -24,14 +24,17 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| [BC-001] | BC | en | it | - | [SA-001], [PP-001], [ADR-0001] | RC-013 |
-| [SA-001] | SA | en | it | [BC-001] | [PP-001], [GOV-001] | RC-014 |
-| [PP-001] | PP | en | it | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004] | RC-015 |
+| [BC-001] | BC | en | it | - | [SA-001], [PP-001], [ADR-0001], [ADR-0002] | RC-019 |
+| [SA-001] | SA | en | it | [BC-001] | [PP-001], [GOV-001] | RC-020 |
+| [PP-001] | PP | en | it | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] | RC-021 |
 | [MIL-001] | MIL | en | it | [PP-001] | [MIL-002] | RC-004 |
 | [MIL-002] | MIL | en | it | [MIL-001] | [MIL-003] | RC-005 |
 | [MIL-003] | MIL | en | it | [MIL-002] | [MIL-004] | RC-006 |
-| [MIL-004] | MIL | en | it | [MIL-003] | - | RC-016 |
-| [ADR-0001] | ADR | - | - | [BC-001], [SA-001] | - | RC-008 |
+| [MIL-004] | MIL | en | it | [MIL-003] | [MIL-005] | RC-016 |
+| [MIL-005] | MIL | en | it | [MIL-004] | [MIL-006] | RC-022 |
+| [MIL-006] | MIL | en | it | [MIL-005] | - | RC-023 |
+| [ADR-0001] | ADR | - | - | [BC-001], [SA-001] | [ADR-0002] | RC-025 |
+| [ADR-0002] | ADR | - | - | [BC-001], [SA-001], [ADR-0001] | - | RC-024 |
 | [GOV-001] | GOV | en | it | [BC-001], [SA-001] | - | RC-009 |
 | Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003], [MIL-004] | - | RC-010, RC-011, RC-012, RC-017 |
 | Wiki (`docs/wiki/`) and `README.md` | WIKI | en | - | [MIL-004] | - | RC-018 |
@@ -47,8 +50,11 @@ updated whenever an artifact instance is created or reviewed.
 | CN-005 | [MIL-004] | - | - | Covered |
 | CN-006 | [MIL-004] | - | - | Covered |
 | CN-007 | [MIL-001], [MIL-004] | - | - | Covered |
-| CN-008 | [MIL-001] | [ADR-0001] | - | Covered |
+| CN-008 | [MIL-001], [MIL-005] | [ADR-0001], [ADR-0002] | - | Covered |
 | CN-009 | [MIL-004] | - | - | Covered |
+| CN-010 | [MIL-004] | - | - | Covered |
+| CN-011 | [MIL-004] | - | - | Covered |
+| CN-012 | [MIL-005], [MIL-006] | [ADR-0002] | - | Covered |
 
 ## Open Inconsistencies
 
@@ -69,7 +75,10 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [MIL-002]: ../milestones/mil-002-core-domain-and-use-cases.md
 [MIL-003]: ../milestones/mil-003-site-generation-and-preview.md
 [MIL-004]: ../milestones/mil-004-documentation-and-wrap-up.md
+[MIL-005]: ../milestones/mil-005-sqlite-storage-and-management.md
+[MIL-006]: ../milestones/mil-006-dynamic-site-and-cleanup.md
 [ADR-0001]: ../adr/adr-0001-standard-library-site-generator.md
+[ADR-0002]: ../adr/adr-0002-sqlite-storage-and-dynamic-site.md
 [GOV-001]: ./governance.md
 [6367a3b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/6367a3b727ed74d5ac4bf9fb8c4ffe15b92cfb85
 [53db60c]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/53db60c1a016b07abf9b27b093f0501591ae69c5
