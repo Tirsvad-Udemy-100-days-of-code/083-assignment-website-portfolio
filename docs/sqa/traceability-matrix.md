@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the Python source row and RC-010 | pending |
 
 ---
 
@@ -32,6 +33,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-004] | MIL | en | it | [MIL-003] | - | RC-007 |
 | [ADR-0001] | ADR | - | - | [BC-001], [SA-001] | - | RC-008 |
 | [GOV-001] | GOV | en | it | [BC-001], [SA-001] | - | RC-009 |
+| Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003] | - | RC-010 |
 
 ## Concern Coverage
 
