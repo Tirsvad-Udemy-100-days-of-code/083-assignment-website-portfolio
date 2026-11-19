@@ -3,7 +3,8 @@
 @brief SiteRenderer that produces HTML pages and a CSS stylesheet.
 """
 
-from importlib import resources
+# The project requires Python 3.13 or newer, so the 3.7 compatibility rule is moot.
+from importlib import resources  # nosemgrep: python37-compatibility-importlib2
 
 from portfolio.application.dto.about_page import AboutPage
 from portfolio.application.dto.home_page import HomePage
