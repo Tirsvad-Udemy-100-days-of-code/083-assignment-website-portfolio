@@ -31,6 +31,10 @@ dev = [
 [tool.setuptools.packages.find]
 where = ["src"]
 
+# The stylesheet is read at run time with importlib.resources.
+[tool.setuptools.package-data]
+"portfolio.presentation" = ["static/*.css"]
+
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
@@ -57,18 +61,38 @@ mypy_path = ["src", "tests/unit"]
 files = ["src", "tests"]
 
 # The layers of src/portfolio, from top to bottom: a layer imports only layers
-# below it. infrastructure and presentation are added in MIL-003, when their
-# packages exist.
+# below it. The composition root (__main__) is outside the layers and wires them.
 [tool.importlinter]
 root_package = "portfolio"
 
 [[tool.importlinter.contracts]]
 name = "Dependencies point inward"
 type = "layers"
-layers = ["portfolio.application", "portfolio.domain"]
+layers = [
+  "portfolio.presentation",
+  "portfolio.infrastructure",
+  "portfolio.application",
+  "portfolio.domain",
+]
 
 [[tool.importlinter.contracts]]
 name = "The domain imports no other layer"
 type = "forbidden"
 source_modules = ["portfolio.domain"]
-forbidden_modules = ["portfolio.application"]
+forbidden_modules = [
+  "portfolio.application",
+  "portfolio.infrastructure",
+  "portfolio.presentation",
+]
+
+[[tool.importlinter.contracts]]
+name = "Presentation does not import infrastructure"
+type = "forbidden"
+source_modules = ["portfolio.presentation"]
+forbidden_modules = ["portfolio.infrastructure"]
+
+[[tool.importlinter.contracts]]
+name = "Infrastructure does not import presentation"
+type = "forbidden"
+source_modules = ["portfolio.infrastructure"]
+forbidden_modules = ["portfolio.presentation"]
