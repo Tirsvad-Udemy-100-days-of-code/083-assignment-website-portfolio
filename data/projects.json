@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Band Name Generator",
+    "type": "Console game",
+    "description": "Asks for the city you grew up in and the name of a pet, then combines them into a band name.",
+    "img_url": "",
+    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+  },
+  {
+    "title": "Tip Calculator",
+    "type": "Console app",
+    "description": "Splits a restaurant bill between friends and adds the tip percentage you choose.",
+    "img_url": "",
+    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+  },
+  {
+    "title": "Rock Paper Scissors",
+    "type": "Console game",
+    "description": "Play rock, paper, scissors against the computer, which picks its move at random.",
+    "img_url": "",
+    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+  },
+  {
+    "title": "Hangman",
+    "type": "Console game",
+    "description": "Guess a hidden word one letter at a time before the drawing of the hangman is complete.",
+    "img_url": "",
+    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+  },
+  {
+    "title": "Blackjack",
+    "type": "Console game",
+    "description": "A game of blackjack against the dealer: draw cards and try to reach 21 without going over.",
+    "img_url": "",
+    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+  },
+  {
+    "title": "Snake Game",
+    "type": "Desktop app",
+    "description": "The classic snake game drawn with turtle graphics: eat the food, grow longer and avoid the walls.",
+    "img_url": "",
+    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+  },
+  {
+    "title": "Flash Card App",
+    "type": "Desktop app",
+    "description": "A Tkinter app that shows French words and flips each card to the English meaning to help you learn.",
+    "img_url": "",
+    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+  },
+  {
+    "title": "Portfolio Website",
+    "type": "Website",
+    "description": "This site: a portfolio generated from JSON files with the Python standard library and shown by a local server.",
+    "img_url": "",
+    "source_code_url": "https://github.com/Tirsvad/udemy.python.100-days-of-code"
+  }
+]
