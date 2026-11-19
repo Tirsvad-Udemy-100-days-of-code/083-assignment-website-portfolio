@@ -18,4 +18,4 @@ Opgaven nævner tre funktioner: `home` (siden med projekterne), `about` (siden o
 
 ## Hvordan dette projekt svarer på den
 
-Projektet når det samme mål med Pythons standardbibliotek alene, så der er intet at installere for at køre det. Begrundelsen står i beslutningsnotatet [ADR-0001](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/src/branch/main/docs/adr/adr-0001-standard-library-site-generator.md). Hvert trin forklares på sin egen side, begyndende med [Trin 1](Step-1-Project-Data-da).
+Projektet når det samme mål med Flask til websiderne og SQLite, via Pythons eget `sqlite3`-modul, til data. Siderne tegnes fra databasen ved hver forespørgsel, så en ændring ses med det samme. Begrundelsen står i beslutningsnotatet [ADR-0003](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/src/branch/main/docs/adr/adr-0003-flask-and-jinja-on-sqlite.md). Hvert trin forklares på sin egen side, begyndende med [Trin 1](Step-1-Project-Data-da).

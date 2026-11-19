@@ -6,25 +6,27 @@ Other modules import their constants from here; no module repeats a literal
 that is defined in this file.
 """
 
+from collections.abc import Mapping
+from types import MappingProxyType
 from typing import Final
 
 ## @brief Name of the package and of the command line program.
 APP_NAME: Final[str] = "portfolio"
 
 ## @brief One-line description of the program, shown in the command line help.
-APP_DESCRIPTION: Final[str] = "Build and preview a portfolio website."
+APP_DESCRIPTION: Final[str] = "Manage and serve a portfolio website."
 
 ## @brief Folder that holds the JSON data files, relative to the working directory.
 DEFAULT_DATA_DIR: Final[str] = "data"
 
-## @brief Folder the generated site is written to, relative to the working directory.
-DEFAULT_OUTPUT_DIR: Final[str] = "build"
-
-## @brief Host the preview server binds to; loopback only, so nothing is exposed.
+## @brief Host the web server binds to; loopback only, so nothing is exposed.
 DEFAULT_HOST: Final[str] = "127.0.0.1"
 
-## @brief Port of the preview server.
+## @brief Port of the web server.
 DEFAULT_PORT: Final[int] = 8000
+
+## @brief Highest port number; 0 asks the system for a free port.
+MAX_PORT: Final[int] = 65535
 
 ## @brief Title of the site, shown on every page.
 SITE_TITLE: Final[str] = "Portfolio"
@@ -56,16 +58,23 @@ MAX_SKILL_LENGTH: Final[int] = 60
 ## @brief Largest number of skills on one project.
 MAX_PROJECT_SKILLS: Final[int] = 10
 
-## @brief File name endings an image of the data folder may have, in lower case.
-IMAGE_EXTENSIONS: Final[tuple[str, ...]] = (
-    ".svg",
-    ".png",
-    ".jpg",
-    ".jpeg",
-    ".gif",
-    ".webp",
-    ".avif",
+## @brief Content type the images route sends for each image file name ending.
+##
+## The endings are in lower case; the table is the whitelist of served images.
+IMAGE_CONTENT_TYPES: Final[Mapping[str, str]] = MappingProxyType(
+    {
+        ".svg": "image/svg+xml",
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".gif": "image/gif",
+        ".webp": "image/webp",
+        ".avif": "image/avif",
+    }
 )
+
+## @brief File name endings an image of the data folder may have, in lower case.
+IMAGE_EXTENSIONS: Final[tuple[str, ...]] = tuple(IMAGE_CONTENT_TYPES)
 
 ## @brief Number of colours the placeholder of a card without image can have.
 PLACEHOLDER_COLOR_COUNT: Final[int] = 6
@@ -79,37 +88,77 @@ PROJECTS_FILE_NAME: Final[str] = "projects.json"
 ## @brief Name of the JSON file that holds the profile, inside the data folder.
 PROFILE_FILE_NAME: Final[str] = "profile.json"
 
-## @brief File name of the home page in the generated site.
-HOME_PAGE_FILE_NAME: Final[str] = "index.html"
-
-## @brief File name of the about page in the generated site.
-ABOUT_PAGE_FILE_NAME: Final[str] = "about.html"
-
-## @brief File name of the stylesheet, in the package and in the generated site.
+## @brief File name of the stylesheet, in the static folder of the package.
 STYLESHEET_FILE_NAME: Final[str] = "style.css"
 
 ## @brief Folder of the presentation package that holds the stylesheet.
 STATIC_DIR_NAME: Final[str] = "static"
 
-## @brief Package that holds the static files, as importlib.resources names it.
+## @brief Package that holds the templates and the static files; Flask's root.
 PRESENTATION_PACKAGE: Final[str] = "portfolio.presentation"
 
-## @brief Name of the command that builds the site.
-COMMAND_BUILD: Final[str] = "build"
-
-## @brief Name of the command that serves the built site.
+## @brief Name of the command that serves the site.
 COMMAND_SERVE: Final[str] = "serve"
+
+## @brief Folder of the data folder that holds the images the site serves.
+IMAGES_DIR_NAME: Final[str] = "images"
+
+## @brief URL of the home page.
+ROUTE_HOME: Final[str] = "/"
+
+## @brief URL of the about page.
+ROUTE_ABOUT: Final[str] = "/about"
+
+## @brief URL of the stylesheet.
+ROUTE_STYLESHEET: Final[str] = f"/{STATIC_DIR_NAME}/{STYLESHEET_FILE_NAME}"
+
+## @brief URL prefix of the images; a local image path of the data starts with it.
+IMAGES_URL_PREFIX: Final[str] = f"/{IMAGES_DIR_NAME}/"
+
+## @brief URL pattern of an image; the part after the prefix is the file.
+ROUTE_IMAGES: Final[str] = f"{IMAGES_URL_PREFIX}<path:file>"
+
+## @brief Methods every route answers; HEAD comes with GET.
+ALLOWED_METHODS: Final[tuple[str, ...]] = ("GET",)
+
+## @brief Content type of the stylesheet.
+CSS_CONTENT_TYPE: Final[str] = "text/css"
+
+## @brief Template of the home page.
+HOME_TEMPLATE: Final[str] = "home.html"
+
+## @brief Template of the about page.
+ABOUT_TEMPLATE: Final[str] = "about.html"
+
+## @brief Template of the error pages.
+ERROR_TEMPLATE: Final[str] = "error.html"
+
+## @brief Headers added to every response, error pages included; name, value.
+SECURITY_HEADERS: Final[tuple[tuple[str, str], ...]] = (
+    ("Content-Security-Policy", "default-src 'self'"),
+    ("X-Content-Type-Options", "nosniff"),
+    ("Referrer-Policy", "no-referrer"),
+)
+
+## @brief Text of the error page for an address that does not exist.
+ERROR_TEXT_NOT_FOUND: Final[str] = "This page does not exist."
+
+## @brief Text of the error page for a method other than GET and HEAD.
+ERROR_TEXT_METHOD_NOT_ALLOWED: Final[str] = "This page can only be read."
+
+## @brief Text of the error page when the stored data cannot be read.
+ERROR_TEXT_SERVER: Final[str] = "The site cannot read its data right now."
+
+## @brief Text of the link from an error page to the home page.
+ERROR_HOME_LINK_TEXT: Final[str] = "Back to the home page"
 
 ## @brief Exit code of a run that succeeded.
 EXIT_OK: Final[int] = 0
 
-## @brief Exit code when a data file is missing or invalid.
+## @brief Exit code when a data file or the database is missing or invalid.
 EXIT_DATA_ERROR: Final[int] = 2
 
-## @brief Exit code when the output folder is missing or cannot be written.
-EXIT_OUTPUT_ERROR: Final[int] = 3
-
-## @brief Exit code when the preview server cannot start.
+## @brief Exit code when the web server cannot start.
 EXIT_SERVER_ERROR: Final[int] = 4
 
 ## @brief Format of the log lines written by the `logging` module.
@@ -163,7 +212,7 @@ SAFE_URL_SCHEMES: Final[tuple[str, ...]] = ("http", "https")
 ## @brief URL put in place of an unsafe one, so the page still renders.
 FALLBACK_URL: Final[str] = "#"
 
-## @brief Language of the generated pages.
+## @brief Language of the pages.
 HTML_LANG: Final[str] = "en"
 
 ## @brief Label of the link to the home page.
@@ -176,14 +225,14 @@ NAV_ABOUT_LABEL: Final[str] = "About"
 NAV_ARIA_LABEL: Final[str] = "Main"
 
 ## @brief Footer text of every page; it holds no year, so the output is stable.
-FOOTER_TEXT: Final[str] = "Built with the Python standard library."
+FOOTER_TEXT: Final[str] = "Built with Python and Flask."
 
 ## @brief Heading of the project list on the home page.
 HOME_HEADING: Final[str] = "My projects"
 
 ## @brief Text shown on the home page when there is no project.
 EMPTY_STATE_TEXT: Final[str] = (
-    "No projects yet. Add some to the projects data file and build the site again."
+    "No projects yet. Add one with the project add command and reload the page."
 )
 
 ## @brief Text of the link to the source code of a project.
@@ -198,30 +247,26 @@ TAGS_LABEL: Final[str] = "Tags"
 ## @brief Heading of the links list on the about page.
 LINKS_HEADING: Final[str] = "Links"
 
-## @brief Help text of the build command.
-HELP_BUILD: Final[str] = "Write the site (HTML and CSS) from the data files."
-
 ## @brief Help text of the serve command.
-HELP_SERVE: Final[str] = "Serve the built site on a local web server."
+HELP_SERVE: Final[str] = "Serve the site from the database on a local web server."
 
 ## @brief Help text of the option that names the data folder.
-HELP_DATA_DIR: Final[str] = "Folder with the JSON data files (default: %(default)s)."
-
-## @brief Help text of the option that names the output folder.
-HELP_OUTPUT_DIR: Final[str] = "Folder of the generated site (default: %(default)s)."
+HELP_DATA_DIR: Final[str] = (
+    "Folder with the JSON data files and the images (default: %(default)s)."
+)
 
 ## @brief Help text of the option that names the host.
 HELP_HOST: Final[str] = "Address to bind the server to (default: %(default)s)."
 
+## @brief Error when the option `--port` is not a port number; field: value.
+MESSAGE_PORT_RANGE: Final[str] = "{value!r} is not a port number from 0 to 65535"
+
 ## @brief Help text of the option that names the port.
 HELP_PORT: Final[str] = "Port of the server (default: %(default)s)."
 
-## @brief Message after a build; fields: count, folder.
-MESSAGE_BUILT: Final[str] = "Built {count} files into {folder}\n"
-
-## @brief Message when the server starts; fields: folder, host, port.
+## @brief Message when the server starts; fields: host, port.
 MESSAGE_SERVING: Final[str] = (
-    "Serving {folder} at http://{host}:{port}/ (press Ctrl+C to stop)\n"
+    "Serving the portfolio at http://{host}:{port}/ (press Ctrl+C to stop)\n"
 )
 
 ## @brief Message after the server stopped.
@@ -230,13 +275,20 @@ MESSAGE_STOPPED: Final[str] = "Server stopped.\n"
 ## @brief Format of an error message on the error stream; field: message.
 MESSAGE_ERROR: Final[str] = "error: {message}\n"
 
-## @brief Error when the folder to serve is missing; field: folder.
-MESSAGE_MISSING_OUTPUT: Final[str] = (
-    "output folder {folder} does not exist; run the build command first"
-)
-
 ## @brief Error when the server cannot start; fields: host, port, reason.
 MESSAGE_SERVER_FAILED: Final[str] = "cannot start the server on {host}:{port}: {reason}"
+
+## @brief Error when the site cannot start for want of a usable database; field: path.
+MESSAGE_DATABASE_UNAVAILABLE: Final[str] = (
+    "database {path} not found or not usable; "
+    "run `python -m portfolio init` and `python -m portfolio import` first"
+)
+
+## @brief Error when a read-only database is asked to create or change something.
+MESSAGE_DATABASE_READ_ONLY: Final[str] = "the database is open read-only"
+
+## @brief Query string that makes SQLite open a file read-only, after a file URI.
+SQLITE_READ_ONLY_QUERY: Final[str] = "?mode=ro"
 
 ## @brief Database file, relative to the working directory; ignored by git.
 DEFAULT_DATABASE_PATH: Final[str] = "data/portfolio.db"

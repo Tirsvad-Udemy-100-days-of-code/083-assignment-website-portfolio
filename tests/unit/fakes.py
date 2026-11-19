@@ -2,8 +2,6 @@
 
 from collections.abc import Mapping, Sequence
 
-from portfolio.application.dto.about_page import AboutPage
-from portfolio.application.dto.home_page import HomePage
 from portfolio.application.errors.data_source_error import DataSourceError
 from portfolio.application.errors.duplicate_project_error import DuplicateProjectError
 from portfolio.application.errors.profile_not_found_error import ProfileNotFoundError
@@ -28,18 +26,6 @@ class InMemoryProfileRepository:
         return self._profile
 
 
-class InMemorySiteWriter:
-    def __init__(self) -> None:
-        self.files: dict[str, str] = {}
-        self.binary_files: dict[str, bytes] = {}
-
-    def write_text(self, relative_path: str, content: str) -> None:
-        self.files[relative_path] = content
-
-    def write_bytes(self, relative_path: str, content: bytes) -> None:
-        self.binary_files[relative_path] = content
-
-
 class InMemoryDataFileReader:
     def __init__(self, files: Mapping[str, bytes] | None = None) -> None:
         self._files = files or {}
@@ -50,19 +36,6 @@ class InMemoryDataFileReader:
         if relative_path not in self._files:
             raise DataSourceError(f"{relative_path}: file not found")
         return self._files[relative_path]
-
-
-class StubSiteRenderer:
-    """Returns short markers, so a test sees which page data was rendered."""
-
-    def render_home(self, page: HomePage) -> str:
-        return f"home:{len(page.projects)}"
-
-    def render_about(self, page: AboutPage) -> str:
-        return f"about:{page.name}"
-
-    def stylesheet(self) -> str:
-        return "css"
 
 
 class InMemoryProjectStore:

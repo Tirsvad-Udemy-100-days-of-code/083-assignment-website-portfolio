@@ -1,8 +1,8 @@
-"""Contract test: the JSON and the SQLite repositories return the same objects.
+"""Contract test: what the JSON files describe is what the SQLite repositories return.
 
-Both implementations are given the same data folder and must return the projects
-and the profile that the folder describes, in the same order, field by field. The
-expected objects are built here from the raw JSON, not by either repository.
+A data folder is imported into a database; the repositories must return the
+projects and the profile that the folder describes, in the same order, field by
+field. The expected objects are built here from the raw JSON, not by the loaders.
 """
 
 import json
@@ -19,12 +19,8 @@ from portfolio.constants import DEFAULT_DATA_DIR, PROFILE_FILE_NAME, PROJECTS_FI
 from portfolio.domain.entities.profile import Profile
 from portfolio.domain.entities.project import Project
 from portfolio.domain.value_objects.link import Link
-from portfolio.infrastructure.repositories.json_profile_repository import (
-    JsonProfileRepository,
-)
-from portfolio.infrastructure.repositories.json_project_repository import (
-    JsonProjectRepository,
-)
+from portfolio.infrastructure.load_from_json import load_from_json
+from portfolio.infrastructure.load_profile_from_json import load_profile_from_json
 from portfolio.infrastructure.repositories.sqlite_profile_repository import (
     SqliteProfileRepository,
 )
@@ -78,29 +74,16 @@ FOLDERS: dict[str, Callable[[Path], Path]] = {
 }
 
 
-def json_repositories(data: Path, tmp_path: Path) -> Repositories:
-    return (
-        JsonProjectRepository(data / PROJECTS_FILE_NAME),
-        JsonProfileRepository(data / PROFILE_FILE_NAME),
-    )
-
-
 def sqlite_repositories(data: Path, tmp_path: Path) -> Repositories:
     database = SqliteDatabase(tmp_path / "portfolio.db")
     SqliteDatabaseInitializer(database).initialize()
     import_portfolio(
-        JsonProjectRepository(data / PROJECTS_FILE_NAME),
-        JsonProfileRepository(data / PROFILE_FILE_NAME),
+        load_from_json(data / PROJECTS_FILE_NAME),
+        load_profile_from_json(data / PROFILE_FILE_NAME),
         SqlitePortfolioImporter(database),
         replace=False,
     )
     return SqliteProjectRepository(database), SqliteProfileRepository(database)
-
-
-IMPLEMENTATIONS: dict[str, Callable[[Path, Path], Repositories]] = {
-    "json": json_repositories,
-    "sqlite": sqlite_repositories,
-}
 
 
 @pytest.fixture(params=sorted(FOLDERS))
@@ -108,11 +91,9 @@ def data_folder(request: pytest.FixtureRequest, tmp_path: Path) -> Path:
     return FOLDERS[request.param](tmp_path)
 
 
-@pytest.fixture(params=sorted(IMPLEMENTATIONS))
-def repositories(
-    request: pytest.FixtureRequest, data_folder: Path, tmp_path: Path
-) -> Repositories:
-    return IMPLEMENTATIONS[request.param](data_folder, tmp_path)
+@pytest.fixture
+def repositories(data_folder: Path, tmp_path: Path) -> Repositories:
+    return sqlite_repositories(data_folder, tmp_path)
 
 
 def expected_projects(data: Path) -> tuple[Project, ...]:

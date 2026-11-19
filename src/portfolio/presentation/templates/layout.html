@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ html_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} | {{ site_title }}</title>
+  <link rel="stylesheet" href="{{ url_for('stylesheet') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="{{ url_for('home') }}">{{ site_title }}</a>
+      <nav aria-label="{{ nav_aria_label }}"><a href="{{ url_for('home') }}"{% if nav_current == 'home' %} aria-current="page"{% endif %}>{{ nav_home_label }}</a><a href="{{ url_for('about') }}"{% if nav_current == 'about' %} aria-current="page"{% endif %}>{{ nav_about_label }}</a></nav>
+    </div>
+  </header>
+  <main class="container">
+{% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="container">{{ footer_text }}</div>
+  </footer>
+</body>
+</html>

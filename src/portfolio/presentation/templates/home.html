@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% set nav_current = "home" %}
+{% block title %}{{ nav_home_label }}{% endblock %}
+{% block content %}
+    <h1>{{ home_heading }}</h1>
+{% if page.projects %}
+    <div class="card-grid">
+{% for card in page.projects %}
+      <article class="flip-card" tabindex="0">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+{% set source = card.image_url|image_src %}
+{% if source %}
+            <img class="card-image" src="{{ source }}" alt="{{ card.title }}" loading="lazy">
+{% else %}
+            <div class="card-image card-placeholder placeholder-{{ card.title|placeholder_color }}" aria-hidden="true">{{ card.title|placeholder_letter }}</div>
+{% endif %}
+            <div class="card-body">
+              <h2 class="card-title">{{ card.title }}</h2>
+              <span class="badge">{{ card.kind }}</span>
+              <p class="card-text">{{ card.description }}</p>
+            </div>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <a class="card-link" href="{{ card.source_code_url|safe_url }}" rel="noopener noreferrer">{{ source_code_label }}</a>
+{% if card.tags %}
+            <ul class="tags" aria-label="{{ tags_label }}">{% for tag in card.tags %}<li class="tag">{{ tag }}</li>{% endfor %}</ul>
+{% endif %}
+{% if card.skills %}
+            <h3 class="skills-title">{{ skills_heading }}</h3>
+            <ul class="skill-list">{% for skill in card.skills %}<li>{{ skill }}</li>{% endfor %}</ul>
+{% endif %}
+          </div>
+        </div>
+      </article>
+{% endfor %}
+    </div>
+{% else %}
+    <p class="empty-state">{{ empty_state_text }}</p>
+{% endif %}
+{% endblock %}

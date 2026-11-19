@@ -5,20 +5,20 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "portfolio-website"
 version = "0.1.0"
-description = "A portfolio website generator built with the Python standard library (Day 83 of 100 Days of Code)."
+description = "A portfolio website served by Flask from a SQLite database (Day 83 of 100 Days of Code)."
 readme = "README.md"
 requires-python = ">=3.13"
 license = "AGPL-3.0-or-later"
 license-files = ["LICENSE"]
 authors = [{ name = "Jens Tirsvad Nielsen" }]
-keywords = ["portfolio", "static-site", "python", "100-days-of-code"]
+keywords = ["portfolio", "flask", "sqlite", "python", "100-days-of-code"]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.13",
   "Topic :: Internet :: WWW/HTTP :: Site Management",
 ]
-# No runtime dependencies: the site is built with the standard library only.
-dependencies = []
+# Flask is the only runtime dependency, pinned to an exact version (ADR-0003).
+dependencies = ["Flask==3.1.3"]
 
 [project.optional-dependencies]
 dev = [
@@ -31,9 +31,9 @@ dev = [
 [tool.setuptools.packages.find]
 where = ["src"]
 
-# The stylesheet is read at run time with importlib.resources.
+# The templates and the stylesheet are read at run time by Flask.
 [tool.setuptools.package-data]
-"portfolio.presentation" = ["static/*.css"]
+"portfolio.presentation" = ["templates/*.html", "static/*.css"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"
@@ -64,6 +64,8 @@ files = ["src", "tests"]
 # below it. The composition root (__main__) is outside the layers and wires them.
 [tool.importlinter]
 root_package = "portfolio"
+# Needed for the contract that keeps flask and jinja2 out of the inner layers.
+include_external_packages = true
 
 [[tool.importlinter.contracts]]
 name = "Dependencies point inward"
@@ -96,3 +98,9 @@ name = "Infrastructure does not import presentation"
 type = "forbidden"
 source_modules = ["portfolio.infrastructure"]
 forbidden_modules = ["portfolio.presentation"]
+
+[[tool.importlinter.contracts]]
+name = "The domain and application layers import no web framework"
+type = "forbidden"
+source_modules = ["portfolio.domain", "portfolio.application"]
+forbidden_modules = ["flask", "jinja2"]

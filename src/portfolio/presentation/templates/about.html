@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% set nav_current = "about" %}
+{% block title %}{{ nav_about_label }}{% endblock %}
+{% block content %}
+    <section class="about">
+      <div class="about-header">
+{% set photo = page.photo_url|image_src %}
+{% if photo %}
+        <img class="avatar" src="{{ photo }}" alt="{{ page.name }}">
+{% else %}
+        <div class="avatar avatar-initials" aria-hidden="true">{{ page.initials }}</div>
+{% endif %}
+        <div>
+          <h1>{{ page.name }}</h1>
+          <p class="headline">{{ page.headline }}</p>
+        </div>
+      </div>
+      <p>{{ page.summary }}</p>
+      <h2>{{ skills_heading }}</h2>
+      <ul class="skills">
+{% for skill in page.skills %}
+        <li>{{ skill }}</li>
+{% endfor %}
+      </ul>
+      <h2>{{ links_heading }}</h2>
+      <ul class="links">
+{% for link in page.links %}
+        <li><a href="{{ link.url|safe_url }}" rel="noopener noreferrer">{{ link.label }}</a></li>
+{% endfor %}
+      </ul>
+    </section>
+{% endblock %}

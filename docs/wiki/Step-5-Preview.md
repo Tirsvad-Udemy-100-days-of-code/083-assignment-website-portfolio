@@ -4,9 +4,9 @@
 
 ## What this step builds
 
-Two commands finish the tool. `python -m portfolio build` reads the data and writes `index.html`, `about.html` and `style.css` to a folder. `python -m portfolio serve` shows that folder with the standard library's `http.server` at <http://127.0.0.1:8000>. Both have options (`--data`, `--out`, `--host`, `--port`) and give a one-line message and a non-zero exit code when something is wrong, for example a missing data file.
+One command shows the site. `python -m portfolio serve` starts a Flask server at <http://127.0.0.1:8000>. It has the options `--db`, `--data`, `--host` and `--port`. Every request reads the database and renders the page with a Jinja template, so there is no build step. When the database is missing, `serve` gives a one-line message that names the commands `init` and `import`, and a non-zero exit code.
 
-![The build command and its output](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-05-build-command.png)
+![The serve command and a missing database](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-05-serve-command.png)
 
 ![The site on the local preview server](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-05-preview-server.png)
 
@@ -20,8 +20,7 @@ Two commands finish the tool. `python -m portfolio build` reads the data and wri
 
 ```text
 python -m portfolio --help
-python -m portfolio build --data data --out build
-python -m portfolio serve --out build
+python -m portfolio serve --db data/portfolio.db --data data --port 8000
 ```
 
 Next: [Step 6: Tests](Step-6-Tests).

@@ -12,7 +12,6 @@ from portfolio.constants import (
     DEFAULT_DATABASE_PATH,
     EXIT_DATA_ERROR,
     EXIT_OK,
-    HOME_PAGE_FILE_NAME,
     PROFILE_FILE_NAME,
     PROJECTS_FILE_NAME,
     SCHEMA_VERSION,
@@ -726,16 +725,3 @@ def test_a_title_that_looks_like_a_condition_removes_nothing(
 
     result.assert_failed_on_one_line("no project has the title")
     assert len(project_titles(run, filled)) == SAMPLE_PROJECT_COUNT
-
-
-def test_build_still_reads_the_json_files_and_ignores_the_database(
-    filled: Path, run: CommandRunner, tmp_path: Path
-) -> None:
-    run("project", "remove", "Prime Number Benchmark", "--db", str(filled))
-    site = tmp_path / "site"
-
-    result = run("build", "--data", str(SAMPLE_DATA), "--out", str(site))
-
-    assert result.code == EXIT_OK
-    home = (site / HOME_PAGE_FILE_NAME).read_text(encoding="utf-8")
-    assert "Prime Number Benchmark" in home

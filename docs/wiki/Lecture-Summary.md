@@ -18,4 +18,4 @@ The assignment names three functions: `home` (the page with the projects), `abou
 
 ## How this project answers it
 
-The project reaches the same goal with the Python standard library only, so there is nothing to install to run it. The reasoning is written down in the decision record [ADR-0001](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/src/branch/main/docs/adr/adr-0001-standard-library-site-generator.md). Each step is explained on its own page, starting with [Step 1](Step-1-Project-Data).
+The project reaches the same goal with Flask for the web pages and SQLite, through Python's own `sqlite3` module, for the data. The pages are rendered from the database on every request, so a change shows at once. The reasoning is written down in the decision record [ADR-0003](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/src/branch/main/docs/adr/adr-0003-flask-and-jinja-on-sqlite.md). Each step is explained on its own page, starting with [Step 1](Step-1-Project-Data).

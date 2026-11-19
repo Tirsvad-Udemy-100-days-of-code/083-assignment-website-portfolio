@@ -2,7 +2,7 @@
 
 # Kom i gang
 
-Du skal bruge Python 3.13 eller nyere og Git. Projektet har ingen afhængigheder ved kørsel. Docker skal kun bruges til at tage skærmbillederne igen, og Doxygen kun til at bygge API-referencen.
+Du skal bruge Python 3.13 eller nyere og Git. `pip` installerer Flask, den eneste afhængighed ved kørsel, sammen med de pakker, Flask skal bruge. Docker skal kun bruges til at tage skærmbillederne igen, og Doxygen kun til at bygge API-referencen.
 
 ## Opsætning
 
@@ -33,11 +33,12 @@ Mappen `.venv` er en privat kopi af Python til dette projekt, så der installere
 ## Kør
 
 ```text
-python -m portfolio build
+python -m portfolio init
+python -m portfolio import
 python -m portfolio serve
 ```
 
-Åbn <http://127.0.0.1:8000> i en browser. Tryk `Ctrl+C` for at stoppe serveren.
+`init` opretter databasen, `import` fylder den fra eksempel-JSON-filerne i `data/`, og `serve` starter Flask-serveren. Åbn <http://127.0.0.1:8000> i en browser. Tryk `Ctrl+C` for at stoppe serveren.
 
 ## Test
 

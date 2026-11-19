@@ -1,4 +1,4 @@
-"""Integration tests of the JSON profile repository."""
+"""Integration tests of load_profile_from_json against real files."""
 
 from pathlib import Path
 
@@ -8,14 +8,12 @@ from data_files import profile_document, write_json
 from portfolio.application.errors.data_source_error import DataSourceError
 from portfolio.domain.value_objects.link import Link
 from portfolio.infrastructure.errors.data_file_error import DataFileError
-from portfolio.infrastructure.repositories.json_profile_repository import (
-    JsonProfileRepository,
-)
+from portfolio.infrastructure.load_profile_from_json import load_profile_from_json
 
 
-def test_repository_reads_the_profile(tmp_path: Path) -> None:
+def test_load_profile_from_json_reads_the_profile(tmp_path: Path) -> None:
     path = write_json(tmp_path / "profile.json", profile_document())
-    profile = JsonProfileRepository(path).get_profile()
+    profile = load_profile_from_json(path)
     assert profile.name == "Ada Lovelace"
     assert profile.headline == "Software developer"
     assert profile.summary == "Builds small, tested programs."
@@ -23,66 +21,66 @@ def test_repository_reads_the_profile(tmp_path: Path) -> None:
     assert profile.links == (Link("GitHub", "https://example.com/me"),)
 
 
-def test_repository_reads_the_photo_path(tmp_path: Path) -> None:
+def test_load_profile_from_json_reads_the_photo_path(tmp_path: Path) -> None:
     path = write_json(
         tmp_path / "profile.json", profile_document(photo=" images/profile.jpg ")
     )
-    assert JsonProfileRepository(path).get_profile().photo == "images/profile.jpg"
+    assert load_profile_from_json(path).photo == "images/profile.jpg"
 
 
 @pytest.mark.parametrize("photo", [None, "missing-key"])
-def test_repository_gives_no_photo_when_it_is_not_set(
+def test_load_profile_from_json_gives_no_photo_when_it_is_not_set(
     tmp_path: Path, photo: str | None
 ) -> None:
     document = profile_document()
     if photo is None:
         document["photo"] = None
     path = write_json(tmp_path / "profile.json", document)
-    assert JsonProfileRepository(path).get_profile().photo is None
+    assert load_profile_from_json(path).photo is None
 
 
-def test_repository_accepts_a_profile_without_links(tmp_path: Path) -> None:
+def test_load_profile_from_json_accepts_a_profile_without_links(tmp_path: Path) -> None:
     path = write_json(tmp_path / "profile.json", profile_document(links=[]))
-    assert JsonProfileRepository(path).get_profile().links == ()
+    assert load_profile_from_json(path).links == ()
 
 
-def test_repository_reads_unicode(tmp_path: Path) -> None:
+def test_load_profile_from_json_reads_unicode(tmp_path: Path) -> None:
     path = write_json(
         tmp_path / "profile.json", profile_document(name="Søren Åberg", skills=["東京"])
     )
-    profile = JsonProfileRepository(path).get_profile()
+    profile = load_profile_from_json(path)
     assert profile.name == "Søren Åberg"
     assert profile.skills == ("東京",)
 
 
-def test_repository_reports_a_missing_file(tmp_path: Path) -> None:
+def test_load_profile_from_json_reports_a_missing_file(tmp_path: Path) -> None:
     with pytest.raises(DataSourceError, match=r"profile\.json: file not found"):
-        JsonProfileRepository(tmp_path / "profile.json").get_profile()
+        load_profile_from_json(tmp_path / "profile.json")
 
 
-def test_repository_reports_invalid_json(tmp_path: Path) -> None:
+def test_load_profile_from_json_reports_invalid_json(tmp_path: Path) -> None:
     path = tmp_path / "profile.json"
     path.write_text("{not json", encoding="utf-8")
     with pytest.raises(DataFileError, match="invalid JSON"):
-        JsonProfileRepository(path).get_profile()
+        load_profile_from_json(path)
 
 
 @pytest.mark.parametrize("document", [[], "text", None])
-def test_repository_reports_a_document_that_is_not_an_object(
+def test_load_profile_from_json_reports_a_document_that_is_not_an_object(
     tmp_path: Path, document: object
 ) -> None:
     path = write_json(tmp_path / "profile.json", document)
     with pytest.raises(DataFileError, match="the profile must be a JSON object"):
-        JsonProfileRepository(path).get_profile()
+        load_profile_from_json(path)
 
 
 @pytest.mark.parametrize("key", ["name", "headline", "summary", "skills", "links"])
-def test_repository_reports_a_missing_key(tmp_path: Path, key: str) -> None:
+def test_load_profile_from_json_reports_a_missing_key(tmp_path: Path, key: str) -> None:
     document = profile_document()
     del document[key]
     path = write_json(tmp_path / "profile.json", document)
     with pytest.raises(DataFileError, match=f"missing the key '{key}'"):
-        JsonProfileRepository(path).get_profile()
+        load_profile_from_json(path)
 
 
 @pytest.mark.parametrize(
@@ -97,12 +95,12 @@ def test_repository_reports_a_missing_key(tmp_path: Path, key: str) -> None:
         ({"links": [{"label": "GitHub"}]}, "link 1 is missing the key 'url'"),
     ],
 )
-def test_repository_reports_a_wrong_shape(
+def test_load_profile_from_json_reports_a_wrong_shape(
     tmp_path: Path, overrides: dict[str, object], message: str
 ) -> None:
     path = write_json(tmp_path / "profile.json", profile_document(**overrides))
     with pytest.raises(DataFileError, match=message):
-        JsonProfileRepository(path).get_profile()
+        load_profile_from_json(path)
 
 
 @pytest.mark.parametrize(
@@ -117,11 +115,11 @@ def test_repository_reports_a_wrong_shape(
         ({"links": [{"label": "", "url": "https://x.example"}]}, "label must not be"),
     ],
 )
-def test_repository_wraps_an_invalid_domain_value(
+def test_load_profile_from_json_wraps_an_invalid_domain_value(
     tmp_path: Path, overrides: dict[str, object], message: str
 ) -> None:
     path = write_json(tmp_path / "profile.json", profile_document(**overrides))
     with pytest.raises(DataFileError, match=message) as error:
-        JsonProfileRepository(path).get_profile()
+        load_profile_from_json(path)
     assert error.value.__cause__ is not None
     assert str(path) in str(error.value)

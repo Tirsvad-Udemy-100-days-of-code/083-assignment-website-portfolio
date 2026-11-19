@@ -4,7 +4,7 @@
 
 ## What this step builds
 
-`pytest` runs unit tests for the entities and use cases, integration tests for the JSON repositories and the site writer, and end-to-end tests that build the real sample site and read the result. `lint-imports` checks that the layers only depend inward, `ruff` checks style and `mypy --strict` checks the types.
+`pytest` runs unit tests for the entities and use cases, integration tests for the SQLite repositories, Flask test-client tests for every route and header, and end-to-end tests that start the real server and read its answers. `lint-imports` checks that the layers only depend inward, `ruff` checks style and `mypy --strict` checks the types.
 
 ![A test run](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-06-tests.png)
 
