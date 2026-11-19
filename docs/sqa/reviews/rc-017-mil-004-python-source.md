@@ -10,6 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go | [1d8362f] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Re-checked after the author's profile photo was added: three tests updated, 309 passed<br>Verdict Go | [732dcef] |
 
 ---
 
@@ -21,7 +22,7 @@
 - Language and domain: n/a
 - Language reviewer: none
 - Mode: autonomous, not independent (the reviewer is a stand-in for S01)
-- Checks run: `pytest -q` 308 passed; `ruff check .` and `ruff format --check .` clean; `mypy --strict` clean on 81 files; `lint-imports` 4 kept, 0 broken; `doxygen Doxyfile` no warning; opengrep scan with `.opengrep.yml` 0 findings; end-to-end tests build the real data folder with and without a profile photo
+- Checks run: `pytest -q` 309 passed; `ruff check .` and `ruff format --check .` clean; `mypy --strict` clean on 81 files; `lint-imports` 4 kept, 0 broken; `doxygen Doxyfile` no warning; opengrep scan with `.opengrep.yml` 0 findings; end-to-end tests build the real data folder with and without a profile photo
 
 ## Checklist Results
 
@@ -62,3 +63,4 @@ Go — every Mandatory criterion of `QC-PY-001` passes and the checks listed abo
 [MIL-004]: ../../milestones/mil-004-documentation-and-wrap-up.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
 [1d8362f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1d8362f63554020f75ee5ab9f293a185882a3bcd
+[732dcef]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/732dcef1e86f987cf6a232f750934d8eb9ac37d6
