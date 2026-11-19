@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-011 for the MIL-002 source | [6367a3b] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-012 for the MIL-003 source | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-012 for the MIL-003 source | [53db60c] |
 
 ---
 
@@ -71,3 +71,4 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [ADR-0001]: ../adr/adr-0001-standard-library-site-generator.md
 [GOV-001]: ./governance.md
 [6367a3b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/6367a3b727ed74d5ac4bf9fb8c4ffe15b92cfb85
+[53db60c]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/53db60c1a016b07abf9b27b093f0501591ae69c5
