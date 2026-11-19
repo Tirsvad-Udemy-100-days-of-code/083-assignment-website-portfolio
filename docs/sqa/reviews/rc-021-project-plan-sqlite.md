@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the gateways MIL-005 and MIL-006 for the SQLite storage and the dynamic site, moved the end date to 2026-11-25 and added the scope coverage and the plan risks, at the request of S01 (ADR-0002)<br>Verdict Go (RC-021) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the gateways MIL-005 and MIL-006 for the SQLite storage and the dynamic site, moved the end date to 2026-11-25 and added the scope coverage and the plan risks, at the request of S01 (ADR-0002)<br>Verdict Go (RC-021) | [1406a53] |
 
 ---
 
@@ -71,3 +71,4 @@ Go — every Mandatory criterion of `QC-PP-001` passes, and criteria 3, 5 and 9 
 
 [PP-001]: ../../project-plan.md
 [QC-PP-001]: ../../../framework/qc/artifacts/qc-project-plan.md
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

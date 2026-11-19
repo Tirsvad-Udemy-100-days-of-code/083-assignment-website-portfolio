@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added the LinkedIn link, the profile photo and the project flip cards to the scope coverage and the MIL-004 deliverable; added OI-003<br>Verdict Go (RC-015) | [ec90c2b] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the gateways MIL-005 and MIL-006 for the SQLite storage and the dynamic site, moved the end date to 2026-11-25 and added the scope coverage and the plan risks, at the request of S01 (ADR-0002) <br>Verdict Go (RC-021) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the gateways MIL-005 and MIL-006 for the SQLite storage and the dynamic site, moved the end date to 2026-11-25 and added the scope coverage and the plan risks, at the request of S01 (ADR-0002) <br>Verdict Go (RC-021) | [1406a53] |
 
 ---
 
@@ -119,3 +119,4 @@ The gateways form a chain: MIL-001 precedes MIL-002, which precedes MIL-003, whi
 [MIL-005]: ./milestones/mil-005-sqlite-storage-and-management.md
 [MIL-006]: ./milestones/mil-006-dynamic-site-and-cleanup.md
 [ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

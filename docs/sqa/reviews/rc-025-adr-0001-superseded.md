@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Superseded by ADR-0002: the static site generator and the JSON data are replaced by SQLite and a dynamic server; the principle of no runtime dependency is kept<br>Verdict Go (RC-025) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Superseded by ADR-0002: the static site generator and the JSON data are replaced by SQLite and a dynamic server; the principle of no runtime dependency is kept<br>Verdict Go (RC-025) | [1406a53] |
 
 ---
 
@@ -52,3 +52,4 @@ Go — every Mandatory criterion of `QC-ADR-001` passes.
 
 [ADR-0001]: ../../adr/adr-0001-standard-library-site-generator.md
 [QC-ADR-001]: ../../../framework/qc/artifacts/qc-adr.md
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

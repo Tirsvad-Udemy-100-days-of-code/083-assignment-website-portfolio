@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concern CN-012 (SQLite storage and a dynamic site) and updated the communication milestones, at the request of S01<br>Verdict Go (RC-020) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concern CN-012 (SQLite storage and a dynamic site) and updated the communication milestones, at the request of S01<br>Verdict Go (RC-020) | [1406a53] |
 
 ---
 
@@ -65,3 +65,4 @@ Go — every Mandatory criterion of `QC-SA-001` passes, and criteria 3, 5 and 9 
 
 [SA-001]: ../../stakeholder-analysis.md
 [QC-SA-001]: ../../../framework/qc/artifacts/qc-stakeholder-analysis.md
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

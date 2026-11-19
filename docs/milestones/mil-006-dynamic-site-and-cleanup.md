@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-023) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-023) | [1406a53] |
 
 ---
 
@@ -85,3 +85,4 @@ Decide whether the site is dynamic and SQLite is the only store: a running serve
 [BC-001]: ../business-case.md
 [SA-001]: ../stakeholder-analysis.md
 [MIL-005]: ./mil-005-sqlite-storage-and-management.md
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

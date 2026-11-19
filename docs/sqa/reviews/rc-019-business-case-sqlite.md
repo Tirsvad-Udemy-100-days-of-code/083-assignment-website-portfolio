@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O9, O10, SC10, SC11, the SQLite database, the management commands and the dynamic server to scope, assumptions and risks; amended O1, O2 and SC1; removed the database from the out-of-scope list, at the request of S01 (ADR-0002)<br>Verdict Go (RC-019) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O9, O10, SC10, SC11, the SQLite database, the management commands and the dynamic server to scope, assumptions and risks; amended O1, O2 and SC1; removed the database from the out-of-scope list, at the request of S01 (ADR-0002)<br>Verdict Go (RC-019) | [1406a53] |
 
 ---
 
@@ -64,3 +64,4 @@ Go — every Mandatory criterion of `QC-BC-001` passes, and criteria 3, 5 and 9 
 
 [BC-001]: ../../business-case.md
 [QC-BC-001]: ../../../framework/qc/artifacts/qc-business-case.md
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

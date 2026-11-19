@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | [ec90c2b] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O9, O10, SC10, SC11, the SQLite database, the management commands and the dynamic server to scope, assumptions and risks; amended O1, O2 and SC1; removed the database from the out-of-scope list, at the request of S01 (ADR-0002) <br>Verdict Go (RC-019) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O9, O10, SC10, SC11, the SQLite database, the management commands and the dynamic server to scope, assumptions and risks; amended O1, O2 and SC1; removed the database from the out-of-scope list, at the request of S01 (ADR-0002) <br>Verdict Go (RC-019) | [1406a53] |
 
 ---
 
@@ -168,3 +168,4 @@ Proceed: the project is small, has a clear definition of done, needs no runtime 
 
 [SA-001]: ./stakeholder-analysis.md
 [ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

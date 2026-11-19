@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-022) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-022) | [1406a53] |
 
 ---
 
@@ -81,3 +81,4 @@ A SQLite database (Python `sqlite3`, no new dependency) with a versioned schema 
 [PP-001]: ../project-plan.md
 [MIL-004]: ./mil-004-documentation-and-wrap-up.md
 [MIL-006]: ./mil-006-dynamic-site-and-cleanup.md
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

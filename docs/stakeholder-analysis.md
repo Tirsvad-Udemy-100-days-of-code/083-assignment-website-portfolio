@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added concerns CN-010 (LinkedIn link and profile photo) and CN-011 (flip cards with tags and skills) at the request of S01<br>Verdict Go (RC-014) | [ec90c2b] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concern CN-012 (SQLite storage and a dynamic site) and updated the communication milestones, at the request of S01 <br>Verdict Go (RC-020) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concern CN-012 (SQLite storage and a dynamic site) and updated the communication milestones, at the request of S01 <br>Verdict Go (RC-020) | [1406a53] |
 
 ---
 
@@ -102,3 +102,4 @@ No use cases are modelled ([BC-001] Out of Scope), so no actor mapping exists. E
 
 [BC-001]: ./business-case.md
 [ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

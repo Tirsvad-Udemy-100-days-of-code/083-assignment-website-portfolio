@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-024) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-024) | [1406a53] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -59,3 +59,4 @@ Use option 2. The database is a SQLite file opened through the standard library,
 [ADR-0001]: ./adr-0001-standard-library-site-generator.md
 [MIL-005]: ../milestones/mil-005-sqlite-storage-and-management.md
 [MIL-006]: ../milestones/mil-006-dynamic-site-and-cleanup.md
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
