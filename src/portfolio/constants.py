@@ -237,3 +237,208 @@ MESSAGE_MISSING_OUTPUT: Final[str] = (
 
 ## @brief Error when the server cannot start; fields: host, port, reason.
 MESSAGE_SERVER_FAILED: Final[str] = "cannot start the server on {host}:{port}: {reason}"
+
+## @brief Database file, relative to the working directory; ignored by git.
+DEFAULT_DATABASE_PATH: Final[str] = "data/portfolio.db"
+
+## @brief Location that SQLite keeps in memory only; used by the tests.
+IN_MEMORY_DATABASE: Final[str] = ":memory:"
+
+## @brief Version of the database schema, stored in `PRAGMA user_version`.
+##
+## The schema script in `sqlite_schema.py` sets the same number; PRAGMA cannot take
+## a parameter, so a test checks that the two agree.
+SCHEMA_VERSION: Final[int] = 1
+
+## @brief Name of the command that creates the database.
+COMMAND_INIT: Final[str] = "init"
+
+## @brief Name of the command that imports the JSON data files.
+COMMAND_IMPORT: Final[str] = "import"
+
+## @brief Name of the command group that manages the projects.
+COMMAND_PROJECT: Final[str] = "project"
+
+## @brief Name of the command group that manages the profile.
+COMMAND_PROFILE: Final[str] = "profile"
+
+## @brief Name of the sub-command that lists the projects.
+SUBCOMMAND_LIST: Final[str] = "list"
+
+## @brief Name of the sub-command that adds a project.
+SUBCOMMAND_ADD: Final[str] = "add"
+
+## @brief Name of the sub-command that changes a project or the profile.
+SUBCOMMAND_SET: Final[str] = "set"
+
+## @brief Name of the sub-command that removes a project.
+SUBCOMMAND_REMOVE: Final[str] = "remove"
+
+## @brief Separator between the label and the address in the option `--link`.
+LINK_SEPARATOR: Final[str] = "="
+
+## @brief Help text of the init command.
+HELP_INIT: Final[str] = "Create the database, or check that it is up to date."
+
+## @brief Help text of the import command.
+HELP_IMPORT: Final[str] = "Copy the JSON data files into the database."
+
+## @brief Help text of the project command group.
+HELP_PROJECT: Final[str] = "Manage the projects in the database."
+
+## @brief Help text of the profile command group.
+HELP_PROFILE: Final[str] = "Manage the profile in the database."
+
+## @brief Help text of the project list command.
+HELP_PROJECT_LIST: Final[str] = "List the projects."
+
+## @brief Help text of the project add command.
+HELP_PROJECT_ADD: Final[str] = "Add a project."
+
+## @brief Help text of the project set command.
+HELP_PROJECT_SET: Final[str] = "Change the given fields of a project."
+
+## @brief Help text of the project remove command.
+HELP_PROJECT_REMOVE: Final[str] = "Remove a project."
+
+## @brief Help text of the profile set command.
+HELP_PROFILE_SET: Final[str] = "Create the profile or change the given fields."
+
+## @brief Help text of the option that names the database.
+HELP_DATABASE: Final[str] = "Database file (default: %(default)s)."
+
+## @brief Help text of the option that replaces existing data on import.
+HELP_REPLACE: Final[str] = "Replace the data of a database that already holds some."
+
+## @brief Help text of the argument that names a project.
+HELP_PROJECT_TITLE: Final[str] = "Title of the project."
+
+## @brief Help text of the option that gives the title of a new project.
+HELP_TITLE: Final[str] = "Title of the new project."
+
+## @brief Help text of the option that gives a new title to a project.
+HELP_NEW_TITLE: Final[str] = "New title of the project."
+
+## @brief Help text of the option that gives the kind of a project.
+HELP_KIND: Final[str] = "Kind of project, for example Website."
+
+## @brief Help text of the option that gives the description of a project.
+HELP_DESCRIPTION: Final[str] = "Short description of the project."
+
+## @brief Help text of the option that gives the image of a project.
+HELP_IMAGE_URL: Final[str] = (
+    "http or https address, or relative path of an image in the data folder."
+)
+
+## @brief Help text of the option that gives the source code address of a project.
+HELP_SOURCE_CODE_URL: Final[str] = "Address of the source code."
+
+## @brief Help text of the option that gives one tag; repeat it for more.
+HELP_TAG: Final[str] = "A tag of the project; repeat the option. Replaces the tags."
+
+## @brief Help text of the option that gives one project skill; repeat it for more.
+HELP_PROJECT_SKILL: Final[str] = (
+    "A skill of the project; repeat the option. Replaces the skills."
+)
+
+## @brief Help text of the option that gives the name of the profile.
+HELP_NAME: Final[str] = "Full name."
+
+## @brief Help text of the option that gives the headline of the profile.
+HELP_HEADLINE: Final[str] = "One-line professional headline."
+
+## @brief Help text of the option that gives the summary of the profile.
+HELP_SUMMARY: Final[str] = "Short text about the person."
+
+## @brief Help text of the option that gives the photo of the profile.
+HELP_PHOTO: Final[str] = "Relative path of the photo in the data folder."
+
+## @brief Help text of the option that gives one profile skill.
+HELP_PROFILE_SKILL: Final[str] = (
+    "A skill of the profile; repeat the option. Replaces the skills."
+)
+
+## @brief Help text of the option that gives one profile link.
+HELP_LINK: Final[str] = "A link as LABEL=URL; repeat the option. Replaces the links."
+
+## @brief Message after init created the database; fields: path, version.
+MESSAGE_DATABASE_CREATED: Final[str] = (
+    "Created the database {path} (schema version {version})\n"
+)
+
+## @brief Message after init found a current database; fields: path, version.
+MESSAGE_DATABASE_READY: Final[str] = (
+    "The database {path} is up to date (schema version {version})\n"
+)
+
+## @brief Message after an import; fields: count, path.
+MESSAGE_IMPORTED: Final[str] = "Imported {count} projects and the profile into {path}\n"
+
+## @brief Message after a project was added; field: title.
+MESSAGE_PROJECT_ADDED: Final[str] = "Added the project {title!r}\n"
+
+## @brief Message after a project was changed; field: title.
+MESSAGE_PROJECT_CHANGED: Final[str] = "Changed the project {title!r}\n"
+
+## @brief Message after a project was removed; field: title.
+MESSAGE_PROJECT_REMOVED: Final[str] = "Removed the project {title!r}\n"
+
+## @brief Message after the profile was created.
+MESSAGE_PROFILE_CREATED: Final[str] = "Created the profile\n"
+
+## @brief Message after the profile was changed.
+MESSAGE_PROFILE_CHANGED: Final[str] = "Changed the profile\n"
+
+## @brief Message of the project list when there is no project.
+MESSAGE_NO_PROJECTS: Final[str] = "No projects.\n"
+
+## @brief One line of the project list; fields: title, kind, source_code_url.
+MESSAGE_PROJECT_LINE: Final[str] = "{title} | {kind} | {source_code_url}\n"
+
+## @brief Error when no project has the title; field: title.
+MESSAGE_PROJECT_NOT_FOUND: Final[str] = "no project has the title {title!r}"
+
+## @brief Error when a project already has the title; field: title.
+MESSAGE_PROJECT_EXISTS: Final[str] = "a project with the title {title!r} already exists"
+
+## @brief Error when the database holds no profile.
+MESSAGE_PROFILE_MISSING: Final[str] = (
+    "the database holds no profile yet; create it with the profile set command"
+)
+
+## @brief Error when an import would overwrite data.
+MESSAGE_DATABASE_NOT_EMPTY: Final[str] = (
+    "the database already holds data; use --replace to overwrite it"
+)
+
+## @brief Error when the database file does not exist.
+MESSAGE_DATABASE_NOT_FOUND: Final[str] = (
+    "database not found; run the init command first"
+)
+
+## @brief Error when the schema is missing; the database is not initialised.
+MESSAGE_SCHEMA_MISSING: Final[str] = (
+    "the database has no schema; run the init command first"
+)
+
+## @brief Error when the schema is newer than the program; fields: found, known.
+MESSAGE_SCHEMA_NEWER: Final[str] = (
+    "the database has schema version {found}, newer than version {known} "
+    "that this program knows; update the program"
+)
+
+## @brief Error when the schema version is not one this program can use.
+MESSAGE_SCHEMA_UNKNOWN: Final[str] = (
+    "the database has the unknown schema version {found}"
+)
+
+## @brief Error when a change has no new value.
+MESSAGE_NOTHING_TO_CHANGE: Final[str] = "nothing to change: no new value was given"
+
+## @brief Error when the profile does not exist and the data to create it is short.
+MESSAGE_NEW_PROFILE_INCOMPLETE: Final[str] = (
+    "a new profile needs a name, a headline, a summary and at least one skill"
+)
+
+## @brief Error when a link option is not LABEL=URL; field: value.
+MESSAGE_LINK_FORMAT: Final[str] = "link {value!r} must look like LABEL=URL"

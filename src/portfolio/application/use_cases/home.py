@@ -6,10 +6,9 @@
 import random
 
 from portfolio.application.dto.home_page import HomePage
-from portfolio.application.dto.project_card import ProjectCard
+from portfolio.application.dto.project_card import to_project_card
 from portfolio.application.ports.project_repository import ProjectRepository
 from portfolio.constants import HOME_PROJECT_LIMIT, SITE_TITLE
-from portfolio.domain.entities.project import Project
 
 
 def home(
@@ -34,17 +33,5 @@ def home(
         chosen = rng.sample(projects, k=min(limit, len(projects)))
     return HomePage(
         site_title=SITE_TITLE,
-        projects=tuple(_to_card(project) for project in chosen),
-    )
-
-
-def _to_card(project: Project) -> ProjectCard:
-    return ProjectCard(
-        title=project.title,
-        kind=project.kind,
-        description=project.description,
-        image_url=project.image_url,
-        source_code_url=project.source_code_url,
-        tags=project.tags,
-        skills=project.skills,
+        projects=tuple(to_project_card(project) for project in chosen),
     )

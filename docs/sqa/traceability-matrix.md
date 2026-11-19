@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-017 for the MIL-004 source and RC-018 for the wiki and README | [1d8362f] |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-019 to RC-025 for the plan change (BC, SA, PP, MIL-005, MIL-006, ADR-0001, ADR-0002) | [1406a53] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-026 for the MIL-005 source | [a91e72e] |
 
 ---
 
@@ -36,7 +36,7 @@ updated whenever an artifact instance is created or reviewed.
 | [ADR-0001] | ADR | - | - | [BC-001], [SA-001] | [ADR-0002] | RC-025 |
 | [ADR-0002] | ADR | - | - | [BC-001], [SA-001], [ADR-0001] | - | RC-024 |
 | [GOV-001] | GOV | en | it | [BC-001], [SA-001] | - | RC-009 |
-| Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003], [MIL-004] | - | RC-010, RC-011, RC-012, RC-017 |
+| Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] | - | RC-010, RC-011, RC-012, RC-017, RC-026 |
 | Wiki (`docs/wiki/`) and `README.md` | WIKI | en | - | [MIL-004] | - | RC-018 |
 
 ## Concern Coverage
@@ -85,3 +85,4 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
 [1d8362f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1d8362f63554020f75ee5ab9f293a185882a3bcd
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[a91e72e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/a91e72e351b7f2cf4204e49971a63209aea13656
