@@ -4,12 +4,13 @@
 | Key | Value |
 | --- | --- |
 | ID | ADR-0001 |
-| CrossReference | [BC-001], [SA-001] |
+| CrossReference | [BC-001], [SA-001], [ADR-0002] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Superseded by ADR-0002 | Jens Tirsvad Nielsen | Stand-in for S01 | Superseded by ADR-0002: the static site generator and the JSON data are replaced by SQLite and a dynamic server; the principle of no runtime dependency is kept <br>Verdict Go (RC-025) | [1406a53] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -52,4 +53,6 @@ Build the portfolio as a static site generator on the Python standard library (o
 
 [BC-001]: ../business-case.md
 [SA-001]: ../stakeholder-analysis.md
+[ADR-0002]: ./adr-0002-sqlite-storage-and-dynamic-site.md
 [8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concerns CN-010 (LinkedIn link and profile photo) and CN-011 (flip cards with tags and skills) at the request of S01<br>Verdict Go (RC-014) | [ec90c2b] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added concerns CN-010 (LinkedIn link and profile photo) and CN-011 (flip cards with tags and skills) at the request of S01<br>Verdict Go (RC-014) | [ec90c2b] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concern CN-012 (SQLite storage and a dynamic site) and updated the communication milestones, at the request of S01 <br>Verdict Go (RC-020) | [1406a53] |
 
 ---
 
@@ -50,14 +50,15 @@ This analysis names the people who have an interest in the Website Portfolio pro
 | CN-009 | S02 | The lecture is summarised, not copied: no lecture screenshot, text or video is published. | Legal constraint |
 | CN-010 | S01 | The portfolio connects to my LinkedIn profile and shows my profile photo. | Functionality |
 | CN-011 | S01 | My projects are flip cards: the front shows name, description and image, the back shows the source, the tags and the skills the project gives me. I show projects that show my skills, not basic exercises. | Functionality |
+| CN-012 | S01 | My data is stored in a SQLite database and the site shows a change without a rebuild. | Functionality |
 
 ## Communication Requirements
 
 | ID | Channel | Frequency | Deliverable | Phase / Milestone |
 | --- | --- | --- | --- | --- |
-| CM-001 | Chat with S01 | Once per run, then at the end | Plan for acceptance; end-of-run summary with every stand-in decision | Plan acceptance, MIL-004 |
-| CM-002 | Pull request on the git host | One per milestone | Changes, review records and closed issues | MIL-001 to MIL-004 |
-| CM-003 | README and wiki (English, Danish, Bahasa Malaysia) | Updated at each milestone that changes behaviour | How to set up, run and test; what each step teaches | MIL-004 |
+| CM-001 | Chat with S01 | Once per run, then at the end | Plan for acceptance; end-of-run summary with every stand-in decision | Plan acceptance, MIL-006 |
+| CM-002 | Pull request on the git host | One per milestone | Changes, review records and closed issues | MIL-001 to MIL-006 |
+| CM-003 | README and wiki (English, Danish, Bahasa Malaysia) | Updated at each milestone that changes behaviour | How to set up, run and test; what each step teaches | MIL-004, MIL-006 |
 | CM-004 | Repository description and topics | Once | Description and at least five topics | MIL-001 |
 
 ## Conflicting Interests and Mitigations
@@ -89,6 +90,7 @@ No use cases are modelled ([BC-001] Out of Scope), so no actor mapping exists. E
 | S03 | CN-008 | O1, O4 |
 | S01 | CN-010 | O7 |
 | S01 | CN-011 | O8 |
+| S01 | CN-012 | O9, O10 |
 
 ## Sign-Off
 
@@ -99,5 +101,5 @@ No use cases are modelled ([BC-001] Out of Scope), so no actor mapping exists. E
 ---
 
 [BC-001]: ./business-case.md
-[8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
 [ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
+[1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
