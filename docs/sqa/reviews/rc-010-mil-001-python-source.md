@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go | [24bf6ae] |
 
 ---
 
@@ -59,3 +59,4 @@ Go — every Mandatory criterion of `QC-PY-001` passes and the checks listed abo
 ---
 
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[24bf6ae]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/24bf6ae3f1aed725ec1d61efcc5364f1dea9868d
