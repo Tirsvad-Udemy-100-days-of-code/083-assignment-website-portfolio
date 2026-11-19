@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go for the repository content; criterion 14 is Pending the host | [0c64aed] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Checked criterion 14 on the published wiki after the merge<br>Verdict Go | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Checked criterion 14 on the published wiki after the merge<br>Verdict Go | [1f11026] |
 
 ---
 
@@ -67,3 +67,4 @@ Go — every Mandatory criterion of `QC-WIKI-001` passes, criterion 14 on the pu
 [QC-WIKI-001]: ../../../framework/qc/artifacts/qc-wiki.md
 [MIL-006]: ../../milestones/mil-006-dynamic-site-and-cleanup.md
 [0c64aed]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/0c64aed29bbd9484f961c11b6965844b9d1afb3e
+[1f11026]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1f1102645a874f62a0b5b85deee68765da065bba
