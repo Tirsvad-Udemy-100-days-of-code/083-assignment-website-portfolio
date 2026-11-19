@@ -11,14 +11,14 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | [ec90c2b] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O9, O10, SC10, SC11, the SQLite database, the management commands and the dynamic server to scope, assumptions and risks; amended O1, O2 and SC1; removed the database from the out-of-scope list, at the request of S01 (ADR-0002) <br>Verdict Go (RC-019) | [1406a53] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added O9, O10, SC10, SC11, the SQLite database, the management commands and the dynamic server to scope, assumptions and risks; amended O1, O2 and SC1; removed the database from the out-of-scope list, at the request of S01 (ADR-0002) <br>Verdict Go (RC-019) | [1406a53] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Chose Flask and Jinja for the web site: amended O1, O10, SC1, SC3, SC11, the scope, the risks and the introduction; the no-runtime-dependency principle is replaced by one pinned runtime dependency, at the request of S01 (ADR-0003) <br>Verdict Go (RC-027) | pending |
 
 ---
 
 ## Executive Summary
 
-Day 83 of the course "100 Days of Code: The Complete Python Pro Bootcamp" asks the participant to build a portfolio website that shows their skills and the projects they have built. The lecture gives no step-by-step guidance: the participant must design and build the result alone. This project delivers that assignment as a small, readable Python project: a portfolio site generated from a list of projects, with a home page, an about page and a local preview, built with the Python standard library only. It ships with tests, a Doxygen reference, a README and a three-language wiki (English, Danish, Bahasa Malaysia), so other course participants and repository visitors can run it, learn from it and compare it with their own solution.
+Day 83 of the course "100 Days of Code: The Complete Python Pro Bootcamp" asks the participant to build a portfolio website that shows their skills and the projects they have built. The lecture gives no step-by-step guidance: the participant must design and build the result alone. This project delivers that assignment as a small, readable Python project: a portfolio website with a home page and an about page, served by Flask from a SQLite database, with Jinja templates and everything else on the Python standard library. It ships with tests, a Doxygen reference, a README and a three-language wiki (English, Danish, Bahasa Malaysia), so other course participants and repository visitors can run it, learn from it and compare it with their own solution.
 
 ## Methodological and Standards Foundation
 
@@ -31,18 +31,18 @@ Day 83 of the course "100 Days of Code: The Complete Python Pro Bootcamp" asks t
 ## Problem Statement
 
 1. The Day 83 assignment is deliberately open: a participant who finishes it alone has no reference to compare against, and a participant who copies a tutorial learns little.
-2. The only available idea for this assignment is a Flask and SQLAlchemy application whose repository has no tests, no run instructions and no way to run it without installing and configuring several third-party packages and an environment variable.
+2. The only available idea for this assignment is a Flask and SQLAlchemy application whose repository has no tests, no run instructions and no way to run it without installing and configuring several third-party packages and an environment variable. This project keeps Flask but needs no secret and only one runtime dependency.
 3. A portfolio is needed for job interviews, but a beginner's portfolio is often an unstructured folder of scripts that a visitor cannot run or read quickly.
 
 ## Business Opportunity
 
-A portfolio site that is easy to install (no runtime dependencies), easy to read (one concern per module, documented), proven by tests, and explained in three languages gives the author a reusable showcase, gives fellow participants a readable reference for the assignment, and gives repository visitors a clear example of a small, well-structured Python project.
+A portfolio site that is easy to install (one pinned runtime dependency, Flask), easy to read (one concern per module, documented), proven by tests, and explained in three languages gives the author a reusable showcase, gives fellow participants a readable reference for the assignment, and gives repository visitors a clear example of a small, well-structured Python project.
 
 ## Objectives
 
 | # | Objective |
 | --- | --- |
-| O1 | Provide a portfolio site generator that builds a home page and an about page from a list of projects stored in a database, with the function names `home`, `about` and `load_from_json` taken from the idea repository, using the Python standard library only. |
+| O1 | Provide a portfolio site generator that builds a home page and an about page from a list of projects stored in a database, with the function names `home`, `about` and `load_from_json` taken from the idea repository, using Flask for the web site and the Python standard library for everything else. |
 | O2 | Provide a local server command so the site can be viewed in a browser without installing anything. |
 | O3 | Prove the behaviour with automated pytest tests, and keep the dependency direction of the layers checked by tooling. |
 | O4 | Document how to create and use a local `.venv`, upgrade pip, run the project and run the tests, for both Windows and Linux. |
@@ -51,14 +51,14 @@ A portfolio site that is easy to install (no runtime dependencies), easy to read
 | O7 | Connect the portfolio to the author's LinkedIn profile and show the author's profile photo on the about page. |
 | O8 | Show each project as a flip card: the front shows the project name, description and image; the back shows the source code link, the tags and the skills the project shows. The sample projects are real work of the author that shows the author's skills, not basic course exercises. |
 | O9 | Store the projects and the profile in a SQLite database through the Python standard library, import the existing JSON files once, and change the data with commands. |
-| O10 | Make the site dynamic: a running server renders the home page and the about page from the database on every request, so a data change shows without a rebuild. |
+| O10 | Make the site dynamic: a running Flask application renders the home page and the about page from the database with Jinja templates on every request, so a data change shows without a rebuild. |
 
 ## Scope
 
 ### In Scope
 
 - A Python package under `src/` with the layers domain, application, infrastructure and presentation, and a `constants.py` module for all constants.
-- A SQLite database with a versioned schema for projects and the profile, the commands `init`, `import` and the management commands, a sample `projects.json` and `profile.json` used as the import source, and a local server that renders a home page and an about page, with a stylesheet and the images, from the database on every request.
+- A SQLite database with a versioned schema for projects and the profile, the commands `init`, `import` and the management commands, a sample `projects.json` and `profile.json` used as the import source, and a local Flask application that renders a home page and an about page with Jinja templates, a stylesheet and the images, from the database on every request.
 - Tests under `tests/` run with pytest.
 - `pyproject.toml`, a Python `.gitignore`, an `.editorconfig`, a Doxygen configuration and Doxygen comments in the source.
 - A README from the framework template and a flat wiki in `docs/wiki/` in English, Danish and Bahasa Malaysia, with a Getting Started page for Windows and Linux.
@@ -69,11 +69,11 @@ A portfolio site that is easy to install (no runtime dependencies), easy to read
 
 ### Out of Scope
 
-- Reproducing the Flask, SQLAlchemy and Bootstrap application of the idea repository (see ADR-0001 and ADR-0002).
+- Reproducing the SQLAlchemy and Bootstrap parts of the idea repository: storage stays on the standard library `sqlite3` (see ADR-0002 and ADR-0003).
 - User accounts, a contact form, a web admin page for content management, and hosting and deployment of the site. The data is changed by commands, not by the web site.
 - Copying lecture material: no lecture screenshot, text or video appears in the README or the wiki; the lecture is only summarised.
 - Fetching the profile photo from LinkedIn automatically: LinkedIn requires a sign-in and its terms restrict automated access, so the author supplies the image file.
-- Third-party runtime dependencies. Development tools (pytest, ruff, mypy, import-linter) are installed only on request, through an optional extra.
+- Third-party runtime dependencies other than Flask and the packages Flask itself installs. Development tools (pytest, ruff, mypy, import-linter) are installed only on request, through an optional extra.
 - Use-case modelling, user stories and a domain dictionary: the product is too small to justify them.
 
 ## Expected Benefits
@@ -81,7 +81,7 @@ A portfolio site that is easy to install (no runtime dependencies), easy to read
 ### Tangible Benefits
 
 - A runnable site and a test suite that pass on a clean clone with Python 3.13 or newer.
-- Zero runtime dependencies, so a visitor needs only Python.
+- One pinned runtime dependency, Flask, which `pip install -e .` installs.
 - A Getting Started guide for Windows and Linux that works from a clean machine.
 - A wiki with the same page set in three languages.
 
@@ -99,9 +99,9 @@ The project supports the course's own goal for Day 83 (independent work that bui
 
 | # | Criterion | Target | Measure |
 | --- | --- | --- | --- |
-| SC1 | The site is served dynamically | `python -m portfolio serve` renders `/` and `/about` from the database on each request on localhost; a data change shows on the next request | Manual run plus an end-to-end test against a running server |
+| SC1 | The site is served dynamically | `python -m portfolio serve` starts the Flask application, which renders `/` and `/about` from the database on each request on localhost; a data change shows on the next request | Manual run plus an end-to-end test against a running server |
 | SC2 | Tests pass | 100 % of pytest tests pass on Python 3.13 | `python -m pytest` exit code 0 |
-| SC3 | No runtime dependencies | `[project] dependencies` in `pyproject.toml` is empty | Inspection of `pyproject.toml` |
+| SC3 | Few, pinned runtime dependencies | `[project] dependencies` in `pyproject.toml` lists only Flask, pinned to an exact version | Inspection of `pyproject.toml` |
 | SC4 | Static analysis is clean | 0 findings above the accepted baseline from opengrep, ruff and mypy | Tool output before each push |
 | SC5 | Wiki is complete | Every English page has a Danish and a Bahasa Malaysia page; each step page has a screenshot | Page list compared with `QC-WIKI-001` |
 | SC6 | Guide works on both systems | Getting Started shows Windows PowerShell and Linux commands for the `.venv`, pip upgrade, run and test | Review against the README and wiki criteria |
@@ -109,13 +109,13 @@ The project supports the course's own goal for Day 83 (independent work that bui
 | SC8 | The portfolio connects to LinkedIn and shows the photo | `data/profile.json` links to https://www.linkedin.com/in/tirsvad74/; the about page shows the supplied photo, or an initials avatar until a file is supplied | End-to-end test of the built about page, and a screenshot |
 | SC9 | Projects are flip cards | The built home page has one flip card per project; the front holds name, description and image, the back holds the source code link, the tags and the skills; the sample projects are not basic course exercises | End-to-end test of the built home page, and screenshots of a front and a back |
 | SC10 | Data is stored in SQLite | `python -m portfolio import` loads the sample JSON into the database in one transaction, and the SQLite repositories return the same objects as the JSON repositories did | Contract test and an end-to-end test |
-| SC11 | The dynamic site resists hostile input | Every SQL statement is parameterised; the images route serves only files inside one folder; the server has no write route and sends a content security policy | Tests with hostile titles and paths, and a source search for formatted SQL |
+| SC11 | The dynamic site resists hostile input | Every SQL statement is parameterised; the images route serves only files inside one folder; Jinja autoescaping is on; the application has no write route and sends a content security policy | Tests with hostile titles and paths, and a source search for formatted SQL |
 
 ## Risks
 
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
-| The idea repository is a Flask application and a reviewer expects Flask | Medium: the result differs from the idea | Record the decision in ADR-0001; the home page, the about page and the data file of the idea are kept. |
+| A third-party dependency (Flask and what it installs) has a vulnerability or breaks | Medium: the site fails or is exposed | Pin an exact version in `pyproject.toml`, keep the Flask code in the presentation layer behind the use cases, run the opengrep scan, and record the decision in ADR-0003. |
 | Danish and Bahasa Malaysia texts are produced without a native reviewer | Medium: wording errors | Keep sentences short, keep code and commands in English, and mark the language check as pending until a person who reads the language has checked it. |
 | Screenshots taken on the host desktop would take the user's mouse and keyboard | Medium: interrupts the user | Take screenshots only in a Docker container with a headless browser, as the GUI testing rule requires. |
 | A token is committed or printed | High: secret leak | Tokens stay in the untracked `.env`; the project does not read or test it; `.env` is in `.gitignore`; opengrep runs before each push. |
@@ -148,7 +148,7 @@ The project supports the course's own goal for Day 83 (independent work that bui
 | --- | --- |
 | Author effort: about one working session for planning, code, tests and three-language documentation | A runnable reference solution, a portfolio entry and a documented learning path |
 | Docker image download for headless screenshots (one-off, development only) | Screenshots taken without disturbing the author's desktop |
-| No licence or hosting cost | No runtime dependency to maintain |
+| No licence or hosting cost | One pinned dependency (Flask) to keep up to date |
 
 The assessment is qualitative because the project is a learning exercise with no revenue.
 
@@ -158,14 +158,13 @@ The assessment is qualitative because the project is a learning exercise with no
 | --- | --- |
 | S01 | Product Owner, developer and reviewer: wants a finished, reviewed portfolio project for the course. |
 | S02 | Course participants: want readable, runnable code with the assignment's names and README instructions to run it. |
-| S03 | Repository viewers: want a clear description, topics and README, and no runtime dependencies. |
+| S03 | Repository viewers: want a clear description, topics and README, and an install that is one command. |
 
 ## Recommendation
 
-Proceed: the project is small, has a clear definition of done, needs no runtime dependency and gives all three stakeholders something usable.
+Proceed: the project is small, has a clear definition of done, needs one pinned runtime dependency and gives all three stakeholders something usable.
 
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00

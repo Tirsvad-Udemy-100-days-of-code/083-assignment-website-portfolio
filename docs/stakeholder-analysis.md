@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added concerns CN-010 (LinkedIn link and profile photo) and CN-011 (flip cards with tags and skills) at the request of S01<br>Verdict Go (RC-014) | [ec90c2b] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concern CN-012 (SQLite storage and a dynamic site) and updated the communication milestones, at the request of S01 <br>Verdict Go (RC-020) | [1406a53] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added concern CN-012 (SQLite storage and a dynamic site) and updated the communication milestones, at the request of S01 <br>Verdict Go (RC-020) | [1406a53] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: CN-008 now asks for a one-command install with pinned dependencies, added concern CN-013 (Flask for the website), and rewrote the S02 and S03 conflict, at the request of S01 (ADR-0003) <br>Verdict Go (RC-028) | pending |
 
 ---
 
@@ -26,7 +26,7 @@ This analysis names the people who have an interest in the Website Portfolio pro
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | S01 | Jens Tirsvad Nielsen | Course participant: Product Owner, developer and reviewer | Self (Udemy course participant) | HIGH | HIGH | Manage Closely | A finished, reviewed portfolio project that shows planning, structure, tests and documentation. |
 | S02 | Udemy course participants | Fellow learners who share code and compare solutions | Udemy course community | LOW | HIGH | Keep Informed | Readable, runnable code that uses the assignment's function names, and README instructions to run it. |
-| S03 | GitHub viewers | Visitors who browse the repository for ideas | Public (GitHub and git host visitors) | LOW | LOW | Monitor | A clear repository description, topics and README, and no runtime dependencies to install. |
+| S03 | GitHub viewers | Visitors who browse the repository for ideas | Public (GitHub and git host visitors) | LOW | LOW | Monitor | A clear repository description, topics and README, and an install that is one command with pinned dependencies. |
 
 ## Power/Interest Classification Rationale
 
@@ -46,11 +46,12 @@ This analysis names the people who have an interest in the Website Portfolio pro
 | CN-005 | S02 | The README and the wiki show how to create a `.venv`, upgrade pip, run the site and run the tests, on Windows and Linux. | Usability |
 | CN-006 | S02 | Each build step is explained, with what it teaches and a screenshot, in English, Danish and Bahasa Malaysia. | Usability |
 | CN-007 | S03 | The repository has a description, topics and a README that explain the project at a glance. | Usability |
-| CN-008 | S03 | Nothing has to be installed to run the project beyond Python. | Implementation constraint (no runtime dependencies) |
+| CN-008 | S03 | The project installs with one command and its few runtime dependencies are pinned. | Implementation constraint (few, pinned dependencies) |
 | CN-009 | S02 | The lecture is summarised, not copied: no lecture screenshot, text or video is published. | Legal constraint |
 | CN-010 | S01 | The portfolio connects to my LinkedIn profile and shows my profile photo. | Functionality |
 | CN-011 | S01 | My projects are flip cards: the front shows name, description and image, the back shows the source, the tags and the skills the project gives me. I show projects that show my skills, not basic exercises. | Functionality |
 | CN-012 | S01 | My data is stored in a SQLite database and the site shows a change without a rebuild. | Functionality |
+| CN-013 | S01 | The website uses Flask. | Implementation constraint (Flask) |
 
 ## Communication Requirements
 
@@ -65,7 +66,7 @@ This analysis names the people who have an interest in the Website Portfolio pro
 
 | Conflict | Stakeholders | Mitigation |
 | --- | --- | --- |
-| S02 expects the idea's Flask application, while S03 and the Business Case require no runtime dependencies. | S02, S03 | Build the site with the standard library, keep the idea's function names and data file, and record the decision in ADR-0001. |
+| S02 expects the idea's Flask application, while S03 wants an install that stays small. | S02, S03 | Use Flask as the only runtime dependency, pinned, keep the idea's function names and data keys, store data with `sqlite3`, and record the decision in ADR-0003. |
 | S01 wants the course lecture reflected in the documents, while CN-009 forbids copying it. | S01, S02 | Summarise the lecture in the wiki in the author's own words; take every screenshot from this project's own output. |
 | S01 acts as author and reviewer in autonomous mode. | S01 | The review record states the stand-in and says `Mode: autonomous, not independent`; S01 challenges any decision in the end-of-run summary. |
 
@@ -91,6 +92,7 @@ No use cases are modelled ([BC-001] Out of Scope), so no actor mapping exists. E
 | S01 | CN-010 | O7 |
 | S01 | CN-011 | O8 |
 | S01 | CN-012 | O9, O10 |
+| S01 | CN-013 | O1, O10 |
 
 ## Sign-Off
 
@@ -101,5 +103,4 @@ No use cases are modelled ([BC-001] Out of Scope), so no actor mapping exists. E
 ---
 
 [BC-001]: ./business-case.md
-[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
