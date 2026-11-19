@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-019 to RC-025 for the plan change (BC, SA, PP, MIL-005, MIL-006, ADR-0001, ADR-0002) | [1406a53] |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-026 for the MIL-005 source | [a91e72e] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-027 to RC-033 for the Flask decision (BC, SA, PP, MIL-005, MIL-006, ADR-0003, ADR-0002) | [ae5a380] |
 
 ---
 
@@ -24,17 +24,18 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| [BC-001] | BC | en | it | - | [SA-001], [PP-001], [ADR-0001], [ADR-0002] | RC-019 |
-| [SA-001] | SA | en | it | [BC-001] | [PP-001], [GOV-001] | RC-020 |
-| [PP-001] | PP | en | it | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] | RC-021 |
+| [BC-001] | BC | en | it | - | [SA-001], [PP-001], [ADR-0001], [ADR-0002], [ADR-0003] | RC-027 |
+| [SA-001] | SA | en | it | [BC-001] | [PP-001], [GOV-001] | RC-028 |
+| [PP-001] | PP | en | it | [BC-001], [SA-001] | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] | RC-029 |
 | [MIL-001] | MIL | en | it | [PP-001] | [MIL-002] | RC-004 |
 | [MIL-002] | MIL | en | it | [MIL-001] | [MIL-003] | RC-005 |
 | [MIL-003] | MIL | en | it | [MIL-002] | [MIL-004] | RC-006 |
 | [MIL-004] | MIL | en | it | [MIL-003] | [MIL-005] | RC-016 |
-| [MIL-005] | MIL | en | it | [MIL-004] | [MIL-006] | RC-022 |
-| [MIL-006] | MIL | en | it | [MIL-005] | - | RC-023 |
+| [MIL-005] | MIL | en | it | [MIL-004] | [MIL-006] | RC-030 |
+| [MIL-006] | MIL | en | it | [MIL-005] | - | RC-031 |
 | [ADR-0001] | ADR | - | - | [BC-001], [SA-001] | [ADR-0002] | RC-025 |
-| [ADR-0002] | ADR | - | - | [BC-001], [SA-001], [ADR-0001] | - | RC-024 |
+| [ADR-0002] | ADR | - | - | [BC-001], [SA-001], [ADR-0001] | [ADR-0003] | RC-033 |
+| [ADR-0003] | ADR | - | - | [BC-001], [SA-001], [ADR-0002] | - | RC-032 |
 | [GOV-001] | GOV | en | it | [BC-001], [SA-001] | - | RC-009 |
 | Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] | - | RC-010, RC-011, RC-012, RC-017, RC-026 |
 | Wiki (`docs/wiki/`) and `README.md` | WIKI | en | - | [MIL-004] | - | RC-018 |
@@ -50,11 +51,12 @@ updated whenever an artifact instance is created or reviewed.
 | CN-005 | [MIL-004] | - | - | Covered |
 | CN-006 | [MIL-004] | - | - | Covered |
 | CN-007 | [MIL-001], [MIL-004] | - | - | Covered |
-| CN-008 | [MIL-001], [MIL-005] | [ADR-0001], [ADR-0002] | - | Covered |
+| CN-008 | [MIL-001], [MIL-005], [MIL-006] | [ADR-0001], [ADR-0002], [ADR-0003] | - | Covered |
 | CN-009 | [MIL-004] | - | - | Covered |
 | CN-010 | [MIL-004] | - | - | Covered |
 | CN-011 | [MIL-004] | - | - | Covered |
-| CN-012 | [MIL-005], [MIL-006] | [ADR-0002] | - | Covered |
+| CN-012 | [MIL-005], [MIL-006] | [ADR-0002], [ADR-0003] | - | Covered |
+| CN-013 | [MIL-006] | [ADR-0003] | - | Covered |
 
 ## Open Inconsistencies
 
@@ -79,6 +81,7 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [MIL-006]: ../milestones/mil-006-dynamic-site-and-cleanup.md
 [ADR-0001]: ../adr/adr-0001-standard-library-site-generator.md
 [ADR-0002]: ../adr/adr-0002-sqlite-storage-and-dynamic-site.md
+[ADR-0003]: ../adr/adr-0003-flask-and-jinja-on-sqlite.md
 [GOV-001]: ./governance.md
 [6367a3b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/6367a3b727ed74d5ac4bf9fb8c4ffe15b92cfb85
 [53db60c]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/53db60c1a016b07abf9b27b093f0501591ae69c5
@@ -86,3 +89,4 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [1d8362f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1d8362f63554020f75ee5ab9f293a185882a3bcd
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
 [a91e72e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/a91e72e351b7f2cf4204e49971a63209aea13656
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

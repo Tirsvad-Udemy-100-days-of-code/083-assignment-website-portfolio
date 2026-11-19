@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-022) | [1406a53] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-022) | [1406a53] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: criterion 7 now says the gateway adds no runtime dependency, because SC3 allows the one Flask dependency later (ADR-0003) <br>Verdict Go (RC-030) | [ae5a380] |
 
 ---
 
@@ -33,7 +34,7 @@ A SQLite database (Python `sqlite3`, no new dependency) with a versioned schema 
 | 4 | The commands add, change, list and remove a project, and set the profile, validating through the entities; an invalid value gives a one-line message and a non-zero exit code (O9) | End-to-end tests pass | An invalid value is stored |
 | 5 | Every SQL statement is parameterised: no value is put into SQL text, and a title such as `x'); DROP TABLE project;--` is stored and shown literally (SC11) | A test with hostile input passes and a search of the source finds no formatted SQL | Any formatted SQL |
 | 6 | The database file is not tracked by git and no secret or personal data is stored beyond the portfolio data (SC11) | `.gitignore` lists the file; the scan is clean | Database file tracked |
-| 7 | `[project] dependencies` is still empty (SC3) | Inspection of `pyproject.toml` | A dependency added |
+| 7 | This gateway adds no runtime dependency: `[project] dependencies` is unchanged (SC3) | Inspection of `pyproject.toml` | A dependency added |
 | 8 | `pytest`, `ruff`, `mypy --strict`, import-linter, Doxygen (no warning) and the opengrep scan pass (SC2, SC4) | All pass | Any failure |
 | 9 | The source review record (`QC-PY-001`) is `Go` | `RC-*` says Go | `No-Go` or missing |
 
@@ -82,3 +83,4 @@ A SQLite database (Python `sqlite3`, no new dependency) with a versioned schema 
 [MIL-004]: ./mil-004-documentation-and-wrap-up.md
 [MIL-006]: ./mil-006-dynamic-site-and-cleanup.md
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

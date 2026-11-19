@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added the LinkedIn link, the profile photo and the project flip cards to the scope coverage and the MIL-004 deliverable; added OI-003<br>Verdict Go (RC-015) | [ec90c2b] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the gateways MIL-005 and MIL-006 for the SQLite storage and the dynamic site, moved the end date to 2026-11-25 and added the scope coverage and the plan risks, at the request of S01 (ADR-0002) <br>Verdict Go (RC-021) | [1406a53] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added the gateways MIL-005 and MIL-006 for the SQLite storage and the dynamic site, moved the end date to 2026-11-25 and added the scope coverage and the plan risks, at the request of S01 (ADR-0002) <br>Verdict Go (RC-021) | [1406a53] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: rewrote the MIL-006 deliverable, kept the dates, added the plan risk on the Flask dependency, at the request of S01 (ADR-0003) <br>Verdict Go (RC-029) | [ae5a380] |
 
 ---
 
@@ -40,7 +40,7 @@ This plan schedules the six gateways that deliver the Day 83 portfolio website: 
 | MIL-003 Site generation and preview | [MIL-003] | 2026-11-22 | 2026-11-22 | S01 | none (technical tasks) | `python -m portfolio build` and `python -m portfolio serve` working end to end on sample data, with `load_from_json`, a stylesheet and integration and end-to-end tests | not yet synced |
 | MIL-004 Documentation and wrap-up | [MIL-004] | 2026-11-23 | 2026-11-23 | S01 | none (documentation tasks) | README, Doxygen reference, a wiki in English, Danish and Bahasa Malaysia with one screenshot per step, a LinkedIn link and profile photo on the about page, and flip cards for the projects | not yet synced |
 | MIL-005 SQLite storage and management | [MIL-005] | 2026-11-24 | 2026-11-24 | S01 | none (technical tasks) | A SQLite database with a versioned schema, SQLite repositories, and the commands `init`, `import` and the management commands, tested with hostile input | not yet synced |
-| MIL-006 Dynamic site and cleanup | [MIL-006] | 2026-11-25 | 2026-11-25 | S01 | none (technical and documentation tasks) | `serve` renders the pages from the database on every request with safe routes and headers; the static build and the JSON stores are removed; README, wiki, Doxygen reference and screenshots are updated | not yet synced |
+| MIL-006 Dynamic site and cleanup | [MIL-006] | 2026-11-25 | 2026-11-25 | S01 | none (technical and documentation tasks) | A Flask application with Jinja templates renders the pages from the database on every request with safe routes and headers; Flask is the one pinned runtime dependency; the static build, the standard library server and the JSON stores are removed; README, wiki, Doxygen reference and screenshots are updated | published |
 
 ## Timeline diagram
 
@@ -81,7 +81,7 @@ Project starts 2026-11-19
 | A LinkedIn link and a profile photo on the about page (O7) | MIL-004 |
 | Project flip cards with image, tags and skills (O8) | MIL-004 |
 | A SQLite database, the commands and the import of the JSON files (O9) | MIL-005 |
-| The dynamic server rendering from the database, safe routes and headers (O10) | MIL-006 |
+| The Flask application with Jinja templates rendering from the database, safe routes and headers (O1, O10) | MIL-006 |
 | Updated README, wiki, Doxygen reference and screenshots for the SQLite and dynamic site | MIL-006 |
 
 ## Dependencies
@@ -99,6 +99,7 @@ The gateways form a chain: MIL-001 precedes MIL-002, which precedes MIL-003, whi
 | A review ends `Go-with-conditions` because a criterion only a person can confirm stays Pending | High: the gate blocks the next gateway | Ask S01 at plan acceptance to confirm the language criteria of the English artifacts; stop and report if the gate still blocks | Reviewer is also the author |
 | A change of the SQLite schema after the import is written breaks existing databases | Medium: data cannot be read | The schema version is stored in the file and checked; a newer version stops the program; a database is rebuilt from the JSON samples with `init` and `import` | The database file is committed or lost |
 | The dynamic server exposes files or data it should not | High: a file outside the data folder is shown | Confined images folder, read-only database connection, no write route, hostile-path tests and a layer review before MIL-006 is a Go | Hostile input reaches SQL or a file path |
+| Flask or a package it installs changes behaviour or has a vulnerability | Medium: the site breaks or is exposed | Pin an exact Flask version, keep Flask in the presentation layer, guard the layers with an import-linter contract, and read the release notes before changing the pin | A third-party dependency has a vulnerability or breaks |
 
 ## Open Issues
 
@@ -118,5 +119,5 @@ The gateways form a chain: MIL-001 precedes MIL-002, which precedes MIL-003, whi
 [MIL-004]: ./milestones/mil-004-documentation-and-wrap-up.md
 [MIL-005]: ./milestones/mil-005-sqlite-storage-and-management.md
 [MIL-006]: ./milestones/mil-006-dynamic-site-and-cleanup.md
-[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4
