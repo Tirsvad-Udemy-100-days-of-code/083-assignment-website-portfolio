@@ -34,22 +34,41 @@ where = ["src"]
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
-pythonpath = ["src"]
+# tests/unit holds the shared builders and fakes (sample_data.py, fakes.py).
+pythonpath = ["src", "tests/unit"]
 addopts = "-ra"
 
 [tool.ruff]
 line-length = 88
 target-version = "py313"
-src = ["src", "tests"]
+src = ["src", "tests", "tests/unit"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "N", "S", "SIM", "RUF"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101"]
+# S311: the tests seed random.Random on purpose, to get a reproducible sample.
+"tests/**" = ["S101", "S311"]
 
 [tool.mypy]
 strict = true
 python_version = "3.13"
-mypy_path = "src"
+mypy_path = ["src", "tests/unit"]
 files = ["src", "tests"]
+
+# The layers of src/portfolio, from top to bottom: a layer imports only layers
+# below it. infrastructure and presentation are added in MIL-003, when their
+# packages exist.
+[tool.importlinter]
+root_package = "portfolio"
+
+[[tool.importlinter.contracts]]
+name = "Dependencies point inward"
+type = "layers"
+layers = ["portfolio.application", "portfolio.domain"]
+
+[[tool.importlinter.contracts]]
+name = "The domain imports no other layer"
+type = "forbidden"
+source_modules = ["portfolio.domain"]
+forbidden_modules = ["portfolio.application"]

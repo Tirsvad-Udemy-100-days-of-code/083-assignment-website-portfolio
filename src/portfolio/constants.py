@@ -25,3 +25,21 @@ DEFAULT_HOST: Final[str] = "127.0.0.1"
 
 ## @brief Port of the preview server.
 DEFAULT_PORT: Final[int] = 8000
+
+## @brief Title of the site, shown on every page.
+SITE_TITLE: Final[str] = "Portfolio"
+
+## @brief Largest number of projects the home page shows.
+HOME_PROJECT_LIMIT: Final[int] = 10
+
+## @brief Longest accepted project title, in characters.
+MAX_TITLE_LENGTH: Final[int] = 30
+
+## @brief Longest accepted project kind (the JSON key `type`), in characters.
+MAX_KIND_LENGTH: Final[int] = 30
+
+## @brief Longest accepted project description, in characters.
+MAX_DESCRIPTION_LENGTH: Final[int] = 250
+
+## @brief Longest accepted URL (image or source code), in characters.
+MAX_URL_LENGTH: Final[int] = 200
