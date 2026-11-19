@@ -80,7 +80,10 @@ def test_server_serves_the_about_page(running_server: ThreadingHTTPServer) -> No
     status, _, body = fetch(running_server, ABOUT_PAGE_FILE_NAME)
     assert status == 200
     assert "Jens Tirsvad Nielsen" in body
-    assert "Software developer" in body
+    assert (
+        "Systems Developer | Building reliable software | Always learning and adapting"
+        in body
+    )
     assert "https://www.linkedin.com/in/tirsvad74/" in body
 
 
