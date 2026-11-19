@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Chose Flask and Jinja for the web site: amended O1, O10, SC1, SC3, SC11, the scope, the risks and the introduction; the no-runtime-dependency principle is replaced by one pinned runtime dependency, at the request of S01 (ADR-0003)<br>Verdict Go (RC-027) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Chose Flask and Jinja for the web site: amended O1, O10, SC1, SC3, SC11, the scope, the risks and the introduction; the no-runtime-dependency principle is replaced by one pinned runtime dependency, at the request of S01 (ADR-0003)<br>Verdict Go (RC-027) | [ae5a380] |
 
 ---
 
@@ -64,3 +64,4 @@ Go — every Mandatory criterion of `QC-BC-001` passes, and criteria 3, 5 and 9 
 
 [BC-001]: ../../business-case.md
 [QC-BC-001]: ../../../framework/qc/artifacts/qc-business-case.md
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

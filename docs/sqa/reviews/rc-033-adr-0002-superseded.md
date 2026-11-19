@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Superseded by ADR-0003: the web layer is Flask with Jinja templates; the SQLite storage, the read-only server and the safety rules are kept<br>Verdict Go (RC-033) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Superseded by ADR-0003: the web layer is Flask with Jinja templates; the SQLite storage, the read-only server and the safety rules are kept<br>Verdict Go (RC-033) | [ae5a380] |
 
 ---
 
@@ -52,3 +52,4 @@ Go — every Mandatory criterion of `QC-ADR-001` passes.
 
 [ADR-0002]: ../../adr/adr-0002-sqlite-storage-and-dynamic-site.md
 [QC-ADR-001]: ../../../framework/qc/artifacts/qc-adr.md
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-022) | [1406a53] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: criterion 7 now says the gateway adds no runtime dependency, because SC3 allows the one Flask dependency later (ADR-0003) <br>Verdict Go (RC-030) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: criterion 7 now says the gateway adds no runtime dependency, because SC3 allows the one Flask dependency later (ADR-0003) <br>Verdict Go (RC-030) | [ae5a380] |
 
 ---
 
@@ -83,3 +83,4 @@ A SQLite database (Python `sqlite3`, no new dependency) with a versioned schema 
 [MIL-004]: ./mil-004-documentation-and-wrap-up.md
 [MIL-006]: ./mil-006-dynamic-site-and-cleanup.md
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

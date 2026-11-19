@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: the dynamic site is a Flask application with Jinja templates; new criteria on templates, escaping, the pinned dependency and the layer contract; new tasks 1 to 5 and 7; the documents move to ADR-0003 (ADR-0003)<br>Verdict Go (RC-031) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: the dynamic site is a Flask application with Jinja templates; new criteria on templates, escaping, the pinned dependency and the layer contract; new tasks 1 to 5 and 7; the documents move to ADR-0003 (ADR-0003)<br>Verdict Go (RC-031) | [ae5a380] |
 
 ---
 
@@ -62,3 +62,4 @@ Go — every Mandatory criterion of `QC-MIL-001` passes, and criteria 3, 5 and 9
 
 [MIL-006]: ../../milestones/mil-006-dynamic-site-and-cleanup.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

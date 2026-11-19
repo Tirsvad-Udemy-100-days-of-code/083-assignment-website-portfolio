@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added the gateways MIL-005 and MIL-006 for the SQLite storage and the dynamic site, moved the end date to 2026-11-25 and added the scope coverage and the plan risks, at the request of S01 (ADR-0002) <br>Verdict Go (RC-021) | [1406a53] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: rewrote the MIL-006 deliverable, kept the dates, added the plan risk on the Flask dependency, at the request of S01 (ADR-0003) <br>Verdict Go (RC-029) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: rewrote the MIL-006 deliverable, kept the dates, added the plan risk on the Flask dependency, at the request of S01 (ADR-0003) <br>Verdict Go (RC-029) | [ae5a380] |
 
 ---
 
@@ -120,3 +120,4 @@ The gateways form a chain: MIL-001 precedes MIL-002, which precedes MIL-003, whi
 [MIL-005]: ./milestones/mil-005-sqlite-storage-and-management.md
 [MIL-006]: ./milestones/mil-006-dynamic-site-and-cleanup.md
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

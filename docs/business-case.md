@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added O9, O10, SC10, SC11, the SQLite database, the management commands and the dynamic server to scope, assumptions and risks; amended O1, O2 and SC1; removed the database from the out-of-scope list, at the request of S01 (ADR-0002) <br>Verdict Go (RC-019) | [1406a53] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Chose Flask and Jinja for the web site: amended O1, O10, SC1, SC3, SC11, the scope, the risks and the introduction; the no-runtime-dependency principle is replaced by one pinned runtime dependency, at the request of S01 (ADR-0003) <br>Verdict Go (RC-027) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Chose Flask and Jinja for the web site: amended O1, O10, SC1, SC3, SC11, the scope, the risks and the introduction; the no-runtime-dependency principle is replaced by one pinned runtime dependency, at the request of S01 (ADR-0003) <br>Verdict Go (RC-027) | [ae5a380] |
 
 ---
 
@@ -168,3 +168,4 @@ Proceed: the project is small, has a clear definition of done, needs one pinned 
 
 [SA-001]: ./stakeholder-analysis.md
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

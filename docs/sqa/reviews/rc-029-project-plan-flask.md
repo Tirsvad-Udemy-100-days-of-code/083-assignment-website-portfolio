@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: rewrote the MIL-006 deliverable, kept the dates, added the plan risk on the Flask dependency, at the request of S01 (ADR-0003)<br>Verdict Go (RC-029) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: rewrote the MIL-006 deliverable, kept the dates, added the plan risk on the Flask dependency, at the request of S01 (ADR-0003)<br>Verdict Go (RC-029) | [ae5a380] |
 
 ---
 
@@ -71,3 +71,4 @@ Go — every Mandatory criterion of `QC-PP-001` passes, and criteria 3, 5 and 9 
 
 [PP-001]: ../../project-plan.md
 [QC-PP-001]: ../../../framework/qc/artifacts/qc-project-plan.md
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

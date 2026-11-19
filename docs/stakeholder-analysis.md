@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Added concern CN-012 (SQLite storage and a dynamic site) and updated the communication milestones, at the request of S01 <br>Verdict Go (RC-020) | [1406a53] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: CN-008 now asks for a one-command install with pinned dependencies, added concern CN-013 (Flask for the website), and rewrote the S02 and S03 conflict, at the request of S01 (ADR-0003) <br>Verdict Go (RC-028) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: CN-008 now asks for a one-command install with pinned dependencies, added concern CN-013 (Flask for the website), and rewrote the S02 and S03 conflict, at the request of S01 (ADR-0003) <br>Verdict Go (RC-028) | [ae5a380] |
 
 ---
 
@@ -104,3 +104,4 @@ No use cases are modelled ([BC-001] Out of Scope), so no actor mapping exists. E
 
 [BC-001]: ./business-case.md
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

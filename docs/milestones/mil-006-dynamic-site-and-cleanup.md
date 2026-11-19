@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-023) | [1406a53] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: the dynamic site is a Flask application with Jinja templates; new criteria on templates, escaping, the pinned dependency and the layer contract; new tasks 1 to 5 and 7; the documents move to ADR-0003 (ADR-0003) <br>Verdict Go (RC-031) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: the dynamic site is a Flask application with Jinja templates; new criteria on templates, escaping, the pinned dependency and the layer contract; new tasks 1 to 5 and 7; the documents move to ADR-0003 (ADR-0003) <br>Verdict Go (RC-031) | [ae5a380] |
 
 ---
 
@@ -91,3 +91,4 @@ A Flask application (an application factory in the presentation layer) with Jinj
 [SA-001]: ../stakeholder-analysis.md
 [MIL-005]: ./mil-005-sqlite-storage-and-management.md
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

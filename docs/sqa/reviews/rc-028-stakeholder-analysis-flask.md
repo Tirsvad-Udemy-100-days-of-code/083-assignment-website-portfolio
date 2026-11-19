@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: CN-008 now asks for a one-command install with pinned dependencies, added concern CN-013 (Flask for the website), and rewrote the S02 and S03 conflict, at the request of S01 (ADR-0003)<br>Verdict Go (RC-028) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Flask decision: CN-008 now asks for a one-command install with pinned dependencies, added concern CN-013 (Flask for the website), and rewrote the S02 and S03 conflict, at the request of S01 (ADR-0003)<br>Verdict Go (RC-028) | [ae5a380] |
 
 ---
 
@@ -65,3 +65,4 @@ Go — every Mandatory criterion of `QC-SA-001` passes, and criteria 3, 5 and 9 
 
 [SA-001]: ../../stakeholder-analysis.md
 [QC-SA-001]: ../../../framework/qc/artifacts/qc-stakeholder-analysis.md
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4

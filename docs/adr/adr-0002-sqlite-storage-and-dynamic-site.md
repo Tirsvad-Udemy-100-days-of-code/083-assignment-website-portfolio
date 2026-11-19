@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version <br>Verdict Go (RC-024) | [1406a53] |
-| 2026-11-19 | Superseded by ADR-0003 | Jens Tirsvad Nielsen | Stand-in for S01 | Superseded by ADR-0003: the web layer is Flask with Jinja templates; the SQLite storage, the read-only server and the safety rules are kept <br>Verdict Go (RC-033) | pending |
+| 2026-11-19 | Superseded by ADR-0003 | Jens Tirsvad Nielsen | Stand-in for S01 | Superseded by ADR-0003: the web layer is Flask with Jinja templates; the SQLite storage, the read-only server and the safety rules are kept <br>Verdict Go (RC-033) | [ae5a380] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -62,3 +62,4 @@ Use option 2. The database is a SQLite file opened through the standard library,
 [MIL-005]: ../milestones/mil-005-sqlite-storage-and-management.md
 [MIL-006]: ../milestones/mil-006-dynamic-site-and-cleanup.md
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
+[ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4
