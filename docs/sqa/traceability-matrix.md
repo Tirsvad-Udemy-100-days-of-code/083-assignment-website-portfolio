@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-013 to RC-016 for the amended BC, SA, PP and MIL-004 | [ec90c2b] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-017 for the MIL-004 source and RC-018 for the wiki and README | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-017 for the MIL-004 source and RC-018 for the wiki and README | [1d8362f] |
 
 ---
 
@@ -74,3 +74,4 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [6367a3b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/6367a3b727ed74d5ac4bf9fb8c4ffe15b92cfb85
 [53db60c]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/53db60c1a016b07abf9b27b093f0501591ae69c5
 [ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
+[1d8362f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1d8362f63554020f75ee5ab9f293a185882a3bcd
