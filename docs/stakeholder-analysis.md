@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concerns CN-010 (LinkedIn link and profile photo) and CN-011 (flip cards with tags and skills) at the request of S01<br>Verdict Go (RC-014) | pending |
 
 ---
 
@@ -47,6 +48,8 @@ This analysis names the people who have an interest in the Website Portfolio pro
 | CN-007 | S03 | The repository has a description, topics and a README that explain the project at a glance. | Usability |
 | CN-008 | S03 | Nothing has to be installed to run the project beyond Python. | Implementation constraint (no runtime dependencies) |
 | CN-009 | S02 | The lecture is summarised, not copied: no lecture screenshot, text or video is published. | Legal constraint |
+| CN-010 | S01 | The portfolio connects to my LinkedIn profile and shows my profile photo. | Functionality |
+| CN-011 | S01 | My projects are flip cards: the front shows name, description and image, the back shows the source, the tags and the skills the project gives me. I show projects that show my skills, not basic exercises. | Functionality |
 
 ## Communication Requirements
 
@@ -84,6 +87,8 @@ No use cases are modelled ([BC-001] Out of Scope), so no actor mapping exists. E
 | S02 | CN-009 | O5 |
 | S03 | CN-007 | O6 |
 | S03 | CN-008 | O1, O4 |
+| S01 | CN-010 | O7 |
+| S01 | CN-011 | O8 |
 
 ## Sign-Off
 
