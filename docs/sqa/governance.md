@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
 
 ---
 
@@ -61,3 +61,4 @@ Cross-cutting escalations and disputed verdicts are Accountable to the ARB Chair
 [PP-001]: ../project-plan.md
 [TM-001]: ./traceability-matrix.md
 [PRC-001]: ../../framework/process/review-checklist-process.md
+[8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187

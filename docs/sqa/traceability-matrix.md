@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
 
 ---
 
@@ -68,3 +68,4 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [MIL-004]: ../milestones/mil-004-documentation-and-wrap-up.md
 [ADR-0001]: ../adr/adr-0001-standard-library-site-generator.md
 [GOV-001]: ./governance.md
+[8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187

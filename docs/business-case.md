@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Removed the notebook from scope and constraints (not requested)<br>Named the assignment's function names in O1<br>Reworded the tooling constraint | pending |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [8163226] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Removed the notebook from scope and constraints (not requested)<br>Named the assignment's function names in O1<br>Reworded the tooling constraint | [8163226] |
 
 ---
 
@@ -152,3 +152,4 @@ Proceed: the project is small, has a clear definition of done, needs no runtime 
 ---
 
 [SA-001]: ./stakeholder-analysis.md
+[8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
