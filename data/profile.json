@@ -1,0 +1,9 @@
+{
+  "name": "Jens Tirsvad Nielsen",
+  "headline": "Python developer in training",
+  "summary": "I am learning Python by building one small project a day in the 100 Days of Code course. I care about clear code, tests and tools that stay simple. This portfolio collects some of the projects I am proud of.",
+  "skills": ["Python", "Git", "Unit testing", "HTML and CSS", "Clean architecture", "Command line tools"],
+  "links": [
+    { "label": "GitHub", "url": "https://github.com/Tirsvad" }
+  ]
+}
