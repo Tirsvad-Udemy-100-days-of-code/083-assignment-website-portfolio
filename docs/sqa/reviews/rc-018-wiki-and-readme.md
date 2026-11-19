@@ -10,6 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go for the repository content; criterion 14 is Pending the host | [1d8362f] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Checked criterion 14 on the published wiki after the merge<br>Verdict Go | [6533acf] |
 
 ---
 
@@ -39,7 +40,7 @@
 | 11 | Every page starts with the language line, with the current language in bold and a link to the same page in each other language | Pass | Every page starts with the language line with the current language in bold and links to the same page in the other languages. |
 | 12 | A page in a language other than English is named `<Page>-<code>.md`, with a BCP 47 code; English has no suffix | Pass | Translations are named `<Page>-da.md` and `<Page>-ms.md`; English has no suffix. |
 | 13 | Code blocks, commands, file names and IDs stay in English in every language | Pass | Code blocks, commands, file names and IDs are the same in the three languages. |
-| 14 | The sidebar, every page and every link were checked on the published wiki after the change, not only in the repository | Pending | Can only be checked on the host after the merge (MIL-004 criterion 9); it is repeated there and this record is updated. |
+| 14 | The sidebar, every page and every link were checked on the published wiki after the change, not only in the repository | Pass | After the merge of PR 34, the host listed all 32 files as wiki pages; the sidebar and the 30 pages answer with HTTP 200 and their 84 internal links and images all resolve. |
 | 15 | A change to the layout rules (sections, order, naming) is made in the generator or template and in this checklist's source rules together | Pass | Not applicable: no generator or template changed; the sidebar rules were followed as written. |
 | 16 | The wiki folder (`docs/wiki/`) is flat: every page, `Home.md` and `_Sidebar.md` included, is directly in it, and languages are told apart by file name, never by a subfolder | Pass | All 32 files are directly in `docs/wiki/`, no subfolder. |
 
@@ -52,13 +53,12 @@
 
 ## Overall Verdict
 
-Go for the repository content: every Mandatory criterion of `QC-WIKI-001` that can be checked in the repository passes. Criterion 14 is Pending until the published wiki is checked after the merge; the Danish and Bahasa Malaysia language checks stay Pending for a native reader.
+Go — every Mandatory criterion of `QC-WIKI-001` passes, criterion 14 on the published wiki after the merge. The Danish and Bahasa Malaysia language checks stay Pending for a native reader.
 
 ## Action Items
 
 | Action | Owner | Due |
 | --- | --- | --- |
-| Check the sidebar, every page and every link on the published wiki, then update this record | S01 | after the merge of MIL-004 |
 | Have a native reader confirm the Danish and Bahasa Malaysia pages | S01 | when a reader is available |
 
 ---
@@ -66,3 +66,4 @@ Go for the repository content: every Mandatory criterion of `QC-WIKI-001` that c
 [QC-WIKI-001]: ../../../framework/qc/artifacts/qc-wiki.md
 [MIL-004]: ../../milestones/mil-004-documentation-and-wrap-up.md
 [1d8362f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1d8362f63554020f75ee5ab9f293a185882a3bcd
+[6533acf]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/6533acf317e17c38045de743a7260b46b48a6656
