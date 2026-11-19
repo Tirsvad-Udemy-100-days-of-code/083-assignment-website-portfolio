@@ -1,12 +1,14 @@
 """Capture the screenshots of the README and the wiki.
 
-Every image comes from this project's own output: the data file, the built
-pages, the output of its commands and the served site. Nothing is taken from
+Every image comes from this project's own output: the data file, the output of
+its commands and the pages of the running Flask server. Nothing is taken from
 the course lectures.
 
 The pictures are taken by a headless browser in a Docker container, never on
 the host desktop (a graphical test must not take the user's mouse and
-keyboard). Needs Docker and the project's `.venv`.
+keyboard). The server runs in a container too: it installs the project there,
+so the pictures show a clean install. Needs Docker, an internet connection for
+`pip` and the project's `.venv`.
 
 Usage, from the repository root:
 
@@ -28,6 +30,7 @@ BROWSER_IMAGE = "zenika/alpine-chrome:latest"
 PYTHON_IMAGE = "python:3.13-slim"
 NETWORK = "portfolio-shots"
 SERVER_NAME = "portfolio-preview"
+SERVER_HOST = f"http://{SERVER_NAME}:8000"
 SERVER_PORT = 8000
 # The preview server binds to all interfaces of its own container so that the browser
 # container can reach it over the private Docker network. No port is published to the
@@ -50,12 +53,19 @@ pre{{margin:0;padding:18px 22px;white-space:pre-wrap;word-break:break-word}}
 """
 
 
-def run(command: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
+def run(
+    command: list[str], *, check: bool = True, cwd: Path | None = None
+) -> subprocess.CompletedProcess[str]:
     """Run a command and return its text output; never goes through a shell."""
     # The command is a list built in this file from constants and the repository's own
     # paths, and shell=False, so no input can add to it; the scan finding is accepted.
     return subprocess.run(  # noqa: S603  # nosemgrep: dangerous-subprocess-use-audit
-        command, capture_output=True, text=True, encoding="utf-8", check=check
+        command,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        check=check,
+        cwd=cwd,
     )
 
 
@@ -102,82 +112,106 @@ def shoot(
     print(f"wrote docs/images/{name}.png")
 
 
-def build_site() -> str:
-    """Build the sample site and return the output of the build command."""
-    site = WORK / "site"
-    shutil.rmtree(site, ignore_errors=True)
-    done = run(
-        [python_exe(), "-m", "portfolio", "build", "--data", "data", "--out", str(site)]
+def cli(workdir: Path, *arguments: str) -> tuple[int, str]:
+    """Run one portfolio command in a folder; return its exit code and its output."""
+    done = run([python_exe(), "-m", "portfolio", *arguments], cwd=workdir, check=False)
+    text = (done.stdout + done.stderr).replace("\\", "/")
+    return done.returncode, text.strip()
+
+
+def transcript(workdir: Path, commands: list[list[str]]) -> tuple[str, str]:
+    """Run commands one after another; return the first command and the whole output."""
+    shown = "python -m portfolio " + " ".join(commands[0])
+    lines: list[str] = []
+    for index, arguments in enumerate(commands):
+        _, text = cli(workdir, *arguments)
+        if index:
+            lines.append("\n$ python -m portfolio " + " ".join(arguments))
+        lines.append(text)
+    return shown, "\n".join(lines)
+
+
+def prepare_workspace() -> Path:
+    """Copy the sample data to a scratch folder; no command touches the repository."""
+    shutil.rmtree(WORK / "cli", ignore_errors=True)
+    (WORK / "cli").mkdir(parents=True)
+    shutil.copytree(ROOT / "data", WORK / "cli" / "data")
+    shutil.rmtree(WORK / "app", ignore_errors=True)
+    app = WORK / "app"
+    app.mkdir()
+    for name in ("pyproject.toml", "README.md", "LICENSE"):
+        shutil.copyfile(ROOT / name, app / name)
+    shutil.copytree(
+        ROOT / "src", app / "src", ignore=shutil.ignore_patterns("__pycache__")
     )
-    return done.stdout + done.stderr
+    return WORK / "cli"
 
 
-def plain_copy() -> None:
-    """Copy the built site without its stylesheet, to show the bare page structure."""
-    plain = WORK / "site-plain"
-    shutil.rmtree(plain, ignore_errors=True)
-    shutil.copytree(WORK / "site", plain)
-    for page in plain.glob("*.html"):
-        text = page.read_text(encoding="utf-8")
-        page.write_text(
-            re.sub(r"<link[^>]*stylesheet[^>]*>", "", text), encoding="utf-8"
-        )
+def snapshot(page: str, name: str, extra: str = "") -> None:
+    """Save a page of the running server as a file that loads its files from the server.
 
-
-def flipped_copy() -> None:
-    """Copy the built site with every card turned to its back.
-
-    A headless browser cannot hover, so the copy adds one rule that does what
-    the hover rule does.
+    `extra` is added to the head, for example a rule that turns the cards. A page
+    without its stylesheet is made by removing the link to it.
     """
-    flipped = WORK / "site-flipped"
-    shutil.rmtree(flipped, ignore_errors=True)
-    shutil.copytree(WORK / "site", flipped)
-    with (flipped / "style.css").open("a", encoding="utf-8") as sheet:
-        sheet.write(
-            "\n.flip-card .flip-card-inner "
-            "{ transform: rotateY(180deg); transition: none; }\n"
-        )
+    probe = run(
+        ["docker", "run", "--rm", "--network", NETWORK, "--entrypoint", "wget",
+         BROWSER_IMAGE, "-q", "-O", "-", f"{SERVER_HOST}{page}"],
+    )  # fmt: skip
+    text = probe.stdout
+    head = f'<base href="{SERVER_HOST}/">' + extra
+    text = text.replace("<head>", "<head>" + head, 1)
+    (WORK / f"{name}.html").write_text(text, encoding="utf-8")
 
 
-def capture_preview() -> None:
-    """Serve the site from a container and take the picture from another one."""
+def without_stylesheet(name: str) -> None:
+    """Remove the link to the stylesheet from a saved page."""
+    page = WORK / f"{name}.html"
+    text = page.read_text(encoding="utf-8")
+    page.write_text(re.sub(r"<link[^>]*stylesheet[^>]*>", "", text), encoding="utf-8")
+
+
+def start_server(workdir: Path) -> None:
+    """Start the Flask server in a container that installs the project first."""
     run(["docker", "network", "create", NETWORK], check=False)
     run(["docker", "rm", "-f", SERVER_NAME], check=False)
+    serve = (
+        "pip install -q --no-cache-dir --disable-pip-version-check /app && "
+        "python -m portfolio serve --db /data/portfolio.db --data /data "
+        f"--host {CONTAINER_HOST} --port {SERVER_PORT}"
+    )
     run(
         [
             "docker", "run", "-d", "--rm", "--name", SERVER_NAME, "--network", NETWORK,
-            "-v", f"{ROOT}:/app:ro", "-v", f"{WORK}/site:/site:ro",
-            "-e", "PYTHONPATH=/app/src", "-e", "PYTHONDONTWRITEBYTECODE=1",
-            PYTHON_IMAGE, "python", "-m", "portfolio", "serve",
-            "--out", "/site", "--host", CONTAINER_HOST, "--port", str(SERVER_PORT),
+            "-v", f"{WORK}/app:/app", "-v", f"{workdir}/data:/data",
+            "-e", "PYTHONDONTWRITEBYTECODE=1",
+            PYTHON_IMAGE, "sh", "-c", serve,
         ]
     )  # fmt: skip
-    try:
-        url = f"http://{SERVER_NAME}:{SERVER_PORT}/index.html"
-        for _ in range(20):
-            probe = run(
-                ["docker", "run", "--rm", "--network", NETWORK, "--entrypoint", "wget",
-                 BROWSER_IMAGE, "-q", "-O", "/dev/null", url],
-                check=False,
-            )  # fmt: skip
-            if probe.returncode == 0:
-                break
-            # Wait for the server container to start; one second between 20 tries.
-            time.sleep(1)  # nosemgrep: arbitrary-sleep
-        shoot(url, "step-05-preview-server", DESKTOP, network=NETWORK)
-    finally:
-        run(["docker", "rm", "-f", SERVER_NAME], check=False)
-        run(["docker", "network", "rm", NETWORK], check=False)
+    for _ in range(90):
+        probe = run(
+            ["docker", "run", "--rm", "--network", NETWORK, "--entrypoint", "wget",
+             BROWSER_IMAGE, "-q", "-O", "/dev/null", f"{SERVER_HOST}/"],
+            check=False,
+        )  # fmt: skip
+        if probe.returncode == 0:
+            return
+        # Wait for the server container to install the project and start; one second
+        # between 90 tries.
+        time.sleep(1)  # nosemgrep: arbitrary-sleep
+    raise RuntimeError("the server container did not start")
+
+
+def stop_server() -> None:
+    """Stop the server container and remove the private network."""
+    run(["docker", "rm", "-f", SERVER_NAME], check=False)
+    run(["docker", "network", "rm", NETWORK], check=False)
 
 
 def main() -> int:
     """Capture every screenshot; return the exit code."""
     WORK.mkdir(exist_ok=True)
     IMAGES.mkdir(parents=True, exist_ok=True)
-    build_output = build_site()
-    plain_copy()
-    flipped_copy()
+    workdir = prepare_workspace()
 
     data_text = (ROOT / "data" / "projects.json").read_text(encoding="utf-8")
     first_lines = "\n".join(data_text.splitlines()[:30])
@@ -188,22 +222,75 @@ def main() -> int:
         first_lines + "\n  ...",
     )
     shoot("file:///work/data.html", "step-01-project-data", TERMINAL)
-    shoot(
-        "file:///work/site-plain/index.html", "step-02-home-page-structure", (1000, 900)
-    )
-    shoot("file:///work/site-plain/about.html", "step-03-about-page", (1000, 700))
-    shoot("file:///work/site/index.html", "step-04-styled-home-page", DESKTOP)
-    shoot("file:///work/site/about.html", "step-04-styled-about-page", (1200, 800))
-    shoot("file:///work/site/index.html", "step-04-narrow-screen", NARROW)
 
-    terminal_page(
-        WORK / "build.html",
-        "Terminal",
-        "python -m portfolio build",
-        build_output or "(no output)",
-    )
-    shoot("file:///work/build.html", "step-05-build-command", (1000, 220))
-    capture_preview()
+    # The server needs a database and reads the folder that holds it.
+    command, output = transcript(workdir, [["init"], ["import"], ["project", "list"]])
+    terminal_page(WORK / "database.html", "Terminal", command, output)
+    shoot("file:///work/database.html", "step-08-database-commands", (1000, 520))
+
+    empty = WORK / "empty"
+    shutil.rmtree(empty, ignore_errors=True)
+    empty.mkdir()
+    command, output = transcript(empty, [["serve"]])
+    terminal_page(WORK / "serve-missing.html", "Terminal", command, output)
+    shoot("file:///work/serve-missing.html", "step-05-serve-command", (1000, 220))
+
+    start_server(workdir)
+    try:
+        snapshot("/", "home-plain")
+        without_stylesheet("home-plain")
+        snapshot("/about", "about-plain")
+        without_stylesheet("about-plain")
+        turn = (
+            "<style>.flip-card .flip-card-inner "
+            "{ transform: rotateY(180deg); transition: none; }</style>"
+        )
+        snapshot("/", "home-flipped", extra=turn)
+
+        shoot(
+            "file:///work/home-plain.html",
+            "step-02-home-page-structure",
+            (1000, 900),
+            network=NETWORK,
+        )
+        shoot(
+            "file:///work/about-plain.html",
+            "step-03-about-page",
+            (1000, 700),
+            network=NETWORK,
+        )
+        shoot(f"{SERVER_HOST}/", "step-04-styled-home-page", DESKTOP, network=NETWORK)
+        shoot(
+            f"{SERVER_HOST}/about",
+            "step-04-styled-about-page",
+            (1200, 800),
+            network=NETWORK,
+        )
+        shoot(f"{SERVER_HOST}/", "step-04-narrow-screen", NARROW, network=NETWORK)
+        shoot(f"{SERVER_HOST}/", "step-05-preview-server", DESKTOP, network=NETWORK)
+        shoot(
+            f"{SERVER_HOST}/", "step-07-flip-card-front", (1200, 800), network=NETWORK
+        )
+        shoot(
+            "file:///work/home-flipped.html",
+            "step-07-flip-card-back",
+            (1200, 800),
+            network=NETWORK,
+        )
+        shoot(
+            f"{SERVER_HOST}/about", "step-07-about-page", (1200, 800), network=NETWORK
+        )
+
+        # A project added with a command shows on the next request, with no restart.
+        cli(
+            workdir, "project", "add", "--title", "My new project", "--kind", "Website",
+            "--description", "Added with a command while the server runs.",
+            "--source-code-url", "https://example.com/my-new-project",
+            "--tag", "Flask", "--skill", "SQLite",
+        )  # fmt: skip
+        shoot(f"{SERVER_HOST}/", "step-08-project-added", (1200, 1750), network=NETWORK)
+    finally:
+        stop_server()
 
     tests = run(
         [python_exe(), "-m", "pytest", "-q", "--no-header", "-p", "no:cacheprovider"],
@@ -211,10 +298,6 @@ def main() -> int:
     )
     terminal_page(WORK / "tests.html", "Terminal", "python -m pytest -q", tests.stdout)
     shoot("file:///work/tests.html", "step-06-tests", (1000, 420))
-
-    shoot("file:///work/site/index.html", "step-07-flip-card-front", (1200, 800))
-    shoot("file:///work/site-flipped/index.html", "step-07-flip-card-back", (1200, 800))
-    shoot("file:///work/site/about.html", "step-07-about-page", (1200, 800))
     return 0
 
 

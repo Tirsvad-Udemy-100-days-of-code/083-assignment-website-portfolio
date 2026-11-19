@@ -11,7 +11,7 @@ Projekterne står ikke i koden. De ligger i `data/projects.json`, ét element hv
 ## Hvad vi har lært
 
 - Data og kode er adskilt: du ændrer portfolioen ved at redigere en fil, ikke programmet.
-- JSON svarer direkte til Python-lister og -ordbøger, så standardbiblioteket er nok til at læse det.
+- JSON svarer direkte til Python-lister og -ordbøger, så standardbiblioteket er nok til at læse det. Trin 8 importerer filerne i SQLite én gang; derefter er databasen kilden.
 - Kontrollér data ved grænsen: resten af programmet kan stole på et `Project`.
 - En tydelig fejlbesked (hvilken fil, hvilket element, hvad er galt) er en del af designet.
 

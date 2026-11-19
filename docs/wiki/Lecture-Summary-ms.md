@@ -18,4 +18,4 @@ Tugasan menamakan tiga fungsi: `home` (halaman dengan projek), `about` (halaman 
 
 ## Bagaimana projek ini menjawabnya
 
-Projek ini mencapai matlamat yang sama dengan pustaka standard Python sahaja, jadi tiada apa perlu dipasang untuk menjalankannya. Alasannya ditulis dalam rekod keputusan [ADR-0001](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/src/branch/main/docs/adr/adr-0001-standard-library-site-generator.md). Setiap langkah diterangkan pada halamannya sendiri, bermula dengan [Langkah 1](Step-1-Project-Data-ms).
+Projek ini mencapai matlamat yang sama dengan Flask untuk halaman web dan SQLite, melalui modul `sqlite3` Python sendiri, untuk data. Halaman dijana daripada pangkalan data pada setiap permintaan, jadi perubahan kelihatan serta-merta. Alasannya ditulis dalam rekod keputusan [ADR-0003](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/src/branch/main/docs/adr/adr-0003-flask-and-jinja-on-sqlite.md). Setiap langkah diterangkan pada halamannya sendiri, bermula dengan [Langkah 1](Step-1-Project-Data-ms).

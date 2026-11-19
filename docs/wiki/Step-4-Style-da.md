@@ -14,7 +14,7 @@
 
 - CSS-gitter med `auto-fill` giver et responsivt layout uden framework og uden en media query for hver størrelse.
 - `prefers-color-scheme` lader siden følge den besøgendes valg.
-- Stylesheetet er en statisk fil ved siden af Python-koden; build kopierer den ind i siden.
+- Stylesheetet er en statisk fil ved siden af Python-koden; Flask serverer den fra `/static/style.css`.
 
 ## Prøv det
 

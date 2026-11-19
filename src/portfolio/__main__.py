@@ -9,15 +9,21 @@ hands them to the commands.
 import argparse
 import logging
 from collections.abc import Callable, Sequence
+from functools import partial
 from pathlib import Path
 
+from flask import Flask
+
+from portfolio.application.dto.about_page import AboutPage
+from portfolio.application.dto.home_page import HomePage
 from portfolio.application.dto.profile_changes import ProfileChanges
 from portfolio.application.dto.project_card import ProjectCard
 from portfolio.application.dto.project_changes import ProjectChanges
 from portfolio.application.dto.project_input import ProjectInput
+from portfolio.application.use_cases.about import about
 from portfolio.application.use_cases.add_project import add_project
-from portfolio.application.use_cases.build_site import build_site
 from portfolio.application.use_cases.change_project import change_project
+from portfolio.application.use_cases.home import home
 from portfolio.application.use_cases.import_portfolio import import_portfolio
 from portfolio.application.use_cases.initialize_database import initialize_database
 from portfolio.application.use_cases.list_projects import list_projects
@@ -26,7 +32,6 @@ from portfolio.application.use_cases.set_profile import set_profile
 from portfolio.constants import (
     APP_DESCRIPTION,
     APP_NAME,
-    COMMAND_BUILD,
     COMMAND_IMPORT,
     COMMAND_INIT,
     COMMAND_PROFILE,
@@ -35,10 +40,8 @@ from portfolio.constants import (
     DEFAULT_DATA_DIR,
     DEFAULT_DATABASE_PATH,
     DEFAULT_HOST,
-    DEFAULT_OUTPUT_DIR,
     DEFAULT_PORT,
     EXIT_OK,
-    HELP_BUILD,
     HELP_DATA_DIR,
     HELP_DATABASE,
     HELP_DESCRIPTION,
@@ -51,7 +54,6 @@ from portfolio.constants import (
     HELP_LINK,
     HELP_NAME,
     HELP_NEW_TITLE,
-    HELP_OUTPUT_DIR,
     HELP_PHOTO,
     HELP_PORT,
     HELP_PROFILE,
@@ -70,7 +72,10 @@ from portfolio.constants import (
     HELP_SUMMARY,
     HELP_TAG,
     HELP_TITLE,
+    IMAGES_DIR_NAME,
     LOG_FORMAT,
+    MAX_PORT,
+    MESSAGE_PORT_RANGE,
     PROFILE_FILE_NAME,
     PROJECTS_FILE_NAME,
     SUBCOMMAND_ADD,
@@ -79,25 +84,19 @@ from portfolio.constants import (
     SUBCOMMAND_SET,
 )
 from portfolio.infrastructure.data_folder_reader import FolderDataFileReader
-from portfolio.infrastructure.repositories.json_profile_repository import (
-    JsonProfileRepository,
-)
-from portfolio.infrastructure.repositories.json_project_repository import (
-    JsonProjectRepository,
-)
+from portfolio.infrastructure.load_from_json import load_from_json
+from portfolio.infrastructure.load_profile_from_json import load_profile_from_json
 from portfolio.infrastructure.repositories.sqlite_profile_repository import (
     SqliteProfileRepository,
 )
 from portfolio.infrastructure.repositories.sqlite_project_repository import (
     SqliteProjectRepository,
 )
-from portfolio.infrastructure.site_writer import FileSiteWriter
 from portfolio.infrastructure.sqlite_database import SqliteDatabase
 from portfolio.infrastructure.sqlite_database_initializer import (
     SqliteDatabaseInitializer,
 )
 from portfolio.infrastructure.sqlite_portfolio_importer import SqlitePortfolioImporter
-from portfolio.presentation.commands.build_command import BuildCommand
 from portfolio.presentation.commands.import_command import ImportCommand
 from portfolio.presentation.commands.init_command import InitCommand
 from portfolio.presentation.commands.profile_set_command import ProfileSetCommand
@@ -107,11 +106,9 @@ from portfolio.presentation.commands.project_remove_command import (
     ProjectRemoveCommand,
 )
 from portfolio.presentation.commands.project_set_command import ProjectSetCommand
-from portfolio.presentation.commands.serve_command import (
-    ServeCommand,
-    serve_directory,
-)
-from portfolio.presentation.html_site_renderer import HtmlSiteRenderer
+from portfolio.presentation.commands.serve_command import ServeCommand
+from portfolio.presentation.web.app import create_app
+from portfolio.presentation.web.server import serve_app
 
 _Handler = Callable[[argparse.Namespace], int]
 
@@ -130,23 +127,6 @@ def build_parser() -> argparse.ArgumentParser:
         description=APP_DESCRIPTION,
     )
     commands = parser.add_subparsers(title="commands", dest="command")
-
-    build = commands.add_parser(COMMAND_BUILD, help=HELP_BUILD, description=HELP_BUILD)
-    build.add_argument(
-        "--data", type=Path, default=Path(DEFAULT_DATA_DIR), help=HELP_DATA_DIR
-    )
-    build.add_argument(
-        "--out", type=Path, default=Path(DEFAULT_OUTPUT_DIR), help=HELP_OUTPUT_DIR
-    )
-    build.set_defaults(handler=_run_build)
-
-    serve = commands.add_parser(COMMAND_SERVE, help=HELP_SERVE, description=HELP_SERVE)
-    serve.add_argument(
-        "--out", type=Path, default=Path(DEFAULT_OUTPUT_DIR), help=HELP_OUTPUT_DIR
-    )
-    serve.add_argument("--host", default=DEFAULT_HOST, help=HELP_HOST)
-    serve.add_argument("--port", type=int, default=DEFAULT_PORT, help=HELP_PORT)
-    serve.set_defaults(handler=_run_serve)
 
     _add_database_commands(commands)
     return parser
@@ -174,6 +154,27 @@ def _add_database_commands(commands: _Commands) -> None:
 
     _add_project_commands(commands, database)
     _add_profile_commands(commands, database)
+
+    serve = commands.add_parser(
+        COMMAND_SERVE, parents=[database], help=HELP_SERVE, description=HELP_SERVE
+    )
+    serve.add_argument(
+        "--data", type=Path, default=Path(DEFAULT_DATA_DIR), help=HELP_DATA_DIR
+    )
+    serve.add_argument("--host", default=DEFAULT_HOST, help=HELP_HOST)
+    serve.add_argument("--port", type=_port, default=DEFAULT_PORT, help=HELP_PORT)
+    serve.set_defaults(handler=_run_serve)
+
+
+def _port(text: str) -> int:
+    """Read a port number; some systems would wrap a number above 65535 around."""
+    try:
+        port = int(text)
+    except ValueError:
+        port = -1
+    if not 0 <= port <= MAX_PORT:
+        raise argparse.ArgumentTypeError(MESSAGE_PORT_RANGE.format(value=text))
+    return port
 
 
 def _add_project_commands(
@@ -275,13 +276,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     return handler(arguments)
 
 
-def _run_build(arguments: argparse.Namespace) -> int:
-    return BuildCommand(_build_site).run(arguments.data, arguments.out)
-
-
 def _run_serve(arguments: argparse.Namespace) -> int:
-    return ServeCommand(serve_directory).run(
-        arguments.out, arguments.host, arguments.port
+    return ServeCommand(_check_site_database, _serve_site).run(
+        arguments.db, arguments.data, arguments.host, arguments.port
     )
 
 
@@ -352,8 +349,8 @@ def _prepare_database(path: Path) -> bool:
 
 def _import_data(path: Path, data_dir: Path, replace: bool) -> int:
     return import_portfolio(
-        JsonProjectRepository(data_dir / PROJECTS_FILE_NAME),
-        JsonProfileRepository(data_dir / PROFILE_FILE_NAME),
+        load_from_json(data_dir / PROJECTS_FILE_NAME),
+        load_profile_from_json(data_dir / PROFILE_FILE_NAME),
         SqlitePortfolioImporter(SqliteDatabase(path)),
         replace,
     )
@@ -381,14 +378,37 @@ def _store_profile(path: Path, changes: ProfileChanges) -> bool:
     return set_profile(repository, repository, changes)
 
 
-def _build_site(data_dir: Path, output_dir: Path) -> tuple[str, ...]:
-    return build_site(
-        JsonProjectRepository(data_dir / PROJECTS_FILE_NAME),
-        JsonProfileRepository(data_dir / PROFILE_FILE_NAME),
-        FolderDataFileReader(data_dir),
-        HtmlSiteRenderer(),
-        FileSiteWriter(output_dir),
+def _home_page(path: Path) -> HomePage:
+    """Read the home page; every call opens the database read-only, then closes it."""
+    return home(SqliteProjectRepository(SqliteDatabase(path, read_only=True)))
+
+
+def _about_page(path: Path) -> AboutPage:
+    """Read the about page; every call opens the database read-only, then closes it."""
+    return about(SqliteProfileRepository(SqliteDatabase(path, read_only=True)))
+
+
+def create_site(database: Path, data_dir: Path) -> Flask:
+    """!
+    @brief Wire the Flask application to a database and a data folder.
+    @param database The database file; it is opened read-only on every request.
+    @param data_dir The data folder; only its `images` folder is served.
+    @return The application, ready to be served.
+    """
+    return create_app(
+        home_page=partial(_home_page, database),
+        about_page=partial(_about_page, database),
+        images=FolderDataFileReader(data_dir / IMAGES_DIR_NAME),
     )
+
+
+def _check_site_database(path: Path) -> None:
+    _home_page(path)
+    _about_page(path)
+
+
+def _serve_site(database: Path, data_dir: Path, host: str, port: int) -> None:
+    serve_app(create_site(database, data_dir), host, port)
 
 
 if __name__ == "__main__":

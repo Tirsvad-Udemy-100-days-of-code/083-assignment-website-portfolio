@@ -2,7 +2,7 @@
 
 # Getting started
 
-You need Python 3.13 or newer and Git. The project has no runtime dependencies. Docker is only needed to retake the screenshots, and Doxygen only to build the API reference.
+You need Python 3.13 or newer and Git. `pip` installs Flask, the only runtime dependency, with the packages Flask needs. Docker is only needed to retake the screenshots, and Doxygen only to build the API reference.
 
 ## Set up
 
@@ -33,11 +33,12 @@ The `.venv` folder is a private copy of Python for this project, so nothing is i
 ## Run
 
 ```text
-python -m portfolio build
+python -m portfolio init
+python -m portfolio import
 python -m portfolio serve
 ```
 
-Open <http://127.0.0.1:8000> in a browser. Press `Ctrl+C` to stop the server.
+`init` creates the database, `import` fills it from the sample JSON files in `data/`, and `serve` starts the Flask server. Open <http://127.0.0.1:8000> in a browser. Press `Ctrl+C` to stop the server.
 
 ## Test
 

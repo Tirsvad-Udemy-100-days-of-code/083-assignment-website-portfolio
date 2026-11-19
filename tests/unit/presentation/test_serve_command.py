@@ -4,53 +4,84 @@ from pathlib import Path
 
 import pytest
 
-from portfolio.constants import EXIT_OK, EXIT_OUTPUT_ERROR, EXIT_SERVER_ERROR
+from portfolio.application.errors.data_source_error import DataSourceError
+from portfolio.constants import EXIT_DATA_ERROR, EXIT_OK, EXIT_SERVER_ERROR
 from portfolio.presentation.commands.serve_command import ServeCommand
+
+DATABASE = Path("data/portfolio.db")
+DATA = Path("data")
 
 
 class RecordingRunner:
     def __init__(self, error: Exception | None = None) -> None:
-        self.calls: list[tuple[Path, str, int]] = []
+        self.calls: list[tuple[Path, Path, str, int]] = []
         self._error = error
 
-    def __call__(self, directory: Path, host: str, port: int) -> None:
-        self.calls.append((directory, host, port))
+    def __call__(self, database: Path, data: Path, host: str, port: int) -> None:
+        self.calls.append((database, data, host, port))
         if self._error is not None:
             raise self._error
 
 
-def test_serve_command_runs_the_server_on_the_folder(tmp_path: Path) -> None:
-    runner = RecordingRunner()
-    code = ServeCommand(runner).run(tmp_path, "127.0.0.1", 8123)
+class RecordingCheck:
+    def __init__(self, error: Exception | None = None) -> None:
+        self.calls: list[Path] = []
+        self._error = error
+
+    def __call__(self, database: Path) -> None:
+        self.calls.append(database)
+        if self._error is not None:
+            raise self._error
+
+
+def test_serve_command_checks_the_database_then_runs_the_server() -> None:
+    check, runner = RecordingCheck(), RecordingRunner()
+
+    code = ServeCommand(check, runner).run(DATABASE, DATA, "127.0.0.1", 8123)
+
     assert code == EXIT_OK
-    assert runner.calls == [(tmp_path, "127.0.0.1", 8123)]
+    assert check.calls == [DATABASE]
+    assert runner.calls == [(DATABASE, DATA, "127.0.0.1", 8123)]
 
 
-def test_serve_command_refuses_a_missing_folder(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+def test_serve_command_names_init_and_import_when_the_database_is_missing(
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
+    check = RecordingCheck(DataSourceError("database not found"))
     runner = RecordingRunner()
-    missing = tmp_path / "nothing"
-    code = ServeCommand(runner).run(missing, "127.0.0.1", 8000)
+
+    code = ServeCommand(check, runner).run(DATABASE, DATA, "127.0.0.1", 8000)
+
     err = capsys.readouterr().err
-    assert code == EXIT_OUTPUT_ERROR
+    assert code == EXIT_DATA_ERROR
     assert runner.calls == []
-    assert f"output folder {missing} does not exist" in err
+    assert err.startswith("error: database ")
+    assert str(DATABASE) in err
+    assert "python -m portfolio init" in err
+    assert "python -m portfolio import" in err
     assert err.count("\n") == 1
-
-
-def test_serve_command_refuses_a_file_in_place_of_the_folder(tmp_path: Path) -> None:
-    a_file = tmp_path / "file.txt"
-    a_file.write_text("x", encoding="utf-8")
-    runner = RecordingRunner()
-    assert ServeCommand(runner).run(a_file, "127.0.0.1", 8000) == EXIT_OUTPUT_ERROR
-    assert runner.calls == []
+    assert "Traceback" not in err
 
 
 def test_serve_command_reports_a_port_that_cannot_be_bound(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     runner = RecordingRunner(OSError("address already in use"))
-    code = ServeCommand(runner).run(tmp_path, "127.0.0.1", 8000)
+
+    code = ServeCommand(RecordingCheck(), runner).run(DATABASE, DATA, "127.0.0.1", 8000)
+
     assert code == EXIT_SERVER_ERROR
     assert "127.0.0.1:8000: address already in use" in capsys.readouterr().err
+
+
+def test_serve_command_reports_a_port_out_of_range(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    runner = RecordingRunner(OverflowError("bind(): port must be 0-65535."))
+
+    code = ServeCommand(RecordingCheck(), runner).run(
+        DATABASE, DATA, "127.0.0.1", 99999
+    )
+
+    assert code == EXIT_SERVER_ERROR
+    assert "port must be 0-65535" in capsys.readouterr().err

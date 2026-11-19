@@ -4,9 +4,9 @@
 
 ## Hvad dette trin bygger
 
-To kommandoer gør værktøjet færdigt. `python -m portfolio build` læser data og skriver `index.html`, `about.html` og `style.css` til en mappe. `python -m portfolio serve` viser mappen med standardbibliotekets `http.server` på <http://127.0.0.1:8000>. Begge har indstillinger (`--data`, `--out`, `--host`, `--port`) og giver en enkelt linje besked og en exitkode forskellig fra nul, når noget er galt, fx en manglende datafil.
+Én kommando viser siden. `python -m portfolio serve` starter en Flask-server på <http://127.0.0.1:8000>. Den har indstillingerne `--db`, `--data`, `--host` og `--port`. Hver forespørgsel læser databasen og tegner siden med en Jinja-skabelon, så der er intet build-trin. Når databasen mangler, giver `serve` en enkelt linje besked, der nævner kommandoerne `init` og `import`, og en exitkode forskellig fra nul.
 
-![Build-kommandoen og dens output](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-05-build-command.png)
+![Serve-kommandoen og en manglende database](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-05-serve-command.png)
 
 ![Siden på den lokale forhåndsvisningsserver](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-05-preview-server.png)
 
@@ -20,8 +20,7 @@ To kommandoer gør værktøjet færdigt. `python -m portfolio build` læser data
 
 ```text
 python -m portfolio --help
-python -m portfolio build --data data --out build
-python -m portfolio serve --out build
+python -m portfolio serve --db data/portfolio.db --data data --port 8000
 ```
 
 Næste: [Trin 6: Tests](Step-6-Tests-da).

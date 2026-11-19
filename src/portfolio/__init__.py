@@ -1,4 +1,4 @@
 """!
 @file __init__.py
-@brief Portfolio website generator built with the Python standard library.
+@brief Portfolio website served by Flask from a SQLite database.
 """

@@ -8,7 +8,12 @@ from collections.abc import Iterator
 from contextlib import closing, contextmanager
 from pathlib import Path
 
-from portfolio.constants import IN_MEMORY_DATABASE, MESSAGE_DATABASE_NOT_FOUND
+from portfolio.constants import (
+    IN_MEMORY_DATABASE,
+    MESSAGE_DATABASE_NOT_FOUND,
+    MESSAGE_DATABASE_READ_ONLY,
+    SQLITE_READ_ONLY_QUERY,
+)
 from portfolio.infrastructure.errors.database_error import DatabaseError
 from portfolio.infrastructure.sqlite_schema import require_current_schema
 
@@ -25,14 +30,23 @@ class SqliteDatabase:
     and rolled back when it fails. The location `:memory:` keeps one connection
     open for the life of the object, because every new connection to it would be
     a new, empty database; call `close` when the object is no longer needed.
+
+    A read-only database opens its file with the SQLite option `mode=ro`, so the
+    engine itself refuses every change and the file is never created.
     """
 
-    def __init__(self, location: Path | str) -> None:
+    def __init__(self, location: Path | str, read_only: bool = False) -> None:
         """!
         @brief Create the object; nothing is opened yet.
         @param location The database file, or `:memory:`.
+        @param read_only True to open the file read-only; `write` and `create` then
+            fail with a DatabaseError.
+        @throws ValueError The database is `:memory:`, which cannot be read-only.
         """
+        if read_only and str(location) == IN_MEMORY_DATABASE:
+            raise ValueError("an in-memory database cannot be read-only")
         self._location = str(location)
+        self._read_only = read_only
         self._shared: sqlite3.Connection | None = None
 
     def close(self) -> None:
@@ -93,6 +107,8 @@ class SqliteDatabase:
     def _connection(self, create: bool) -> Iterator[sqlite3.Connection]:
         """Give a connection and turn a SQLite or file error into a DatabaseError."""
         try:
+            if self._read_only and create:
+                raise DatabaseError(self._location, MESSAGE_DATABASE_READ_ONLY)
             if self._location == IN_MEMORY_DATABASE:
                 yield self._shared_connection()
             else:
@@ -112,7 +128,12 @@ class SqliteDatabase:
         return self._shared
 
     def _new_connection(self) -> sqlite3.Connection:
-        connection = sqlite3.connect(self._location)
+        if self._read_only:
+            # A URI, so that SQLite takes the option; as_uri quotes `?` and `#`.
+            uri = Path(self._location).resolve().as_uri() + SQLITE_READ_ONLY_QUERY
+            connection = sqlite3.connect(uri, uri=True)
+        else:
+            connection = sqlite3.connect(self._location)
         try:
             connection.execute(_FOREIGN_KEYS_ON)
         except sqlite3.Error:

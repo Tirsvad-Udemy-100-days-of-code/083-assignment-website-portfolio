@@ -14,7 +14,7 @@ Satu helaian gaya, `style.css`, memberi laman ini rupanya. Projek disusun dalam 
 
 - Grid CSS dengan `auto-fill` memberi reka letak responsif tanpa rangka kerja dan tanpa media query untuk setiap saiz.
 - `prefers-color-scheme` membolehkan halaman mengikut pilihan pelawat.
-- Helaian gaya ialah fail statik di sebelah kod Python; binaan menyalinnya ke dalam laman.
+- Helaian gaya ialah fail statik di sebelah kod Python; Flask menghidangkannya dari `/static/style.css`.
 
 ## Cuba sendiri
 

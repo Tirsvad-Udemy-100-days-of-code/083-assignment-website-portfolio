@@ -4,7 +4,7 @@
 
 ## Apa yang dibina dalam langkah ini
 
-`pytest` menjalankan ujian unit untuk entiti dan kes guna, ujian integrasi untuk repositori JSON dan penulis laman, serta ujian hujung ke hujung yang membina laman contoh sebenar dan membaca hasilnya. `lint-imports` menyemak bahawa lapisan hanya bergantung ke dalam, `ruff` menyemak gaya dan `mypy --strict` menyemak jenis.
+`pytest` menjalankan ujian unit untuk entiti dan kes guna, ujian integrasi untuk repositori SQLite, ujian klien ujian Flask untuk setiap laluan dan pengepala, serta ujian hujung ke hujung yang memulakan pelayan sebenar dan membaca jawapannya. `lint-imports` menyemak bahawa lapisan hanya bergantung ke dalam, `ruff` menyemak gaya dan `mypy --strict` menyemak jenis.
 
 ![Larian ujian](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-06-tests.png)
 

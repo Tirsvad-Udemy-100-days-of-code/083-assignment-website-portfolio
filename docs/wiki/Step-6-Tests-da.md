@@ -4,7 +4,7 @@
 
 ## Hvad dette trin bygger
 
-`pytest` kører enhedstests af entiteter og use cases, integrationstests af JSON-repositorierne og site-skriveren og end-to-end-tests, der bygger den rigtige eksempelside og læser resultatet. `lint-imports` kontrollerer, at lagene kun afhænger indad, `ruff` kontrollerer stil, og `mypy --strict` kontrollerer typerne.
+`pytest` kører enhedstests af entiteter og use cases, integrationstests af SQLite-repositorierne, Flask-testklient-tests af hver rute og header og end-to-end-tests, der starter den rigtige server og læser dens svar. `lint-imports` kontrollerer, at lagene kun afhænger indad, `ruff` kontrollerer stil, og `mypy --strict` kontrollerer typerne.
 
 ![En testkørsel](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/raw/branch/main/docs/images/step-06-tests.png)
 

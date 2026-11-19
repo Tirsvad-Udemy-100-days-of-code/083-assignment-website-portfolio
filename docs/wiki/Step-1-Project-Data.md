@@ -11,7 +11,7 @@ The projects are not written into the code. They live in `data/projects.json`, o
 ## What we gained
 
 - Data and code are separate: you change the portfolio by editing a file, not the program.
-- JSON maps directly onto Python lists and dictionaries, so the standard library is enough to read it.
+- JSON maps directly onto Python lists and dictionaries, so the standard library is enough to read it. Step 8 imports these files into SQLite once; after that the database is the source.
 - Check data at the border: the rest of the program can trust a `Project`.
 - A clear error message (which file, which entry, what is wrong) is part of the design.
 

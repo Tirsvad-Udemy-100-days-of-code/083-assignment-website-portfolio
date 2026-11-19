@@ -11,7 +11,7 @@ Projek tidak ditulis dalam kod. Ia disimpan dalam `data/projects.json`, satu ent
 ## Apa yang kita pelajari
 
 - Data dan kod diasingkan: anda mengubah portfolio dengan menyunting fail, bukan atur cara.
-- JSON terus sepadan dengan senarai dan kamus Python, jadi pustaka standard sudah memadai untuk membacanya.
+- JSON terus sepadan dengan senarai dan kamus Python, jadi pustaka standard sudah memadai untuk membacanya. Langkah 8 mengimport fail ini ke SQLite sekali; selepas itu pangkalan data ialah sumbernya.
 - Semak data di sempadan: bahagian lain atur cara boleh mempercayai `Project`.
 - Mesej ralat yang jelas (fail mana, entri mana, apa yang salah) ialah sebahagian daripada reka bentuk.
 

@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-026 for the MIL-005 source | [a91e72e] |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-027 to RC-033 for the Flask decision (BC, SA, PP, MIL-005, MIL-006, ADR-0003, ADR-0002) | [ae5a380] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-034 for the MIL-006 source and RC-035 for the wiki and README | [0c64aed] |
 
 ---
 
@@ -37,8 +37,8 @@ updated whenever an artifact instance is created or reviewed.
 | [ADR-0002] | ADR | - | - | [BC-001], [SA-001], [ADR-0001] | [ADR-0003] | RC-033 |
 | [ADR-0003] | ADR | - | - | [BC-001], [SA-001], [ADR-0002] | - | RC-032 |
 | [GOV-001] | GOV | en | it | [BC-001], [SA-001] | - | RC-009 |
-| Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005] | - | RC-010, RC-011, RC-012, RC-017, RC-026 |
-| Wiki (`docs/wiki/`) and `README.md` | WIKI | en | - | [MIL-004] | - | RC-018 |
+| Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006] | - | RC-010, RC-011, RC-012, RC-017, RC-026, RC-034 |
+| Wiki (`docs/wiki/`) and `README.md` | WIKI | en | - | [MIL-004], [MIL-006] | - | RC-018, RC-035 |
 
 ## Concern Coverage
 
@@ -90,3 +90,4 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [1406a53]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/1406a53bbc208284c38c07a83b3d264ffdea7b00
 [a91e72e]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/a91e72e351b7f2cf4204e49971a63209aea13656
 [ae5a380]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ae5a3801d5a3fc5b5ef24d5a0c9ea5dcabe71db4
+[0c64aed]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/0c64aed29bbd9484f961c11b6965844b9d1afb3e

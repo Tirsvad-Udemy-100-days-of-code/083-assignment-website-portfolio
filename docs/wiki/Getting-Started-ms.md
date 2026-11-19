@@ -2,7 +2,7 @@
 
 # Bermula
 
-Anda memerlukan Python 3.13 atau lebih baharu dan Git. Projek ini tidak mempunyai kebergantungan semasa dijalankan. Docker hanya diperlukan untuk mengambil semula tangkapan skrin, dan Doxygen hanya untuk membina rujukan API.
+Anda memerlukan Python 3.13 atau lebih baharu dan Git. `pip` memasang Flask, satu-satunya kebergantungan semasa dijalankan, bersama pakej yang diperlukan Flask. Docker hanya diperlukan untuk mengambil semula tangkapan skrin, dan Doxygen hanya untuk membina rujukan API.
 
 ## Sediakan
 
@@ -33,11 +33,12 @@ Folder `.venv` ialah salinan Python yang peribadi untuk projek ini, jadi tiada a
 ## Jalankan
 
 ```text
-python -m portfolio build
+python -m portfolio init
+python -m portfolio import
 python -m portfolio serve
 ```
 
-Buka <http://127.0.0.1:8000> dalam pelayar. Tekan `Ctrl+C` untuk menghentikan pelayan.
+`init` mencipta pangkalan data, `import` mengisinya daripada fail JSON contoh dalam `data/`, dan `serve` memulakan pelayan Flask. Buka <http://127.0.0.1:8000> dalam pelayar. Tekan `Ctrl+C` untuk menghentikan pelayan.
 
 ## Uji
 

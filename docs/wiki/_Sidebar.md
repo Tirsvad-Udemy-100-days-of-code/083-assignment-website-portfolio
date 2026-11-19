@@ -10,6 +10,7 @@
 - [Step 5: Preview](Step-5-Preview)
 - [Step 6: Tests](Step-6-Tests)
 - [Step 7: Flip cards and profile](Step-7-Flip-Cards-and-Profile)
+- [Step 8: SQLite and Flask](Step-8-SQLite-and-Flask)
 
 **Languages**
 

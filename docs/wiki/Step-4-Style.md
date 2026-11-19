@@ -14,7 +14,7 @@ One stylesheet, `style.css`, gives the site its look. The projects sit in a grid
 
 - CSS grid with `auto-fill` makes a responsive layout without a framework and without a media query for every size.
 - `prefers-color-scheme` lets the page follow the visitor's choice.
-- The stylesheet is a static file next to the Python code; the build copies it into the site.
+- The stylesheet is a static file next to the Python code; Flask serves it from `/static/style.css`.
 
 ## Try it
 
