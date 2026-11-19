@@ -219,27 +219,69 @@ def test_build_copies_every_project_image_unchanged(tmp_path: Path) -> None:
         assert (site / relative).read_bytes() == (data / relative).read_bytes()
 
 
-def test_about_page_links_to_linkedin_and_shows_the_initials_avatar(
+AVATAR_IMAGE_PATTERN = r'<img class="avatar" src="([^"]+)" alt="([^"]+)">'
+
+
+def copy_sample_data(tmp_path: Path) -> Path:
+    data = tmp_path / "data"
+    shutil.copytree(PROJECT_ROOT / DEFAULT_DATA_DIR, data)
+    return data
+
+
+def set_photo(data: Path, photo: str | None) -> None:
+    """Point the profile at `photo`, or remove the key when it is None."""
+    profile_path = data / PROFILE_FILE_NAME
+    profile = json.loads(profile_path.read_text("utf-8"))
+    if photo is None:
+        profile.pop("photo", None)
+    else:
+        profile["photo"] = photo
+    write_json(profile_path, profile)
+
+
+def test_about_page_links_to_linkedin_and_shows_the_real_profile_photo(
     tmp_path: Path,
 ) -> None:
-    about = (build_real_data(tmp_path) / ABOUT_PAGE_FILE_NAME).read_text("utf-8")
+    site = build_real_data(tmp_path)
+    about = (site / ABOUT_PAGE_FILE_NAME).read_text("utf-8")
     assert (
         '<a href="https://www.linkedin.com/in/tirsvad74/" '
         'rel="noopener noreferrer">LinkedIn</a>'
     ) in about
     assert "https://github.com/Tirsvad" in about
+    match = re.search(AVATAR_IMAGE_PATTERN, about)
+    assert match is not None
+    assert match.group(1) == "images/profile.jpg"
+    assert match.group(2) == "Jens Tirsvad Nielsen"
+    assert "avatar-initials" not in about
+    copied = (site / "images" / "profile.jpg").read_bytes()
+    assert (
+        copied
+        == (PROJECT_ROOT / DEFAULT_DATA_DIR / "images" / "profile.jpg").read_bytes()
+    )
+
+
+def test_about_page_shows_the_initials_avatar_when_the_profile_has_no_photo(
+    tmp_path: Path,
+) -> None:
+    data = copy_sample_data(tmp_path)
+    set_photo(data, None)
+    site = tmp_path / "site"
+    assert entry_point.main(["build", "--data", str(data), "--out", str(site)]) == 0
+    about = (site / ABOUT_PAGE_FILE_NAME).read_text("utf-8")
+    assert (
+        '<a href="https://www.linkedin.com/in/tirsvad74/" '
+        'rel="noopener noreferrer">LinkedIn</a>'
+    ) in about
     assert '<div class="avatar avatar-initials" aria-hidden="true">JN</div>' in about
     assert '<img class="avatar"' not in about
+    assert not (site / "images" / "profile.jpg").exists()
 
 
 def build_with_photo(tmp_path: Path, photo_bytes: bytes) -> Path:
-    data = tmp_path / "data"
-    shutil.copytree(PROJECT_ROOT / DEFAULT_DATA_DIR, data)
+    data = copy_sample_data(tmp_path)
     (data / "images" / "profile.png").write_bytes(photo_bytes)
-    profile_path = data / PROFILE_FILE_NAME
-    profile = json.loads(profile_path.read_text("utf-8"))
-    profile["photo"] = "images/profile.png"
-    write_json(profile_path, profile)
+    set_photo(data, "images/profile.png")
     site = tmp_path / "site"
     assert entry_point.main(["build", "--data", str(data), "--out", str(site)]) == 0
     return site
@@ -251,7 +293,7 @@ def test_about_page_shows_the_supplied_photo_and_the_build_copies_it(
     photo = b"\x89PNG\r\n\x1a\n" + bytes(range(32))
     site = build_with_photo(tmp_path, photo)
     about = (site / ABOUT_PAGE_FILE_NAME).read_text("utf-8")
-    match = re.search(r'<img class="avatar" src="([^"]+)" alt="([^"]+)">', about)
+    match = re.search(AVATAR_IMAGE_PATTERN, about)
     assert match is not None
     assert match.group(1) == "images/profile.png"
     assert match.group(2) == "Jens Tirsvad Nielsen"
@@ -262,12 +304,8 @@ def test_about_page_shows_the_supplied_photo_and_the_build_copies_it(
 def test_build_fails_with_a_message_when_the_photo_file_is_missing(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    data = tmp_path / "data"
-    shutil.copytree(PROJECT_ROOT / DEFAULT_DATA_DIR, data)
-    profile_path = data / PROFILE_FILE_NAME
-    profile = json.loads(profile_path.read_text("utf-8"))
-    profile["photo"] = "images/profile.jpg"
-    write_json(profile_path, profile)
+    data = copy_sample_data(tmp_path)
+    (data / "images" / "profile.jpg").unlink()
     site = tmp_path / "site"
     code = entry_point.main(["build", "--data", str(data), "--out", str(site)])
     captured = capsys.readouterr()

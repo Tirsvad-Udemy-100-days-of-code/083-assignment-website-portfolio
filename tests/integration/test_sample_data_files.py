@@ -37,7 +37,8 @@ def test_sample_profile_links_to_linkedin_and_github() -> None:
     assert "GitHub" in urls
 
 
-def test_sample_profile_has_no_photo_until_the_owner_supplies_one() -> None:
+def test_sample_profile_has_a_photo_file_that_exists() -> None:
     profile = JsonProfileRepository(DATA_DIR / PROFILE_FILE_NAME).get_profile()
-    assert profile.photo is None
+    assert profile.photo == "images/profile.jpg"
+    assert (DATA_DIR / profile.photo).is_file()
     assert profile.initials == "JN"
