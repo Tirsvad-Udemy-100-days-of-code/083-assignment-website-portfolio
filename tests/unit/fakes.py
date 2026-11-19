@@ -1,9 +1,10 @@
 """In-memory fakes of the application ports, for the unit tests."""
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 
 from portfolio.application.dto.about_page import AboutPage
 from portfolio.application.dto.home_page import HomePage
+from portfolio.application.errors.data_source_error import DataSourceError
 from portfolio.domain.entities.profile import Profile
 from portfolio.domain.entities.project import Project
 
@@ -27,9 +28,25 @@ class InMemoryProfileRepository:
 class InMemorySiteWriter:
     def __init__(self) -> None:
         self.files: dict[str, str] = {}
+        self.binary_files: dict[str, bytes] = {}
 
     def write_text(self, relative_path: str, content: str) -> None:
         self.files[relative_path] = content
+
+    def write_bytes(self, relative_path: str, content: bytes) -> None:
+        self.binary_files[relative_path] = content
+
+
+class InMemoryDataFileReader:
+    def __init__(self, files: Mapping[str, bytes] | None = None) -> None:
+        self._files = files or {}
+        self.reads: list[str] = []
+
+    def read_bytes(self, relative_path: str) -> bytes:
+        self.reads.append(relative_path)
+        if relative_path not in self._files:
+            raise DataSourceError(f"{relative_path}: file not found")
+        return self._files[relative_path]
 
 
 class StubSiteRenderer:

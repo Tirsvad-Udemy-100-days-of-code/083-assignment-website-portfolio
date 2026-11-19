@@ -26,3 +26,7 @@ class AboutPage:
     skills: tuple[str, ...]
     ## @brief Links to other sites.
     links: tuple[LinkItem, ...]
+    ## @brief Relative path of the photo; None when the avatar shows the initials.
+    photo_url: str | None
+    ## @brief Initials of the name, shown in the avatar when there is no photo.
+    initials: str

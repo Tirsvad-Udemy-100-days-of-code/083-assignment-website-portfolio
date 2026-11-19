@@ -23,4 +23,6 @@ def about(repository: ProfileRepository) -> AboutPage:
         summary=profile.summary,
         skills=profile.skills,
         links=tuple(LinkItem(label=link.label, url=link.url) for link in profile.links),
+        photo_url=profile.photo,
+        initials=profile.initials,
     )

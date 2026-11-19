@@ -24,6 +24,34 @@ def test_renderer_reads_the_packaged_stylesheet() -> None:
     assert "max-width: 600px" in css
 
 
+def test_stylesheet_flips_the_card_on_pointer_and_keyboard_focus() -> None:
+    css = HtmlSiteRenderer().stylesheet()
+    assert ".flip-card:hover .flip-card-inner" in css
+    assert ".flip-card:focus-within .flip-card-inner" in css
+    assert ".flip-card:focus .flip-card-inner" in css
+    assert "rotateY(180deg)" in css
+    assert "transform-style: preserve-3d" in css
+    assert "-webkit-transform-style: preserve-3d" in css
+    assert "backface-visibility: hidden" in css
+    assert "-webkit-backface-visibility: hidden" in css
+    assert ".flip-card:focus-visible" in css
+
+
+def test_stylesheet_stops_the_animation_when_the_visitor_prefers_reduced_motion() -> (
+    None
+):
+    css = HtmlSiteRenderer().stylesheet()
+    _, _, rule = css.partition("@media (prefers-reduced-motion: reduce)")
+    assert rule
+    assert "transition: none" in rule.split("@media")[0]
+
+
+def test_stylesheet_styles_the_avatar() -> None:
+    css = HtmlSiteRenderer().stylesheet()
+    assert ".avatar" in css
+    assert "border-radius: 50%" in css
+
+
 def test_stylesheet_uses_no_external_resource() -> None:
     css = HtmlSiteRenderer().stylesheet()
     assert "http://" not in css

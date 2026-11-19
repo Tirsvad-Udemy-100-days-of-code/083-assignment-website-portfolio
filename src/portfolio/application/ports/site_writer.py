@@ -19,3 +19,12 @@ class SiteWriter(Protocol):
         @throws SiteWriteError The path leaves the site or the file cannot be written.
         """
         ...
+
+    def write_bytes(self, relative_path: str, content: bytes) -> None:
+        """!
+        @brief Write a binary file, such as an image, inside the site.
+        @param relative_path Path of the file inside the site, such as `images/a.png`.
+        @param content The bytes to write.
+        @throws SiteWriteError The path leaves the site or the file cannot be written.
+        """
+        ...

@@ -45,4 +45,6 @@ def _to_card(project: Project) -> ProjectCard:
         description=project.description,
         image_url=project.image_url,
         source_code_url=project.source_code_url,
+        tags=project.tags,
+        skills=project.skills,
     )

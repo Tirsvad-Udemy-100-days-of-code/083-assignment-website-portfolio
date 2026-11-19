@@ -1,0 +1,17 @@
+/**
+@mainpage Portfolio Website
+
+A portfolio website generator written with the Python standard library only.
+It reads the projects and the profile of the owner from JSON files, builds a
+home page (every project is a flip card) and an about page, and shows them on a
+local preview server.
+
+The code is layered, and each layer only depends on the layers inside it:
+
+- `portfolio.domain`: the `Project` and `Profile` entities and their rules
+- `portfolio.application`: the use cases `home`, `about` and `build_site`, and the ports they need
+- `portfolio.infrastructure`: `load_from_json`, the JSON repositories, the data folder reader and the site writer
+- `portfolio.presentation`: the HTML views, the stylesheet and the `build` and `serve` commands
+
+The README of the repository explains how to set up, run and test the project.
+*/

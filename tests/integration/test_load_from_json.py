@@ -23,6 +23,8 @@ def test_load_from_json_reads_the_projects_in_file_order(tmp_path: Path) -> None
             "Shows the weather of a city.",
             "https://example.com/weather.png",
             "https://example.com/weather",
+            ("Python", "API"),
+            ("Working with web APIs",),
         ),
         Project(
             "Second",
@@ -30,6 +32,8 @@ def test_load_from_json_reads_the_projects_in_file_order(tmp_path: Path) -> None
             "Shows the weather of a city.",
             "https://example.com/weather.png",
             "https://example.com/weather",
+            ("Python", "API"),
+            ("Working with web APIs",),
         ),
     )
 
@@ -41,6 +45,54 @@ def test_load_from_json_maps_type_to_kind_and_img_url_to_image_url(
     project = load_from_json(path)[0]
     assert project.kind == "Game"
     assert project.image_url == ""
+
+
+def test_load_from_json_reads_tags_and_skills(tmp_path: Path) -> None:
+    path = write_json(
+        tmp_path / "p.json",
+        [project_entry(tags=[" C ", "Rust"], skills=["SIMD"])],
+    )
+    project = load_from_json(path)[0]
+    assert project.tags == ("C", "Rust")
+    assert project.skills == ("SIMD",)
+
+
+def test_load_from_json_defaults_tags_and_skills_to_empty(tmp_path: Path) -> None:
+    entry = project_entry()
+    del entry["tags"]
+    del entry["skills"]
+    project = load_from_json(write_json(tmp_path / "p.json", [entry]))[0]
+    assert project.tags == ()
+    assert project.skills == ()
+
+
+def test_load_from_json_reads_a_relative_image_path(tmp_path: Path) -> None:
+    path = write_json(tmp_path / "p.json", [project_entry(img_url=" images/a.svg ")])
+    assert load_from_json(path)[0].image_url == "images/a.svg"
+
+
+@pytest.mark.parametrize(
+    ("overrides", "message"),
+    [
+        ({"tags": "C"}, "project 1: 'tags' must be a JSON array"),
+        ({"tags": None}, "project 1: 'tags' must be a JSON array"),
+        ({"tags": ["C", 3]}, "project 1: tag 2 must be text"),
+        ({"skills": {"a": 1}}, "project 1: 'skills' must be a JSON array"),
+        ({"skills": [["x"]]}, "project 1: skill 1 must be text"),
+        ({"tags": ["C", "  "]}, "project 1: tag must not be blank"),
+        ({"skills": ["x" * 61]}, "skill must be at most 60 characters"),
+        ({"tags": ["x"] * 11}, "tags must hold at most 10 entries"),
+        ({"img_url": "javascript:alert(1)"}, "image_url must be"),
+        ({"img_url": "../secret.png"}, "image_url must be"),
+        ({"img_url": "data:image/png;base64,AAAA"}, "image_url must be"),
+    ],
+)
+def test_load_from_json_rejects_a_bad_tag_skill_or_image(
+    tmp_path: Path, overrides: dict[str, object], message: str
+) -> None:
+    path = write_json(tmp_path / "p.json", [project_entry(**overrides)])
+    with pytest.raises(DataFileError, match=message):
+        load_from_json(path)
 
 
 def test_load_from_json_returns_nothing_for_an_empty_list(tmp_path: Path) -> None:

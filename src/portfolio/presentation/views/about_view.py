@@ -11,7 +11,7 @@ from portfolio.constants import (
     NAV_ABOUT_LABEL,
     SKILLS_HEADING,
 )
-from portfolio.presentation.views.html_safety import escape, safe_url
+from portfolio.presentation.views.html_safety import escape, is_safe_url, safe_url
 from portfolio.presentation.views.layout import render_page
 
 
@@ -24,8 +24,13 @@ def render_about_page(page: AboutPage) -> str:
     skills = "\n".join(f"        <li>{escape(skill)}</li>" for skill in page.skills)
     links = "\n".join(_link(link) for link in page.links)
     body = f"""    <section class="about">
-      <h1>{escape(page.name)}</h1>
-      <p class="headline">{escape(page.headline)}</p>
+      <div class="about-header">
+        {_avatar(page)}
+        <div>
+          <h1>{escape(page.name)}</h1>
+          <p class="headline">{escape(page.headline)}</p>
+        </div>
+      </div>
       <p>{escape(page.summary)}</p>
       <h2>{escape(SKILLS_HEADING)}</h2>
       <ul class="skills">
@@ -44,3 +49,11 @@ def _link(link: LinkItem) -> str:
         f'        <li><a href="{escape(safe_url(link.url))}" '
         f'rel="noopener noreferrer">{escape(link.label)}</a></li>'
     )
+
+
+def _avatar(page: AboutPage) -> str:
+    if page.photo_url is not None and is_safe_url(page.photo_url):
+        source = escape(safe_url(page.photo_url))
+        return f'<img class="avatar" src="{source}" alt="{escape(page.name)}">'
+    initials = escape(page.initials)
+    return f'<div class="avatar avatar-initials" aria-hidden="true">{initials}</div>'

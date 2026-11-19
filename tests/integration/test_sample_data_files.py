@@ -15,8 +15,12 @@ DATA_DIR = Path(__file__).resolve().parents[2] / DEFAULT_DATA_DIR
 
 def test_sample_projects_load() -> None:
     projects = JsonProjectRepository(DATA_DIR / PROJECTS_FILE_NAME).list_projects()
-    assert len(projects) >= 6
+    assert len(projects) == 6
     assert len({project.title for project in projects}) == len(projects)
+    for project in projects:
+        assert project.tags
+        assert project.skills
+        assert (DATA_DIR / project.image_url).is_file()
 
 
 def test_sample_profile_loads() -> None:
@@ -24,3 +28,16 @@ def test_sample_profile_loads() -> None:
     assert profile.name == "Jens Tirsvad Nielsen"
     assert len(profile.skills) >= 1
     assert profile.links
+
+
+def test_sample_profile_links_to_linkedin_and_github() -> None:
+    profile = JsonProfileRepository(DATA_DIR / PROFILE_FILE_NAME).get_profile()
+    urls = {link.label: link.url for link in profile.links}
+    assert urls["LinkedIn"] == "https://www.linkedin.com/in/tirsvad74/"
+    assert "GitHub" in urls
+
+
+def test_sample_profile_has_no_photo_until_the_owner_supplies_one() -> None:
+    profile = JsonProfileRepository(DATA_DIR / PROFILE_FILE_NAME).get_profile()
+    assert profile.photo is None
+    assert profile.initials == "JN"

@@ -32,6 +32,7 @@ from portfolio.constants import (
     PROFILE_FILE_NAME,
     PROJECTS_FILE_NAME,
 )
+from portfolio.infrastructure.data_folder_reader import FolderDataFileReader
 from portfolio.infrastructure.repositories.json_profile_repository import (
     JsonProfileRepository,
 )
@@ -109,6 +110,7 @@ def _build_site(data_dir: Path, output_dir: Path) -> tuple[str, ...]:
     return build_site(
         JsonProjectRepository(data_dir / PROJECTS_FILE_NAME),
         JsonProfileRepository(data_dir / PROFILE_FILE_NAME),
+        FolderDataFileReader(data_dir),
         HtmlSiteRenderer(),
         FileSiteWriter(output_dir),
     )

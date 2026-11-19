@@ -16,6 +16,17 @@ def test_about_maps_the_profile_to_a_page() -> None:
     assert page.skills == ("Python", "Testing")
 
 
+def test_about_has_initials_and_no_photo_when_the_profile_has_none() -> None:
+    page = about(InMemoryProfileRepository(make_profile()))
+    assert page.photo_url is None
+    assert page.initials == "AL"
+
+
+def test_about_gives_the_photo_path_of_the_profile() -> None:
+    page = about(InMemoryProfileRepository(make_profile(photo="images/me.jpg")))
+    assert page.photo_url == "images/me.jpg"
+
+
 def test_about_maps_links_to_link_items() -> None:
     profile = make_profile(links=(make_link(), make_link("Blog", "https://b.example")))
     page = about(InMemoryProfileRepository(profile))

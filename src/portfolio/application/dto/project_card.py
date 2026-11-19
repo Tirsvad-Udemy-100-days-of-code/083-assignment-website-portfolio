@@ -18,7 +18,11 @@ class ProjectCard:
     kind: str
     ## @brief Short description of the project.
     description: str
-    ## @brief URL of the project image; empty when there is none.
+    ## @brief Address or relative path of the project image; empty when there is none.
     image_url: str
     ## @brief URL of the source code.
     source_code_url: str
+    ## @brief Short labels such as the languages used.
+    tags: tuple[str, ...]
+    ## @brief Skills the project shows.
+    skills: tuple[str, ...]

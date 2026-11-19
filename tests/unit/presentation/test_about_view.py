@@ -20,6 +20,31 @@ def test_about_view_shows_name_headline_summary_skills_and_links() -> None:
     )
 
 
+def test_about_view_shows_an_initials_avatar_without_a_photo() -> None:
+    page = render_about_page(make_about_page())
+    assert '<div class="avatar avatar-initials" aria-hidden="true">AL</div>' in page
+    assert "<img" not in page
+
+
+def test_about_view_shows_the_photo_with_the_name_as_alternative_text() -> None:
+    page = render_about_page(make_about_page(photo_url="images/me.jpg"))
+    assert '<img class="avatar" src="images/me.jpg" alt="Ada Lovelace">' in page
+    assert "avatar-initials" not in page
+
+
+def test_about_view_escapes_the_name_in_the_alternative_text() -> None:
+    about = make_about_page(name='"><script>', photo_url="images/me.jpg")
+    page = render_about_page(about)
+    assert "<script>" not in page
+    assert 'alt="&quot;&gt;&lt;script&gt;"' in page
+
+
+def test_about_view_falls_back_to_the_initials_for_an_unsafe_photo() -> None:
+    page = render_about_page(make_about_page(photo_url="javascript:alert(1)"))
+    assert "javascript:" not in page
+    assert "avatar-initials" in page
+
+
 def test_about_view_marks_the_about_link_of_the_navigation() -> None:
     page = render_about_page(make_about_page())
     assert '<a href="about.html" aria-current="page">About</a>' in page
@@ -45,6 +70,16 @@ def test_about_view_replaces_an_unsafe_link_url() -> None:
     page = render_about_page(about)
     assert "javascript:" not in page
     assert '<a href="#" rel="noopener noreferrer">Click</a>' in page
+
+
+def test_about_view_shows_the_linkedin_link() -> None:
+    about = make_about_page(
+        links=(LinkItem("LinkedIn", "https://www.linkedin.com/in/tirsvad74/"),)
+    )
+    assert (
+        '<a href="https://www.linkedin.com/in/tirsvad74/" '
+        'rel="noopener noreferrer">LinkedIn</a>'
+    ) in render_about_page(about)
 
 
 def test_about_view_shows_a_page_without_links() -> None:

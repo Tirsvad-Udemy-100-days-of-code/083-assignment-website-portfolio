@@ -44,3 +44,44 @@ def test_profile_rejects_empty_skills() -> None:
 def test_profile_rejects_blank_skill() -> None:
     with pytest.raises(InvalidProfileError, match="skill"):
         make_profile(skills=("Python", "  "))
+
+
+def test_profile_has_no_photo_by_default() -> None:
+    assert make_profile().photo is None
+
+
+def test_profile_accepts_a_relative_photo_path() -> None:
+    assert make_profile(photo="images/profile.jpg").photo == "images/profile.jpg"
+
+
+@pytest.mark.parametrize(
+    "photo",
+    [
+        "",
+        "https://example.com/me.jpg",
+        "javascript:alert(1)",
+        "data:image/png;base64,AAAA",
+        "/etc/me.jpg",
+        "../me.jpg",
+        "images/me.txt",
+    ],
+)
+def test_profile_rejects_a_photo_that_is_not_a_relative_image_path(photo: str) -> None:
+    with pytest.raises(InvalidProfileError, match="photo"):
+        make_profile(photo=photo)
+
+
+@pytest.mark.parametrize(
+    ("name", "initials"),
+    [
+        ("Ada Lovelace", "AL"),
+        ("Jens Tirsvad Nielsen", "JN"),
+        ("  grace   hopper ", "GH"),
+        ("Plato", "P"),
+        ("Åse Østergård", "ÅØ"),
+    ],
+)
+def test_profile_initials_are_the_first_and_the_last_letter_of_the_name(
+    name: str, initials: str
+) -> None:
+    assert make_profile(name=name).initials == initials

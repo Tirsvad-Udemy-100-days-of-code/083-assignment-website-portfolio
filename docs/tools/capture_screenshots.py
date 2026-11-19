@@ -122,6 +122,22 @@ def plain_copy() -> None:
         )
 
 
+def flipped_copy() -> None:
+    """Copy the built site with every card turned to its back.
+
+    A headless browser cannot hover, so the copy adds one rule that does what
+    the hover rule does.
+    """
+    flipped = WORK / "site-flipped"
+    shutil.rmtree(flipped, ignore_errors=True)
+    shutil.copytree(WORK / "site", flipped)
+    with (flipped / "style.css").open("a", encoding="utf-8") as sheet:
+        sheet.write(
+            "\n.flip-card .flip-card-inner "
+            "{ transform: rotateY(180deg); transition: none; }\n"
+        )
+
+
 def capture_preview() -> None:
     """Serve the site from a container and take the picture from another one."""
     run(["docker", "network", "create", NETWORK], check=False)
@@ -158,6 +174,7 @@ def main() -> int:
     IMAGES.mkdir(parents=True, exist_ok=True)
     build_output = build_site()
     plain_copy()
+    flipped_copy()
 
     data_text = (ROOT / "data" / "projects.json").read_text(encoding="utf-8")
     first_lines = "\n".join(data_text.splitlines()[:30])
@@ -191,6 +208,10 @@ def main() -> int:
     )
     terminal_page(WORK / "tests.html", "Terminal", "python -m pytest -q", tests.stdout)
     shoot("file:///work/tests.html", "step-06-tests", (1000, 420))
+
+    shoot("file:///work/site/index.html", "step-07-flip-card-front", (1200, 800))
+    shoot("file:///work/site-flipped/index.html", "step-07-flip-card-back", (1200, 800))
+    shoot("file:///work/site/about.html", "step-07-about-page", (1200, 800))
     return 0
 
 
