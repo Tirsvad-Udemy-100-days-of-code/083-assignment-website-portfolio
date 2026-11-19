@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the LinkedIn link, profile photo and flip cards to the deliverable, criteria 11 to 14 and tasks 8 to 11, at the request of S01<br>Verdict Go (RC-016) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the LinkedIn link, profile photo and flip cards to the deliverable, criteria 11 to 14 and tasks 8 to 11, at the request of S01<br>Verdict Go (RC-016) | [ec90c2b] |
 
 ---
 
@@ -62,3 +62,4 @@ Go — every Mandatory criterion of `QC-MIL-001` passes, and criteria 3, 5 and 9
 
 [MIL-004]: ../../milestones/mil-004-documentation-and-wrap-up.md
 [QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b

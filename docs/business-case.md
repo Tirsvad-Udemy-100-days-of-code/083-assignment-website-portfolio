@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Removed the notebook from scope and constraints (not requested)<br>Named the assignment's function names in O1<br>Reworded the tooling constraint | [8163226] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | [ec90c2b] |
 
 ---
 
@@ -162,3 +162,4 @@ Proceed: the project is small, has a clear definition of done, needs no runtime 
 
 [SA-001]: ./stakeholder-analysis.md
 [8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
+[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b

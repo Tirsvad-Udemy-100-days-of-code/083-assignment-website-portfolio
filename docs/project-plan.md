@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the LinkedIn link, the profile photo and the project flip cards to the scope coverage and the MIL-004 deliverable; added OI-003<br>Verdict Go (RC-015) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the LinkedIn link, the profile photo and the project flip cards to the scope coverage and the MIL-004 deliverable; added OI-003<br>Verdict Go (RC-015) | [ec90c2b] |
 
 ---
 
@@ -104,3 +104,4 @@ The gateways form a chain: MIL-001 precedes MIL-002, which precedes MIL-003, whi
 [MIL-003]: ./milestones/mil-003-site-generation-and-preview.md
 [MIL-004]: ./milestones/mil-004-documentation-and-wrap-up.md
 [8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
+[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b

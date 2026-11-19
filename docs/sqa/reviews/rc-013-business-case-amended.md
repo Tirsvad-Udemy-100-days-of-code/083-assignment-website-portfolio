@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added O7, O8, SC8, SC9, the LinkedIn link, the profile photo and the flip cards with tags and skills to scope, assumptions and risks, at the request of S01<br>Verdict Go (RC-013) | [ec90c2b] |
 
 ---
 
@@ -64,3 +64,4 @@ Go — every Mandatory criterion of `QC-BC-001` passes, and criteria 3, 5 and 9 
 
 [BC-001]: ../../business-case.md
 [QC-BC-001]: ../../../framework/qc/artifacts/qc-business-case.md
+[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b

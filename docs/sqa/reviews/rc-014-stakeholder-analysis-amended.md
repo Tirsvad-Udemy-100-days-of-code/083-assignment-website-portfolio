@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concerns CN-010 (LinkedIn link and profile photo) and CN-011 (flip cards with tags and skills) at the request of S01<br>Verdict Go (RC-014) | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added concerns CN-010 (LinkedIn link and profile photo) and CN-011 (flip cards with tags and skills) at the request of S01<br>Verdict Go (RC-014) | [ec90c2b] |
 
 ---
 
@@ -65,3 +65,4 @@ Go — every Mandatory criterion of `QC-SA-001` passes, and criteria 3, 5 and 9 
 
 [SA-001]: ../../stakeholder-analysis.md
 [QC-SA-001]: ../../../framework/qc/artifacts/qc-stakeholder-analysis.md
+[ec90c2b]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/ec90c2bed831675a94f868e0bc74743b2aed547b
