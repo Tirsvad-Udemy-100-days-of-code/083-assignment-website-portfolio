@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go for the repository content; criterion 14 is Pending the host | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go for the repository content; criterion 14 is Pending the host | [0c64aed] |
 
 ---
 
@@ -65,3 +65,4 @@ Go for the repository content: every Mandatory criterion of `QC-WIKI-001` that c
 
 [QC-WIKI-001]: ../../../framework/qc/artifacts/qc-wiki.md
 [MIL-006]: ../../milestones/mil-006-dynamic-site-and-cleanup.md
+[0c64aed]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/0c64aed29bbd9484f961c11b6965844b9d1afb3e

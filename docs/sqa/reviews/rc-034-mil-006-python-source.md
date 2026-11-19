@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go | pending |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version<br>Verdict Go | [0c64aed] |
 
 ---
 
@@ -61,3 +61,4 @@ Go — every Mandatory criterion of `QC-PY-001` passes and the checks listed abo
 [BC-001]: ../../business-case.md
 [MIL-006]: ../../milestones/mil-006-dynamic-site-and-cleanup.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[0c64aed]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/0c64aed29bbd9484f961c11b6965844b9d1afb3e
