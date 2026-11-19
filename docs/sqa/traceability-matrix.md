@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Deprecated | Jens Tirsvad Nielsen | Stand-in for S01 | Initial version | [8163226] |
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added the Python source row and RC-010 | [24bf6ae] |
 
 ---
 
@@ -32,6 +33,7 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-004] | MIL | en | it | [MIL-003] | - | RC-007 |
 | [ADR-0001] | ADR | - | - | [BC-001], [SA-001] | - | RC-008 |
 | [GOV-001] | GOV | en | it | [BC-001], [SA-001] | - | RC-009 |
+| Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003] | - | RC-010 |
 
 ## Concern Coverage
 
@@ -69,3 +71,4 @@ No test plan, use case or design artifact exists: the product is too small to ju
 [ADR-0001]: ../adr/adr-0001-standard-library-site-generator.md
 [GOV-001]: ./governance.md
 [8163226]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/816322642c270c0dc5fa0f722c0b3e3f41de5187
+[24bf6ae]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/083-assignment-website-portfolio/commit/24bf6ae3f1aed725ec1d61efcc5364f1dea9868d

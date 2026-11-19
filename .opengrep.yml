@@ -1,0 +1,47 @@
+# Local static-analysis rules for the opengrep scan that runs before every push.
+# Run from the repository root, after `git add` (opengrep scans tracked files):
+#   ~/.opengrep/cli/latest/opengrep.exe scan --config .opengrep.yml .
+# Accepted baseline: 0 findings. A finding of severity ERROR blocks the push.
+rules:
+  - id: hardcoded-token-assignment
+    languages: [generic]
+    severity: ERROR
+    message: Possible hard-coded secret or token
+    pattern-regex: (?i)(token|secret|passwd|password|api[_-]?key|pat)\w*\s*[=:]\s*["']?[A-Za-z0-9_\-]{20,}
+  - id: private-key-block
+    languages: [generic]
+    severity: ERROR
+    message: Private key material
+    pattern-regex: -----BEGIN [A-Z ]*PRIVATE KEY-----
+  - id: python-eval-or-exec
+    languages: [python]
+    severity: ERROR
+    message: eval and exec run arbitrary code
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: exec(...)
+  - id: python-shell-true
+    languages: [python]
+    severity: ERROR
+    message: shell=True lets input reach a shell
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+  - id: python-bind-all-interfaces
+    languages: [python]
+    severity: WARNING
+    message: Binding to all interfaces exposes the preview server; use 127.0.0.1
+    pattern-regex: '["'']0\.0\.0\.0["'']'
+  - id: python-unsafe-deserialization
+    languages: [python]
+    severity: ERROR
+    message: pickle and marshal load untrusted data unsafely
+    pattern-either:
+      - pattern: pickle.load(...)
+      - pattern: pickle.loads(...)
+      - pattern: marshal.loads(...)
+  - id: python-insecure-hash
+    languages: [python]
+    severity: WARNING
+    message: md5 and sha1 are not collision resistant
+    pattern-either:
+      - pattern: hashlib.md5(...)
+      - pattern: hashlib.sha1(...)
