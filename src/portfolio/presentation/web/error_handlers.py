@@ -41,6 +41,29 @@ def _error_page(status: HTTPStatus) -> Response:
     return make_response(page, status.value)
 
 
+def show_http_error(error: HTTPException) -> Response:
+    """!
+    @brief Show the plain page of an HTTP error, such as 404 or 405.
+    @param error The error Flask raised for the request.
+    @return The error page, with the `Allow` header when the method is refused.
+    """
+    status = HTTPStatus(error.code or HTTPStatus.INTERNAL_SERVER_ERROR)
+    response = _error_page(status)
+    if isinstance(error, MethodNotAllowed) and error.valid_methods:
+        response.headers[_ALLOW] = ", ".join(sorted(error.valid_methods))
+    return response
+
+
+def show_data_error(error: DataSourceError) -> Response:
+    """!
+    @brief Show a plain 500 page when the data cannot be read; the cause is logged.
+    @param error The error of the data source.
+    @return The error page.
+    """
+    _logger.error("The data cannot be read: %s", error)
+    return _error_page(HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
 def register_error_handlers(app: Flask) -> None:
     """!
     @brief Show a plain page for every HTTP error and for a failed read of the data.
@@ -49,16 +72,5 @@ def register_error_handlers(app: Flask) -> None:
     shows the exception, a path or a stack trace. The details go to the log.
     @param app The application.
     """
-
-    @app.errorhandler(HTTPException)
-    def show_http_error(error: HTTPException) -> Response:
-        status = HTTPStatus(error.code or HTTPStatus.INTERNAL_SERVER_ERROR)
-        response = _error_page(status)
-        if isinstance(error, MethodNotAllowed) and error.valid_methods:
-            response.headers[_ALLOW] = ", ".join(sorted(error.valid_methods))
-        return response
-
-    @app.errorhandler(DataSourceError)
-    def show_data_error(error: DataSourceError) -> Response:
-        _logger.error("The data cannot be read: %s", error)
-        return _error_page(HTTPStatus.INTERNAL_SERVER_ERROR)
+    app.register_error_handler(HTTPException, show_http_error)
+    app.register_error_handler(DataSourceError, show_data_error)
