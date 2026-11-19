@@ -5,6 +5,9 @@ from collections.abc import Mapping, Sequence
 from portfolio.application.dto.about_page import AboutPage
 from portfolio.application.dto.home_page import HomePage
 from portfolio.application.errors.data_source_error import DataSourceError
+from portfolio.application.errors.duplicate_project_error import DuplicateProjectError
+from portfolio.application.errors.profile_not_found_error import ProfileNotFoundError
+from portfolio.application.errors.project_not_found_error import ProjectNotFoundError
 from portfolio.domain.entities.profile import Profile
 from portfolio.domain.entities.project import Project
 
@@ -60,3 +63,75 @@ class StubSiteRenderer:
 
     def stylesheet(self) -> str:
         return "css"
+
+
+class InMemoryProjectStore:
+    """Reads and writes projects in a list; stands in for the project database."""
+
+    def __init__(self, projects: Sequence[Project] = ()) -> None:
+        self.projects = list(projects)
+
+    def list_projects(self) -> Sequence[Project]:
+        return tuple(self.projects)
+
+    def add_project(self, project: Project) -> None:
+        if any(stored.title == project.title for stored in self.projects):
+            raise DuplicateProjectError(project.title)
+        self.projects.append(project)
+
+    def replace_project(self, title: str, project: Project) -> None:
+        for place, stored in enumerate(self.projects):
+            if stored.title == title:
+                self._require_free(project.title, except_place=place)
+                self.projects[place] = project
+                return
+        raise ProjectNotFoundError(title)
+
+    def _require_free(self, title: str, except_place: int) -> None:
+        for place, stored in enumerate(self.projects):
+            if place != except_place and stored.title == title:
+                raise DuplicateProjectError(title)
+
+    def remove_project(self, title: str) -> None:
+        for place, stored in enumerate(self.projects):
+            if stored.title == title:
+                del self.projects[place]
+                return
+        raise ProjectNotFoundError(title)
+
+
+class InMemoryProfileStore:
+    """Reads and writes the profile in a field; stands in for the profile database."""
+
+    def __init__(self, profile: Profile | None = None) -> None:
+        self.profile = profile
+
+    def get_profile(self) -> Profile:
+        if self.profile is None:
+            raise ProfileNotFoundError
+        return self.profile
+
+    def save_profile(self, profile: Profile) -> None:
+        self.profile = profile
+
+
+class FakeDatabaseInitializer:
+    def __init__(self, created: bool) -> None:
+        self._created = created
+        self.calls = 0
+
+    def initialize(self) -> bool:
+        self.calls += 1
+        return self._created
+
+
+class FakeImportTarget:
+    def __init__(self, empty: bool = True) -> None:
+        self._empty = empty
+        self.imported: tuple[Sequence[Project], Profile] | None = None
+
+    def is_empty(self) -> bool:
+        return self._empty
+
+    def replace_all(self, projects: Sequence[Project], profile: Profile) -> None:
+        self.imported = (projects, profile)

@@ -51,3 +51,9 @@ htmlcov/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# SQLite database of the portfolio (a local file; data/ stays tracked otherwise)
+data/portfolio.db
+*.db-journal
+*.db-wal
+*.db-shm
