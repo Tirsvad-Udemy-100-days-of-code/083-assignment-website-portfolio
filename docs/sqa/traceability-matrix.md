@@ -9,9 +9,9 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-012 for the MIL-003 source | [53db60c] |
 | 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-013 to RC-016 for the amended BC, SA, PP and MIL-004 | [ec90c2b] |
-
+| 2026-11-19 | Accepted | Jens Tirsvad Nielsen | Stand-in for S01 | Added RC-017 for the MIL-004 source and RC-018 for the wiki and README | pending |
+
 ---
 
 ## Purpose
@@ -33,7 +33,8 @@ updated whenever an artifact instance is created or reviewed.
 | [MIL-004] | MIL | en | it | [MIL-003] | - | RC-016 |
 | [ADR-0001] | ADR | - | - | [BC-001], [SA-001] | - | RC-008 |
 | [GOV-001] | GOV | en | it | [BC-001], [SA-001] | - | RC-009 |
-| Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003] | - | RC-010, RC-011, RC-012 |
+| Python source (`src/`, `tests/`) | PY | - | - | [MIL-001], [MIL-002], [MIL-003], [MIL-004] | - | RC-010, RC-011, RC-012, RC-017 |
+| Wiki (`docs/wiki/`) and `README.md` | WIKI | en | - | [MIL-004] | - | RC-018 |
 
 ## Concern Coverage
 

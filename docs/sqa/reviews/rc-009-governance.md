@@ -38,7 +38,7 @@
 | 10 | Written without duplicated words or unexplained abbreviations | Pass | Short sentences without duplicated words. |
 | 11 | A blocking finding (a `Fail` on a Mandatory criterion, or an open security finding rated High or Critical) gives `No-Go`; `Go-with-conditions` is allowed only for findings that do not block | Pass | Escalation Rules state that a blocking finding gives No-Go. |
 | 12 | A risk exception that lets a blocking finding pass names the finding, the owner, an approver who is neither the author nor the owner, an expiry date and the compensating controls; an expired exception is blocking again | Pass | The document states that no risk exception is available, so none can be invalid. |
-| 13 | A criterion only a person can confirm stays `Pending` until a named reviewer independent of the author confirms it; the author's own assessment, a stand-in's or an AI author's, never closes it | Pass | The Escalation Rules keep a person-only criterion Pending until S01 confirms it in chat. |
+| 13 | A criterion only a person can confirm stays `Pending` until a named reviewer independent of the author confirms it; the author's own assessment, a stand-in's or an automated author's, never closes it | Pass | The Escalation Rules keep a person-only criterion Pending until S01 confirms it in chat. |
 
 ## Language and Domain Results
 
