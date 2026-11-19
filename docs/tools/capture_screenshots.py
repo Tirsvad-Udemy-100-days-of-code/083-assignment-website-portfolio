@@ -52,7 +52,9 @@ pre{{margin:0;padding:18px 22px;white-space:pre-wrap;word-break:break-word}}
 
 def run(command: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
     """Run a command and return its text output; never goes through a shell."""
-    return subprocess.run(  # noqa: S603
+    # The command is a list built in this file from constants and the repository's own
+    # paths, and shell=False, so no input can add to it; the scan finding is accepted.
+    return subprocess.run(  # noqa: S603  # nosemgrep: dangerous-subprocess-use-audit
         command, capture_output=True, text=True, encoding="utf-8", check=check
     )
 
@@ -161,7 +163,8 @@ def capture_preview() -> None:
             )  # fmt: skip
             if probe.returncode == 0:
                 break
-            time.sleep(1)
+            # Wait for the server container to start; one second between 20 tries.
+            time.sleep(1)  # nosemgrep: arbitrary-sleep
         shoot(url, "step-05-preview-server", DESKTOP, network=NETWORK)
     finally:
         run(["docker", "rm", "-f", SERVER_NAME], check=False)
